@@ -6,12 +6,16 @@ Trabalho Laboratório 03 Disciplina Projeto de Software
 ># TO BE DEFINED
 # Stack
 ![Golang](https://img.shields.io/badge/Golang-B125EA?style=flat-square&logo=go&logoColor=white)
+
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)
-[![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white)](#)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff)](https://ui.shadcn.com/docs/components)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/docs/installation/using-vite)
+
+![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white)
+
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white)
-![SonarQube Cloud](https://img.shields.io/badge/SonarQube%20Cloud-126ED3?logo=sonarqubecloud&logoColor=fff)
+[![SonarQube Cloud](https://img.shields.io/badge/SonarQube%20Cloud-126ED3?logo=sonarqubecloud&logoColor=fff)](https://sonarcloud.io/login)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jjoaom_PS-PUCMG-StudentCoin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jjoaom_PS-PUCMG-StudentCoin)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jjoaom_PS-PUCMG-StudentCoin&metric=bugs)](https://sonarcloud.io/summary/new_code?id=jjoaom_PS-PUCMG-StudentCoin)
