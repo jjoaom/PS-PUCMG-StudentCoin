@@ -1,0 +1,24 @@
+# Perfil de aplicação para teste CI/CD
+spring:
+  profiles: ci
+  # Spring Security
+  security:
+    user:
+      name: ci_user
+      password: ci_password
+
+
+  mvc:
+    servlet:
+      path=/api/v1:
+      # Configurações do Actuator para CI
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health  # libera apenas o health
+  endpoint:
+    health:
+      sensitive: false  # permite acesso sem login
+
+

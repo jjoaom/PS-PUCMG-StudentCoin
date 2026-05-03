@@ -1,0 +1,44 @@
+@startuml
+title Diagrama de Arquitetura
+
+left to right direction
+skinparam rectangle {
+  RoundCorner 15
+}
+
+' Host
+node "Virtual Private Cloud" {
+
+  ' Rede interna
+  rectangle "Docker Compose" {
+
+    ' Frontend container
+    node "Container: Frontend" {
+      rectangle "Caddy\n(Web Server / Reverse Proxy)\nPort 80/443" as caddy
+      rectangle "React Vite" as react
+      caddy -right-> react : serve arquivos estáticos
+    }
+
+    ' Backend container
+    node "Container: Backend (Kotlin)\nPort 8080" {
+      rectangle "API\nControllers / Services" as api
+      rectangle "Domain\nModel / Repository / DTO" as domain
+      api -left-> domain
+    }
+
+    ' Database container
+    node "Container: PostgreSQL\nPort 3306" {
+      database "Database" as db
+    }
+
+    ' Comunicação interna
+    caddy --> api : HTTP (REST / JSON)
+    api --> db : JDBC / SQL
+  }
+}
+
+' Exposição externa
+cloud "Internet" {
+}
+Internet --> caddy : HTTPS
+@enduml
