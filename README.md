@@ -5,7 +5,9 @@ Trabalho Laboratório 03 Disciplina Projeto de Software
 
 ># TO BE DEFINED
 # Stack
-![Golang](https://img.shields.io/badge/Golang-B125EA?style=flat-square&logo=go&logoColor=white)
+[![Kotlin](https://img.shields.io/badge/Kotlin-%237F52FF.svg?logo=kotlin&logoColor=white)](https://kotlinlang.org/docs/home.html)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff)](https://docs.spring.io/spring-boot/documentation.html)
+[![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?logo=springsecurity&logoColor=fff)](https://docs.spring.io/spring-security/reference/index.html)
 
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)
@@ -58,26 +60,20 @@ docker compose -f docker-compose.prod.yml up --build
 
 # Documentação
 
+> TO DO SPRINT 1 -> Modelagem do sistema: Diagrama de Casos de Uso, Histórias do Usuário,
+Diagrama de Classes e Diagrama de Componentes.
+
+* Modelagem do sistema
+![Sistema](./docs/sistema.png)
+
 * Diagrama de Casos de Uso
-> ![Diagrama de Casos de Uso](./docs/casodeuso.svg)
-
-* Histórias do Usuário
->![Historias de Usuarios Driveflix_page-0001](./docs/userstory.pdf)
-
-
-* Requisitos
->![Requisitos StudentCoin](./docs/TO BE DEFINED)
-
-
+> ![Diagrama de Casos de Uso](./docs/casodeuso.png)
 
 * Diagrama de Classes
 >![Diagrama de Classes](./docs/class.svg)
 
-* Diagrama de Pacotes
->![Diagrama de Pacotes](./docs/package.svg)
-
 * Diagrama de Componentes
 >![Diagrama de Componentes](./docs/component.svg)
 
-* Diagrama de Implantação
->![Diagrama de Implantação](./docs/implantation.svg)
+* Histórias do Usuário
+>![Historias de Usuarios Driveflix_page-0001](./docs/userstory.pdf)
