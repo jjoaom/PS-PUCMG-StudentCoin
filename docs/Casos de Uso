@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+
+actor Aluno
+actor Professor
+actor "Empresa Parceira" as Empresa
+actor Sistema
+
+rectangle "Sistema de Moeda Estudantil" {
+
+    ' AUTENTICAÇÃO
+    Aluno --> (Realizar Login)
+    Professor --> (Realizar Login)
+    Empresa --> (Realizar Login)
+
+    ' ALUNO
+    Aluno --> (Cadastrar-se no sistema)
+    Aluno --> (Consultar saldo e extrato)
+    Aluno --> (Trocar moedas por vantagem)
+    Aluno --> (Receber notificação de moedas)
+    Aluno --> (Receber cupom por email)
+
+    ' PROFESSOR
+    Professor --> (Consultar saldo e extrato)
+    Professor --> (Enviar moedas para aluno)
+    Professor --> (Adicionar mensagem de reconhecimento)
+
+    ' EMPRESA
+    Empresa --> (Cadastrar-se como parceira)
+    Empresa --> (Cadastrar vantagem)
+    Empresa --> (Receber notificação de resgate)
+
+    ' SISTEMA (processos internos)
+    (Enviar moedas para aluno) --> (Validar saldo do professor)
+    (Enviar moedas para aluno) --> (Notificar aluno por email)
+
+    (Trocar moedas por vantagem) --> (Validar saldo do aluno)
+    (Trocar moedas por vantagem) --> (Gerar cupom)
+    (Trocar moedas por vantagem) --> (Notificar empresa)
+
+    Sistema --> (Notificar aluno por email)
+    Sistema --> (Gerar cupom)
+    Sistema --> (Notificar empresa)
+
+}
+
+@enduml
