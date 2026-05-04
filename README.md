@@ -67,7 +67,7 @@ Diagrama de Classes e Diagrama de Componentes.
 ![Sistema](./docs/sistema.png)
 
 * Diagrama de Casos de Uso
-> ![Diagrama de Casos de Uso](./docs/casodeuso.png)
+> ![Diagrama de Casos de Uso](./docs/CasosdeUso.png)
 
 * Diagrama de Classes
 >![Diagrama de Classes](./docs/class.svg)
@@ -76,4 +76,43 @@ Diagrama de Classes e Diagrama de Componentes.
 >![Diagrama de Componentes](./docs/component.svg)
 
 * Histórias do Usuário
->![Historias de Usuarios Driveflix_page-0001](./docs/userstory.pdf)
+## 📌 Histórias de Usuário
+
+**HU01**  
+Como aluno, quero me cadastrar na plataforma, para participar do sistema de moeda estudantil.
+
+**HU02**  
+Como usuário, quero realizar login na plataforma, para acessar as funcionalidades do sistema.
+
+**HU03**  
+Como professor, quero enviar moedas para um aluno, para reconhecer seu desempenho e participação.
+
+**HU04**  
+Como aluno, quero receber notificação por email ao ganhar moedas, para saber quando fui recompensado.
+
+**HU05**  
+Como aluno, quero consultar meu saldo e extrato, para acompanhar minhas moedas recebidas e gastas.
+
+**HU06**  
+Como professor, quero consultar meu saldo e extrato, para acompanhar as moedas que distribuí.
+
+**HU07**  
+Como empresa parceira, quero me cadastrar na plataforma, para oferecer vantagens aos alunos.
+
+**HU08**  
+Como empresa parceira, quero cadastrar vantagens com descrição, foto e custo em moedas, para disponibilizar benefícios aos alunos.
+
+**HU09**  
+Como aluno, quero trocar minhas moedas por vantagens, para obter descontos ou produtos.
+
+**HU10**  
+Como aluno, quero receber um cupom por email após resgatar uma vantagem, para utilizá-la presencialmente.
+
+**HU11**  
+Como empresa parceira, quero receber notificação quando uma vantagem for resgatada, para validar o uso do benefício.
+
+**HU12**  
+Como professor, quero receber moedas automaticamente a cada semestre, para distribuí-las aos alunos.
+
+**HU13**  
+Como aluno, quero selecionar minha instituição no cadastro, para me vincular corretamente ao sistema.
