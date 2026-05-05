@@ -3,7 +3,6 @@ Trabalho Laboratório 03 Disciplina Projeto de Software
 
 ## Atividade Prática da Disciplina Projeto de Software
 
-># TO BE DEFINED
 # Stack
 [![Kotlin](https://img.shields.io/badge/Kotlin-%237F52FF.svg?logo=kotlin&logoColor=white)](https://kotlinlang.org/docs/home.html)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff)](https://docs.spring.io/spring-boot/documentation.html)
