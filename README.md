@@ -69,10 +69,10 @@ Diagrama de Classes e Diagrama de Componentes.
 > ![Diagrama de Casos de Uso](./docs/CasosdeUso.png)
 
 * Diagrama de Classes
->![Diagrama de Classes](./docs/class.svg)
+>![Diagrama de Classes](./docs/DiagramadeClasses.svg)
 
 * Diagrama de Componentes
->![Diagrama de Componentes](./docs/component.svg)
+>![Diagrama de Componentes](./docs/DiagramadeComponentes.svg)
 
 * Histórias do Usuário
 ## 📌 Histórias de Usuário
