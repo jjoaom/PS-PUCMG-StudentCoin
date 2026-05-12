@@ -1,4 +1,4 @@
-package pucmg.ti4.backend
+package pucmg.ps.backend
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

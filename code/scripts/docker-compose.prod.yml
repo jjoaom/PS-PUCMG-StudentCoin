@@ -1,0 +1,55 @@
+services:
+
+  mysql:
+    build: ../db
+    container_name: mysql-db
+    restart: unless-stopped
+    env_file:
+      - ../db/.env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: springboot-backend
+    restart: unless-stopped
+    env_file:
+      - ../backend/.env
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - backend-net
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.prod
+    container_name: caddy-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      # quando for HTTPS:
+      # - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - backend-net
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  backend-net:
+    driver: bridge

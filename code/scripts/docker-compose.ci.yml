@@ -1,0 +1,62 @@
+services:
+
+  mysql:
+    build: ../db
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ci_root
+      MYSQL_DATABASE: animongs_db
+      MYSQL_USER: ci_user
+      MYSQL_PASSWORD: ci_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../db/init:/docker-entrypoint-initdb.d
+    networks:
+      - backend-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: springboot-backend
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/animongs_db
+      SPRING_DATASOURCE_USERNAME: ci_user
+      SPRING_DATASOURCE_PASSWORD: ci_password
+      SPRING_PROFILES_ACTIVE: ci
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - backend-net
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.prod
+    container_name: ionic_prod
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - backend-net
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  backend-net:
+    driver: bridge
