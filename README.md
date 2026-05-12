@@ -74,7 +74,7 @@ Diagrama de Classes e Diagrama de Componentes.
 * Diagrama de Componentes
 >![Diagrama de Componentes](./docs/DiagramadeComponentes.svg)
 
-* Diagrama de Componentes
+* Diagrama ER
 >![Diagrama de Componentes](./docs/diagramaER.png)
 
 * Histórias do Usuário
