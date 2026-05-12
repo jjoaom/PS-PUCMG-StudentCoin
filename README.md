@@ -75,7 +75,6 @@ Diagrama de Classes e Diagrama de Componentes.
 >![Diagrama de Componentes](./docs/DiagramadeComponentes.svg)
 
 * Histórias do Usuário
-## 📌 Histórias de Usuário
 
 **HU01**  
 Como aluno, quero me cadastrar na plataforma, para participar do sistema de moeda estudantil.
@@ -115,3 +114,5 @@ Como professor, quero receber moedas automaticamente a cada semestre, para distr
 
 **HU13**  
 Como aluno, quero selecionar minha instituição no cadastro, para me vincular corretamente ao sistema.
+
+* **Estratégia de Acesso ao Banco de Dados:** A estratégia de acesso ao banco utilizada no projeto foi ORM com JPA/Hibernate. As entidades Kotlin, como Aluno e Empresa, são mapeadas para tabelas do MySQL por meio das anotações @Entity e @Table. O acesso aos dados é feito por interfaces Repository que estendem JpaRepository, evitando SQL manual nas operações básicas de CRUD. O fluxo segue a arquitetura MVC, em que o Controller recebe as requisições, o Service aplica as regras de negócio e o Repository realiza a comunicação com o banco de dados.
