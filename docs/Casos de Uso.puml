@@ -1,0 +1,51 @@
+@startuml
+left to right direction
+
+actor Aluno
+actor Professor
+actor "Empresa Parceira" as Empresa
+actor Sistema
+
+rectangle "Sistema de Moeda Estudantil" {
+
+    ' AUTENTICAÇÃO
+    Aluno --> (HU02\nRealizar Login)
+    Professor --> (HU02\nRealizar Login)
+    Empresa --> (HU02\nRealizar Login)
+
+    ' ALUNO
+    Aluno --> (HU01/HU13\nCadastrar-se no sistema)
+    Aluno --> (HU05\nConsultar saldo e extrato)
+    Aluno --> (HU09\nTrocar moedas por vantagem)
+    Aluno --> (HU04\nReceber notificação de moedas)
+    Aluno --> (HU10\nReceber cupom por email)
+
+    ' PROFESSOR
+    Professor --> (HU06\nConsultar saldo e extrato)
+    Professor --> (HU03\nEnviar moedas para aluno)
+    Professor --> (HU03\nAdicionar mensagem de reconhecimento)
+
+    ' EMPRESA
+    Empresa --> (HU07\nCadastrar-se como parceira)
+    Empresa --> (HU08\nCadastrar vantagem)
+    Empresa --> (HU11\nReceber notificação de resgate)
+
+    ' SISTEMA (processos internos)
+    (HU03\nEnviar moedas para aluno) ..> (HU03\nValidar saldo do professor) : <<include>>
+    (HU03\nEnviar moedas para aluno) ..> (HU04\nNotificar aluno por email) : <<include>>
+
+    (HU09\nTrocar moedas por vantagem) ..> (HU09\nValidar saldo do aluno) : <<include>>
+    (HU09\nTrocar moedas por vantagem) ..> (HU10\nGerar cupom) : <<include>>
+    (HU09\nTrocar moedas por vantagem) ..> (HU11\nNotificar empresa) : <<include>>
+
+    (HU04\nReceber notificação de moedas) ..> (HU04\nNotificar aluno por email) : <<extend>>
+    (HU10\nReceber cupom por email) ..> (HU10\nGerar cupom) : <<extend>>
+    (HU11\nReceber notificação de resgate) ..> (HU11\nNotificar empresa) : <<extend>>
+
+    Sistema --> (HU04\nNotificar aluno por email)
+    Sistema --> (HU10\nGerar cupom)
+    Sistema --> (HU11\nNotificar empresa)
+
+}
+
+@enduml
