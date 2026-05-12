@@ -3,7 +3,9 @@ import "./App.css";
 import Home from "./components/pages/Home";
 import Header from "./components/pages/Header";
 import Login from "./components/pages/Login";
-
+import CadastroAluno from "./components/pages/CadastroAluno/CadastroAluno";
+import CadastroEmpresa from "./components/pages/CadastroEmpresa/CadastroEmpresa";
+import Perfil from "./components/pages/Perfil/Perfil"
 function App() {
   return (
     <>
@@ -12,6 +14,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/CadastroAluno" element={<CadastroAluno />} />
+          <Route path="/CadastroEmpresa" element={<CadastroEmpresa />} />
+          <Route path="/Perfil" element={<Perfil />} />
+
         </Routes>
       </BrowserRouter>
     </>
