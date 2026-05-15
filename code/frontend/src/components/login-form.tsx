@@ -30,49 +30,38 @@ export function LoginForm({
     try {
       setLoading(true)
 
-      let resposta = await fetch("http://localhost:8080/api/alunos/login", {
+      let resposta = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, senha }),
+        body: JSON.stringify({ email, password: senha }),
       })
 
       if (resposta.ok) {
-        const aluno = await resposta.json()
+        const data = await resposta.json()
+        const user = data.user
+        
+        localStorage.setItem("token", data.accessToken)
+        localStorage.setItem("userId", String(user.id))
+        localStorage.setItem("userName", user.name)
+        localStorage.setItem("userEmail", user.email)
+        
+        // Verifica as permissões para definir o tipo de usuário no localStorage
+        if (user.permissions && user.permissions.includes("ALUNO")) {
+            localStorage.setItem("userType", "ALUNO")
+        } else if (user.permissions && user.permissions.includes("EMPRESA")) {
+            localStorage.setItem("userType", "EMPRESA")
+        } else {
+            localStorage.setItem("userType", "USUARIO")
+        }
 
-        localStorage.setItem("userId", String(aluno.id))
-        localStorage.setItem("userName", aluno.nome)
-        localStorage.setItem("userEmail", aluno.email)
-        localStorage.setItem("userType", "ALUNO")
-
-        alert("Login de aluno realizado com sucesso!")
+        alert("Login realizado com sucesso!")
         window.location.href = "/"
         return
+      } else {
+        alert("Email ou senha inválidos")
       }
-
-      resposta = await fetch("http://localhost:8080/api/empresa/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, senha }),
-      })
-
-      if (resposta.ok) {
-        const empresa = await resposta.json()
-
-        localStorage.setItem("userId", String(empresa.id))
-        localStorage.setItem("userName", empresa.nomeFantasia)
-        localStorage.setItem("userEmail", empresa.email)
-        localStorage.setItem("userType", "EMPRESA")
-
-        alert("Login de empresa realizado com sucesso!")
-        window.location.href = "/"
-        return
-      }
-
-      alert("Email ou senha inválidos")
     } catch (error) {
       console.error("Erro no login:", error)
       alert("Erro ao conectar com o backend")

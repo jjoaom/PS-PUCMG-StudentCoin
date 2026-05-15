@@ -1,14 +1,14 @@
 package pucmg.ps.backend.Empresa
 
 import jakarta.persistence.*
+import pucmg.ps.backend.features.auth.user.UserEntity
 
 @Entity
 @Table(name = "empresas")
-data class Empresa(
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+class Empresa(
+    name: String = "",
+    email: String = "",
+    password: String = "",
 
     var nomeFantasia: String,
 
@@ -16,11 +16,6 @@ data class Empresa(
 
     @Column(unique = true)
     var cnpj: String,
-
-    @Column(unique = true)
-    var email: String,
-
-    var senha: String,
 
     var telefone: String? = null,
 
@@ -30,4 +25,4 @@ data class Empresa(
     var bairro: String,
     var cidade: String,
     var estado: String
-)
+) : UserEntity(name = name, email = email, password = password)

@@ -45,7 +45,7 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile.prod
-    container_name: ionic_prod
+    container_name: vite_prod
     ports:
       - "5173:80"
     depends_on:

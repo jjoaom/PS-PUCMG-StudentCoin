@@ -1,10 +1,14 @@
 package pucmg.ps.backend.Empresa
 
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import pucmg.ps.backend.features.auth.permission.PermissionDAO
 
 @Service
 class EmpresaService(
-    private val empresaRepository: EmpresaRepository
+    private val empresaRepository: EmpresaRepository,
+    private val passwordEncoder: PasswordEncoder,
+    private val permissionDao: PermissionDAO
 ) {
 
     fun cadastrar(dto: EmpresaCadastroDTO): Empresa {
@@ -17,12 +21,16 @@ class EmpresaService(
             throw RuntimeException("CNPJ já cadastrado")
         }
 
+        val permissaoEmpresa = permissionDao.findByName("EMPRESA")
+        val permissoes = if (permissaoEmpresa != null) mutableSetOf(permissaoEmpresa) else mutableSetOf()
+
         val empresa = Empresa(
+            name = dto.nomeFantasia,
+            email = dto.email,
+            password = passwordEncoder.encode(dto.senha).toString(),
             nomeFantasia = dto.nomeFantasia,
             razaoSocial = dto.razaoSocial,
             cnpj = dto.cnpj,
-            email = dto.email,
-            senha = dto.senha,
             telefone = dto.telefone,
             cep = dto.cep,
             rua = dto.rua,
@@ -30,21 +38,11 @@ class EmpresaService(
             bairro = dto.bairro,
             cidade = dto.cidade,
             estado = dto.estado
-        )
-
-        return empresaRepository.save(empresa)
-    }
-
-    fun login(dto: EmpresaLoginDTO): Empresa {
-
-        val empresa = empresaRepository.findByEmail(dto.email)
-            ?: throw RuntimeException("Email ou senha inválidos")
-
-        if (empresa.senha != dto.senha) {
-            throw RuntimeException("Email ou senha inválidos")
+        ).apply {
+            this.permissions = permissoes
         }
 
-        return empresa
+        return empresaRepository.save(empresa)
     }
 
     fun buscarPorId(id: Long): Empresa {
@@ -56,11 +54,14 @@ class EmpresaService(
         val empresa = empresaRepository.findById(id)
             .orElseThrow { RuntimeException("Empresa não encontrada") }
 
+        empresa.name = dto.nomeFantasia
+        empresa.email = dto.email
+        if (dto.senha.isNotBlank()) {
+            empresa.password = passwordEncoder.encode(dto.senha).toString()
+        }
         empresa.nomeFantasia = dto.nomeFantasia
         empresa.razaoSocial = dto.razaoSocial
         empresa.cnpj = dto.cnpj
-        empresa.email = dto.email
-        empresa.senha = dto.senha
         empresa.telefone = dto.telefone
         empresa.cep = dto.cep
         empresa.rua = dto.rua

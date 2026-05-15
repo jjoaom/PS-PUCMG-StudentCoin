@@ -3,25 +3,33 @@ package pucmg.ps.backend.shared.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.header.writers.StaticHeadersWriter
+import pucmg.ps.backend.features.auth.CustomUserDetailsService
+import pucmg.ps.backend.features.auth.jwt.JwtAuthFilter
 
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 
 @Configuration
+@EnableWebSecurity
 @Profile("prod")
-internal class SecurityConfig {
-
+@EnableMethodSecurity
+internal class SecurityConfig(
+    private val customUserDetailsService: CustomUserDetailsService,
+    private val jwtAuthFilter: JwtAuthFilter
+) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-
         http.headers { headers ->
             headers
                 .contentSecurityPolicy { csp ->
@@ -48,12 +56,11 @@ internal class SecurityConfig {
 
         http
             .csrf { it.disable() }
-            .sessionManagement {
-                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests {
                 it.requestMatchers("/auth/**").permitAll()
-                // it.requestMatchers("/vacinas/**").permitAll()  
                 it.anyRequest().authenticated()
             }
 
@@ -61,9 +68,15 @@ internal class SecurityConfig {
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+    fun authenticationProvider(): DaoAuthenticationProvider =
+        DaoAuthenticationProvider(customUserDetailsService).apply {
+            setPasswordEncoder(passwordEncoder())
+        }
 
+    @Bean
+    fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager =
+        config.authenticationManager
 
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 }

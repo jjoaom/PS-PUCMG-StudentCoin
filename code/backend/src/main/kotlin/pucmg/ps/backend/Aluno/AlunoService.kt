@@ -1,10 +1,14 @@
 package pucmg.ps.backend.Aluno
 
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import pucmg.ps.backend.features.auth.permission.PermissionDAO
 
 @Service
 class AlunoService(
-    private val alunoRepository: AlunoRepository
+    private val alunoRepository: AlunoRepository,
+    private val passwordEncoder: PasswordEncoder,
+    private val permissionDao: PermissionDAO
 ) {
 
     fun cadastrar(dto: AlunoCadastroDTO): Aluno {
@@ -17,10 +21,13 @@ class AlunoService(
             throw RuntimeException("CPF já cadastrado")
         }
 
+        val permissaoAluno = permissionDao.findByName("ALUNO")
+        val permissoes = if (permissaoAluno != null) mutableSetOf(permissaoAluno) else mutableSetOf()
+
         val aluno = Aluno(
-            nome = dto.nome,
+            name = dto.nome,
             email = dto.email,
-            senha = dto.senha,
+            password = passwordEncoder.encode(dto.senha).toString(),
             cpf = dto.cpf,
             rg = dto.rg,
             telefone = dto.telefone,
@@ -32,24 +39,14 @@ class AlunoService(
             estado = dto.estado,
             curso = dto.curso,
             instituicaoId = dto.instituicaoId
-        )
+        ).apply {
+            this.permissions = permissoes
+        }
 
         return alunoRepository.save(aluno)
     }
 
-    fun login(dto: AlunoLoginDTO): Aluno {
-
-        val aluno = alunoRepository.findByEmail(dto.email)
-            ?: throw RuntimeException("Email ou senha inválidos")
-
-        if (aluno.senha != dto.senha) {
-            throw RuntimeException("Email ou senha inválidos")
-        }
-
-        return aluno
-    }
-
-        fun buscarPorId(id: Long): Aluno {
+    fun buscarPorId(id: Long): Aluno {
         return alunoRepository.findById(id)
             .orElseThrow { RuntimeException("Aluno não encontrado") }
     }
@@ -58,9 +55,11 @@ class AlunoService(
         val aluno = alunoRepository.findById(id)
             .orElseThrow { RuntimeException("Aluno não encontrado") }
 
-        aluno.nome = dto.nome
+        aluno.name = dto.nome
         aluno.email = dto.email
-        aluno.senha = dto.senha
+        if (dto.senha.isNotBlank()) {
+            aluno.password = passwordEncoder.encode(dto.senha).toString()
+        }
         aluno.cpf = dto.cpf
         aluno.rg = dto.rg
         aluno.telefone = dto.telefone

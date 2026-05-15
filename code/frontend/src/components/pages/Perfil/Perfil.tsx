@@ -64,7 +64,11 @@ function Perfil() {
       }
 
       const dados = await resposta.json();
-      setForm(dados);
+      setForm({
+        ...dados,
+        nome: dados.name || dados.nome,
+        senha: ""
+      });
     } catch (error) {
       console.error(error);
       alert("Erro ao conectar com o backend");

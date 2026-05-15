@@ -1,21 +1,14 @@
 package pucmg.ps.backend.Aluno
 
 import jakarta.persistence.*
+import pucmg.ps.backend.features.auth.user.UserEntity
 
 @Entity
 @Table(name = "alunos")
-data class Aluno(
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
-
-    var nome: String,
-
-    @Column(unique = true)
-    var email: String,
-
-    var senha: String,
+class Aluno(
+    name: String = "",
+    email: String = "",
+    password: String = "",
 
     @Column(unique = true)
     var cpf: String,
@@ -41,4 +34,4 @@ data class Aluno(
     var instituicaoId: Long,
 
     var saldoMoedas: Int = 0
-)
+) : UserEntity(name = name, email = email, password = password)

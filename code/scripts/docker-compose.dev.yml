@@ -44,7 +44,7 @@ services:
   frontend:
     build:
       context: ../frontend
-    container_name: ionic_dev
+    container_name: vite_dev
     working_dir: /app
     volumes:
       - ../frontend:/app

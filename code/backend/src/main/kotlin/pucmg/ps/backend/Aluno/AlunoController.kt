@@ -29,24 +29,7 @@ class AlunoController(
         }
     }
 
-    @PostMapping("/login")
-    fun login(
-        @RequestBody dto: AlunoLoginDTO
-    ): ResponseEntity<Any> {
 
-        return try {
-
-            val aluno = alunoService.login(dto)
-
-            ResponseEntity.ok(aluno)
-
-        } catch (e: RuntimeException) {
-
-            ResponseEntity
-                .badRequest()
-                .body(mapOf("erro" to e.message))
-        }
-    }
 
     @GetMapping("/{id}")
     fun buscarPorId(@PathVariable id: Long): ResponseEntity<Any> {

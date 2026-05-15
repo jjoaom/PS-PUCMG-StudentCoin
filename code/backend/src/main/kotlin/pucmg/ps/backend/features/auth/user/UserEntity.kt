@@ -15,9 +15,13 @@ import org.hibernate.annotations.UpdateTimestamp
 import pucmg.ps.backend.features.auth.permission.PermissionEntity
 import java.time.Instant
 
+import jakarta.persistence.Inheritance
+import jakarta.persistence.InheritanceType
+
 @Entity
-@Table(name = "users")
-data class UserEntity(
+@Table(name = "usuarios")
+@Inheritance(strategy = InheritanceType.JOINED)
+open class UserEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

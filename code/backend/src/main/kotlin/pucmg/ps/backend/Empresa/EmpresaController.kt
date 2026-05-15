@@ -20,15 +20,7 @@ class EmpresaController(
         }
     }
 
-    @PostMapping("/login")
-    fun login(@RequestBody dto: EmpresaLoginDTO): ResponseEntity<Any> {
-        return try {
-            val empresa = empresaService.login(dto)
-            ResponseEntity.ok(empresa)
-        } catch (e: RuntimeException) {
-            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
-        }
-    }
+
 
     @GetMapping("/{id}")
     fun buscarPorId(@PathVariable id: Long): ResponseEntity<Any> {

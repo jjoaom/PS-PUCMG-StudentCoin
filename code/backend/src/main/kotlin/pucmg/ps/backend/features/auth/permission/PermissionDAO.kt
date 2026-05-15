@@ -11,6 +11,9 @@ class PermissionDAO(private val repository: PermissionRepository) {
         if (missing.isNotEmpty()) throw PermissionNotFoundException(missing)
         return found
     }
+    fun findByName(name: String): PermissionEntity? {
+    return repository.findByNameIn(setOf(name)).firstOrNull()
+}
 }
 
 class PermissionNotFoundException(names: Set<String>)

@@ -12,7 +12,7 @@ enum Setor {
     SERVICOS
 }
 
-class Usuario {
+class UserEntity {
     -email: String
     -senha: String
     --
@@ -92,8 +92,8 @@ class Vantagem {
 
 ' Relacionamentos
 
-Usuario <|-- Aluno
-Usuario <|-- Professor
+UserEntity <|-- Aluno
+UserEntity <|-- Professor
 
 Instituicao "1" o-- "*" Aluno : vincula-se
 Instituicao "1" o-- "*" Professor : faz parte
