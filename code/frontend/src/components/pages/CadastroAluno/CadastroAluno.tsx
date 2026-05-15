@@ -89,7 +89,7 @@ function CadastroAluno() {
     e.preventDefault();
 
     try {
-      const resposta = await fetch("http://localhost:8080/api/alunos", {
+      const resposta = await fetch("/api/alunos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

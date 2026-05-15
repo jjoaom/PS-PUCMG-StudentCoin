@@ -41,8 +41,8 @@ function Perfil() {
 
   const isAluno = userType === "ALUNO";
   const API = isAluno
-    ? `http://localhost:8080/api/alunos/${userId}`
-    : `http://localhost:8080/api/empresa/${userId}`;
+    ? `/api/alunos/${userId}`
+    : `/api/empresa/${userId}`;
 
   useEffect(() => {
     carregarPerfil();

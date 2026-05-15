@@ -34,7 +34,7 @@ function CadastroEmpresa() {
 
   const [loadingCep, setLoadingCep] = useState(false);
 
-  const API = "http://localhost:8080/api/empresa";
+  const API = "/api/empresa";
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
