@@ -1,127 +1,106 @@
-import { useState, type FormEvent } from "react"
-import { useNavigate } from "react-router-dom"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const navigate = useNavigate()
-  const [email, setEmail] = useState("")
-  const [senha, setSenha] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [erro, setErro] = useState<string | null>(null)
+export function LoginForm() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
 
   async function fazerLogin(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setErro(null)
+    e.preventDefault();
+    setErro(null);
 
     try {
-      setLoading(true)
+      setLoading(true);
+
       const resposta = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password: senha }),
-      })
+      });
 
       if (!resposta.ok) {
-        setErro("Email ou senha inválidos.")
-        return
+        setErro("Email ou senha inválidos.");
+        return;
       }
 
-      const data = await resposta.json()
-      const { accessToken, user } = data
+      const data = await resposta.json();
+      const { accessToken, user } = data;
 
-      localStorage.setItem("token", accessToken)
-      localStorage.setItem("userId", String(user.id))
-      localStorage.setItem("userName", user.name)
-      localStorage.setItem("userEmail", user.email)
+      localStorage.setItem("token", accessToken);
+      localStorage.setItem("userId", String(user.id));
+      localStorage.setItem("userName", user.name);
+      localStorage.setItem("userEmail", user.email);
 
       if (user.permissions?.includes("ALUNO")) {
-        localStorage.setItem("userType", "ALUNO")
-        navigate("/aluno/home")
+        localStorage.setItem("userType", "ALUNO");
+        navigate("/aluno/home");
       } else if (user.permissions?.includes("EMPRESA")) {
-        localStorage.setItem("userType", "EMPRESA")
-        navigate("/empresa/home")
+        localStorage.setItem("userType", "EMPRESA");
+        navigate("/empresa/home");
       } else {
-        localStorage.setItem("userType", "USUARIO")
-        navigate("/")
+        localStorage.setItem("userType", "USUARIO");
+        navigate("/");
       }
     } catch {
-      setErro("Erro ao conectar com o servidor.")
+      setErro("Erro ao conectar com o servidor.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Entrar na conta</CardTitle>
-          <CardDescription>
-            Informe seu email e senha para acessar o sistema.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={fazerLogin}>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="seuemail@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="senha">Senha</FieldLabel>
-                <Input
-                  id="senha"
-                  type="password"
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                  required
-                />
-              </Field>
+    <div className="login-form-card">
+      <div className="login-form-header">
+        <span className="login-icon">🔐</span>
 
-              {erro && (
-                <p className="text-sm text-destructive">{erro}</p>
-              )}
+        <div>
+          <h2>Entrar na conta</h2>
+          <p>Informe seus dados para acessar o sistema.</p>
+        </div>
+      </div>
 
-              <Field>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Entrando..." : "Entrar"}
-                </Button>
-                <FieldDescription className="text-center">
-                  Ainda não tem conta?{" "}
-                  <a href="/cadastro/aluno" className="underline">
-                    Cadastre-se
-                  </a>
-                </FieldDescription>
-              </Field>
-            </FieldGroup>
-          </form>
-        </CardContent>
-      </Card>
+      <form onSubmit={fazerLogin} className="login-form">
+        <div className="form-field">
+          <label htmlFor="email">Email</label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="seuemail@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-field">
+          <label htmlFor="senha">Senha</label>
+
+          <input
+            id="senha"
+            type="password"
+            placeholder="Digite sua senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+        </div>
+
+        {erro && <p className="form-error">{erro}</p>}
+
+        <button type="submit" className="login-submit" disabled={loading}>
+          {loading ? "Entrando..." : "Entrar"}
+        </button>
+
+        <p className="login-register">
+          Ainda não tem conta?{" "}
+          <Link to="/CadastroAluno">Cadastre-se</Link>
+        </p>
+      </form>
     </div>
-  )
+  );
 }

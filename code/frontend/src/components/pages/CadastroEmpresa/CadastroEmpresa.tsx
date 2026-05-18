@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import "./CadastroEmpresa.css";
 
 type FormEmpresa = {
@@ -33,6 +34,7 @@ function CadastroEmpresa() {
   });
 
   const [loadingCep, setLoadingCep] = useState(false);
+  const [loadingCadastro, setLoadingCadastro] = useState(false);
 
   const API = "/api/empresa";
 
@@ -85,6 +87,8 @@ function CadastroEmpresa() {
     e.preventDefault();
 
     try {
+      setLoadingCadastro(true);
+
       const resposta = await fetch(API, {
         method: "POST",
         headers: {
@@ -94,10 +98,6 @@ function CadastroEmpresa() {
       });
 
       if (!resposta.ok) {
-        const erro = await resposta.text();
-
-        console.error(erro);
-
         alert("Erro ao cadastrar empresa");
         return;
       }
@@ -118,58 +118,90 @@ function CadastroEmpresa() {
         cidade: "",
         estado: "",
       });
-    } catch (error) {
-      console.error(error);
-
+    } catch {
       alert("Erro ao conectar com o backend");
+    } finally {
+      setLoadingCadastro(false);
     }
   }
 
   return (
-    <main className="instituicao-page">
-      <section className="instituicao-card">
-        <h1>Cadastro de Empresa</h1>
+    <main className="company-register-page">
+      <section className="company-register-shell glass-card">
+        <div className="company-register-intro">
+          <span className="badge">Empresa Parceira</span>
 
-        <p>
-          Cadastre sua empresa parceira no sistema StudentCoin.
-        </p>
+          <h1>
+            Conecte sua empresa ao <span>StudentCoin.</span>
+          </h1>
 
-        <form onSubmit={cadastrarEmpresa}>
-          <div className="form-grid">
-            <div className="input-group">
+          <p>
+            Ofereça benefícios exclusivos para estudantes e fortaleça sua marca
+            dentro do ecossistema acadêmico digital.
+          </p>
+
+          <div className="company-benefits">
+            <div>
+              <strong>01</strong>
+              <span>Cadastre vantagens e cupons exclusivos.</span>
+            </div>
+
+            <div>
+              <strong>02</strong>
+              <span>Ganhe visibilidade para milhares de estudantes.</span>
+            </div>
+
+            <div>
+              <strong>03</strong>
+              <span>Participe de uma rede moderna de incentivo acadêmico.</span>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={cadastrarEmpresa} className="company-register-form">
+          <div className="form-section-title">
+            <h2>Dados da empresa</h2>
+            <p>Preencha as informações da empresa parceira.</p>
+          </div>
+
+          <div className="modern-form-grid">
+            <div className="modern-input-group">
               <label>Nome Fantasia</label>
 
               <input
                 name="nomeFantasia"
                 value={form.nomeFantasia}
                 onChange={handleChange}
+                placeholder="Digite o nome fantasia"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Razão Social</label>
 
               <input
                 name="razaoSocial"
                 value={form.razaoSocial}
                 onChange={handleChange}
+                placeholder="Digite a razão social"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>CNPJ</label>
 
               <input
                 name="cnpj"
                 value={form.cnpj}
                 onChange={handleChange}
+                placeholder="00.000.000/0000-00"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Email</label>
 
               <input
@@ -177,11 +209,12 @@ function CadastroEmpresa() {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                placeholder="empresa@email.com"
                 required
               />
             </div>
 
-            <div className="input-group full">
+            <div className="modern-input-group">
               <label>Senha</label>
 
               <input
@@ -189,21 +222,31 @@ function CadastroEmpresa() {
                 name="senha"
                 value={form.senha}
                 onChange={handleChange}
+                placeholder="Crie uma senha"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Telefone</label>
 
               <input
                 name="telefone"
                 value={form.telefone}
                 onChange={handleChange}
+                placeholder="(31) 99999-9999"
+                required
               />
             </div>
+          </div>
 
-            <div className="input-group">
+          <div className="form-section-title spacing">
+            <h2>Endereço</h2>
+            <p>O CEP pode preencher os campos automaticamente.</p>
+          </div>
+
+          <div className="modern-form-grid">
+            <div className="modern-input-group">
               <label>CEP</label>
 
               <input
@@ -211,6 +254,7 @@ function CadastroEmpresa() {
                 value={form.cep}
                 onChange={handleChange}
                 onBlur={buscarCep}
+                placeholder="00000-000"
                 required
               />
 
@@ -221,65 +265,81 @@ function CadastroEmpresa() {
               )}
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Rua</label>
 
               <input
                 name="rua"
                 value={form.rua}
                 onChange={handleChange}
+                placeholder="Rua / Avenida"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Número</label>
 
               <input
                 name="numero"
                 value={form.numero}
                 onChange={handleChange}
+                placeholder="123"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Bairro</label>
 
               <input
                 name="bairro"
                 value={form.bairro}
                 onChange={handleChange}
+                placeholder="Bairro"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Cidade</label>
 
               <input
                 name="cidade"
                 value={form.cidade}
                 onChange={handleChange}
+                placeholder="Cidade"
                 required
               />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Estado</label>
 
               <input
                 name="estado"
                 value={form.estado}
                 onChange={handleChange}
+                placeholder="UF"
                 required
               />
             </div>
           </div>
 
-          <button className="instituicao-button" type="submit">
-            Cadastrar Empresa
+          <button
+            className="student-register-button"
+            type="submit"
+            disabled={loadingCadastro}
+          >
+            {loadingCadastro
+              ? "Cadastrando..."
+              : "Cadastrar Empresa"}
           </button>
+
+          <p className="register-login-link">
+            Já possui conta?{" "}
+            <Link to="/Login">Entrar agora</Link>
+          </p>
         </form>
       </section>
     </main>
