@@ -1,6 +1,17 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+type LoginResponse = {
+  accessToken?: string;
+  token?: string;
+  user: {
+    id: number;
+    name?: string;
+    nome?: string;
+    email: string;
+  };
+};
+
 export function LoginForm() {
   const navigate = useNavigate();
 
@@ -9,17 +20,42 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
 
+  async function descobrirTipoUsuario(userId: number, token: string) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const aluno = await fetch(`/api/alunos/${userId}`, { headers });
+
+    if (aluno.ok) {
+      return "ALUNO";
+    }
+
+    const empresa = await fetch(`/api/empresa/${userId}`, { headers });
+
+    if (empresa.ok) {
+      return "EMPRESA";
+    }
+
+    return "USUARIO";
+  }
+
   async function fazerLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     setErro(null);
+    setLoading(true);
 
     try {
-      setLoading(true);
-
       const resposta = await fetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password: senha }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password: senha,
+        }),
       });
 
       if (!resposta.ok) {
@@ -27,25 +63,34 @@ export function LoginForm() {
         return;
       }
 
-      const data = await resposta.json();
-      const { accessToken, user } = data;
+      const data: LoginResponse = await resposta.json();
 
-      localStorage.setItem("token", accessToken);
+      const token = data.accessToken || data.token;
+      const user = data.user;
+
+      if (!token || !user) {
+        setErro("Resposta de login inválida.");
+        return;
+      }
+
+      localStorage.setItem("token", token);
       localStorage.setItem("userId", String(user.id));
-      localStorage.setItem("userName", user.name);
-      localStorage.setItem("userEmail", user.email);
+      localStorage.setItem("userName", user.name || user.nome || "");
+      localStorage.setItem("userEmail", user.email || "");
 
-      if (user.permissions?.includes("ALUNO")) {
-        localStorage.setItem("userType", "ALUNO");
-        navigate("/aluno/home");
-      } else if (user.permissions?.includes("EMPRESA")) {
-        localStorage.setItem("userType", "EMPRESA");
-        navigate("/empresa/home");
+      const userType = await descobrirTipoUsuario(user.id, token);
+
+      localStorage.setItem("userType", userType);
+
+      if (userType === "ALUNO") {
+        navigate("/");
+      } else if (userType === "EMPRESA") {
+        navigate("/");
       } else {
-        localStorage.setItem("userType", "USUARIO");
         navigate("/");
       }
-    } catch {
+    } catch (error) {
+      console.error(error);
       setErro("Erro ao conectar com o servidor.");
     } finally {
       setLoading(false);
@@ -73,6 +118,7 @@ export function LoginForm() {
             placeholder="seuemail@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             required
           />
         </div>
@@ -86,6 +132,7 @@ export function LoginForm() {
             placeholder="Digite sua senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
+            autoComplete="current-password"
             required
           />
         </div>
@@ -97,8 +144,7 @@ export function LoginForm() {
         </button>
 
         <p className="login-register">
-          Ainda não tem conta?{" "}
-          <Link to="/CadastroAluno">Cadastre-se</Link>
+          Ainda não tem conta? <Link to="/Cadastro">Cadastre-se</Link>
         </p>
       </form>
     </div>

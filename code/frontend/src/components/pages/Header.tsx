@@ -20,7 +20,7 @@ export default function Header() {
           </button>
         </Link>
 
-        <Link to="/CadastroAluno">
+        <Link to="/Cadastro">
           <button className="primary-button">
             Cadastre-se
           </button>

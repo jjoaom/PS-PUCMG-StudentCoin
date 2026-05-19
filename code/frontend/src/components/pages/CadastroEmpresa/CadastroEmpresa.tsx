@@ -17,7 +17,7 @@ type FormEmpresa = {
   estado: string;
 };
 
-function CadastroEmpresa() {
+export default function CadastroEmpresa() {
   const [form, setForm] = useState<FormEmpresa>({
     nomeFantasia: "",
     razaoSocial: "",
@@ -346,4 +346,3 @@ function CadastroEmpresa() {
   );
 }
 
-export default CadastroEmpresa;

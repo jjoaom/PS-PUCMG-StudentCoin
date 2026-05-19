@@ -1,207 +1,311 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import "./Perfil.css";
+type TipoUsuario = "ALUNO" | "EMPRESA";
 
-type UsuarioForm = {
-  nome?: string;
-  nomeFantasia?: string;
-  razaoSocial?: string;
-  cpf?: string;
-  cnpj?: string;
-  rg?: string;
+type PerfilForm = {
+  nome: string;
   email: string;
   senha: string;
-  telefone?: string;
+  cpf: string;
+  rg: string;
+  telefone: string;
   cep: string;
   rua: string;
   numero: string;
   bairro: string;
   cidade: string;
   estado: string;
-  curso?: string;
-  instituicaoId?: number;
+  curso: string;
+  instituicaoId: string;
+  nomeFantasia: string;
+  razaoSocial: string;
+  cnpj: string;
 };
 
-function Perfil() {
-  const [form, setForm] = useState<UsuarioForm>({
+export default function Perfil() {
+  const [tipoUsuario, setTipoUsuario] = useState<TipoUsuario>("ALUNO");
+  const [editando, setEditando] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [salvando, setSalvando] = useState(false);
+
+  const [form, setForm] = useState<PerfilForm>({
+    nome: "",
     email: "",
     senha: "",
+    cpf: "",
+    rg: "",
+    telefone: "",
     cep: "",
     rua: "",
     numero: "",
     bairro: "",
     cidade: "",
     estado: "",
+    curso: "",
+    instituicaoId: "",
+    nomeFantasia: "",
+    razaoSocial: "",
+    cnpj: "",
   });
 
-  const [loading, setLoading] = useState(true);
-  const [editando, setEditando] = useState(false);
-
   const userId = localStorage.getItem("userId");
-  const userType = localStorage.getItem("userType");
 
-  const isAluno = userType === "ALUNO";
-  const API = isAluno
-    ? `/api/alunos/${userId}`
-    : `/api/empresa/${userId}`;
+  function descobrirTipoUsuario(): TipoUsuario {
+    const tipo =
+      localStorage.getItem("tipoUsuario") ||
+      localStorage.getItem("userType") ||
+      localStorage.getItem("role") ||
+      localStorage.getItem("accessType") ||
+      "";
+
+    return tipo.toUpperCase().includes("EMPRESA") ? "EMPRESA" : "ALUNO";
+  }
+
+  function endpointBase(tipo: TipoUsuario) {
+    return tipo === "EMPRESA" ? "/api/empresa" : "/api/alunos";
+  }
 
   useEffect(() => {
-    carregarPerfil();
-  }, []);
+    async function carregarPerfil() {
+      try {
+        if (!userId) {
+          alert("Usuário não encontrado no localStorage.");
+          return;
+        }
 
-  async function carregarPerfil() {
-    if (!userId || !userType) {
-      alert("Usuário não está logado");
-      window.location.href = "/Login";
-      return;
-    }
+        const tipo = descobrirTipoUsuario();
+        setTipoUsuario(tipo);
 
-    try {
-      const resposta = await fetch(API);
+        const resposta = await fetch(`${endpointBase(tipo)}/${userId}`);
 
-      if (!resposta.ok) {
-        alert("Erro ao carregar perfil");
-        return;
+        if (!resposta.ok) {
+          const erro = await resposta.json().catch(() => null);
+          alert(erro?.erro || "Erro ao carregar perfil.");
+          return;
+        }
+
+        const dados = await resposta.json();
+
+        setForm((prev) => ({
+          ...prev,
+          nome: dados.nome || dados.name || "",
+          email: dados.email || "",
+          cpf: dados.cpf || "",
+          rg: dados.rg || "",
+          telefone: dados.telefone || "",
+          cep: dados.cep || "",
+          rua: dados.rua || "",
+          numero: dados.numero || "",
+          bairro: dados.bairro || "",
+          cidade: dados.cidade || "",
+          estado: dados.estado || "",
+          curso: dados.curso || "",
+          instituicaoId: String(dados.instituicaoId || ""),
+          nomeFantasia: dados.nomeFantasia || "",
+          razaoSocial: dados.razaoSocial || "",
+          cnpj: dados.cnpj || "",
+        }));
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao conectar com o backend.");
+      } finally {
+        setLoading(false);
       }
-
-      const dados = await resposta.json();
-      setForm({
-        ...dados,
-        nome: dados.name || dados.nome,
-        senha: ""
-      });
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao conectar com o backend");
-    } finally {
-      setLoading(false);
     }
-  }
+
+    carregarPerfil();
+  }, [userId]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target;
 
     setForm((prev) => ({
       ...prev,
-      [name]: name === "instituicaoId" ? Number(value) : value,
+      [name]: value,
     }));
   }
 
-  async function buscarCep() {
-    const cepLimpo = form.cep.replace(/\D/g, "");
+  async function salvarPerfil(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-    if (cepLimpo.length !== 8) {
-      alert("CEP inválido");
+    if (!userId) {
+      alert("Usuário não encontrado.");
       return;
     }
 
     try {
-      const resposta = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
-      const dados = await resposta.json();
+      setSalvando(true);
 
-      if (dados.erro) {
-        alert("CEP não encontrado");
-        return;
-      }
+      const payload =
+        tipoUsuario === "EMPRESA"
+          ? {
+              nomeFantasia: form.nomeFantasia,
+              razaoSocial: form.razaoSocial,
+              cnpj: form.cnpj,
+              email: form.email,
+              senha: form.senha,
+              telefone: form.telefone,
+              cep: form.cep,
+              rua: form.rua,
+              numero: form.numero,
+              bairro: form.bairro,
+              cidade: form.cidade,
+              estado: form.estado,
+            }
+          : {
+              nome: form.nome,
+              email: form.email,
+              senha: form.senha,
+              cpf: form.cpf,
+              rg: form.rg,
+              telefone: form.telefone,
+              cep: form.cep,
+              rua: form.rua,
+              numero: form.numero,
+              bairro: form.bairro,
+              cidade: form.cidade,
+              estado: form.estado,
+              curso: form.curso,
+              instituicaoId: Number(form.instituicaoId),
+            };
 
-      setForm((prev) => ({
-        ...prev,
-        rua: dados.logradouro || "",
-        bairro: dados.bairro || "",
-        cidade: dados.localidade || "",
-        estado: dados.uf || "",
-      }));
-    } catch {
-      alert("Erro ao buscar CEP");
-    }
-  }
-
-  async function salvarAlteracoes(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    try {
-      const resposta = await fetch(API, {
+      const resposta = await fetch(`${endpointBase(tipoUsuario)}/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       if (!resposta.ok) {
-        alert("Erro ao atualizar perfil");
+        const erro = await resposta.json().catch(() => null);
+        alert(erro?.erro || "Erro ao salvar perfil.");
         return;
-      }
-
-      const dadosAtualizados = await resposta.json();
-
-      localStorage.setItem("userEmail", dadosAtualizados.email);
-
-      if (isAluno) {
-        localStorage.setItem("userName", dadosAtualizados.nome);
-      } else {
-        localStorage.setItem("userName", dadosAtualizados.nomeFantasia);
       }
 
       alert("Perfil atualizado com sucesso!");
       setEditando(false);
-      carregarPerfil();
     } catch (error) {
       console.error(error);
-      alert("Erro ao conectar com o backend");
+      alert("Erro ao conectar com o backend.");
+    } finally {
+      setSalvando(false);
     }
   }
 
   if (loading) {
-    return <p className="perfil-loading">Carregando perfil...</p>;
+    return (
+      <main className="profile-page">
+        <section className="profile-card">
+          <h1>Carregando perfil...</h1>
+        </section>
+      </main>
+    );
   }
 
   return (
-    <main className="perfil-page">
-      <section className="perfil-card">
-        <div className="perfil-header">
+    <main className="profile-page">
+      <section className="profile-card">
+        <div className="profile-header">
           <div>
+            <span className="badge">
+              {tipoUsuario === "EMPRESA" ? "Empresa Parceira" : "Aluno"}
+            </span>
+
             <h1>Meu Perfil</h1>
             <p>Visualize e edite suas informações cadastradas.</p>
           </div>
 
           <button
             type="button"
-            className="perfil-edit-btn"
-            onClick={() => setEditando(!editando)}
+            className="profile-edit-button"
+            onClick={() => setEditando((prev) => !prev)}
           >
             {editando ? "Cancelar" : "Editar Perfil"}
           </button>
         </div>
 
-        <form onSubmit={salvarAlteracoes}>
-          <div className="form-grid">
-            {isAluno ? (
+        <form onSubmit={salvarPerfil} className="profile-form">
+          <div className="modern-form-grid">
+            {tipoUsuario === "EMPRESA" ? (
               <>
-                <div className="input-group">
+                <div className="modern-input-group">
+                  <label>Nome Fantasia</label>
+                  <input
+                    name="nomeFantasia"
+                    value={form.nomeFantasia}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+
+                <div className="modern-input-group">
+                  <label>Razão Social</label>
+                  <input
+                    name="razaoSocial"
+                    value={form.razaoSocial}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+
+                <div className="modern-input-group">
+                  <label>CNPJ</label>
+                  <input
+                    name="cnpj"
+                    value={form.cnpj}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="modern-input-group">
                   <label>Nome</label>
-                  <input name="nome" value={form.nome || ""} onChange={handleChange} disabled={!editando} />
+                  <input
+                    name="nome"
+                    value={form.nome}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
                 </div>
 
-                <div className="input-group">
+                <div className="modern-input-group">
                   <label>CPF</label>
-                  <input name="cpf" value={form.cpf || ""} onChange={handleChange} disabled={!editando} />
+                  <input
+                    name="cpf"
+                    value={form.cpf}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
                 </div>
 
-                <div className="input-group">
+                <div className="modern-input-group">
                   <label>RG</label>
-                  <input name="rg" value={form.rg || ""} onChange={handleChange} disabled={!editando} />
+                  <input
+                    name="rg"
+                    value={form.rg}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
                 </div>
 
-                <div className="input-group">
+                <div className="modern-input-group">
                   <label>Curso</label>
-                  <input name="curso" value={form.curso || ""} onChange={handleChange} disabled={!editando} />
+                  <input
+                    name="curso"
+                    value={form.curso}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
                 </div>
 
-                <div className="input-group">
+                <div className="modern-input-group">
                   <label>Instituição</label>
                   <select
                     name="instituicaoId"
-                    value={form.instituicaoId || ""}
+                    value={form.instituicaoId}
                     onChange={handleChange}
                     disabled={!editando}
                   >
@@ -214,74 +318,104 @@ function Perfil() {
                   </select>
                 </div>
               </>
-            ) : (
-              <>
-                <div className="input-group">
-                  <label>Nome Fantasia</label>
-                  <input name="nomeFantasia" value={form.nomeFantasia || ""} onChange={handleChange} disabled={!editando} />
-                </div>
-
-                <div className="input-group">
-                  <label>Razão Social</label>
-                  <input name="razaoSocial" value={form.razaoSocial || ""} onChange={handleChange} disabled={!editando} />
-                </div>
-
-                <div className="input-group">
-                  <label>CNPJ</label>
-                  <input name="cnpj" value={form.cnpj || ""} onChange={handleChange} disabled={!editando} />
-                </div>
-              </>
             )}
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Email</label>
-              <input name="email" type="email" value={form.email} onChange={handleChange} disabled={!editando} />
+              <input
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Senha</label>
-              <input name="senha" type="password" value={form.senha} onChange={handleChange} disabled={!editando} />
+              <input
+                name="senha"
+                type="password"
+                value={form.senha}
+                onChange={handleChange}
+                disabled={!editando}
+                placeholder={editando ? "Digite uma nova senha" : ""}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Telefone</label>
-              <input name="telefone" value={form.telefone || ""} onChange={handleChange} disabled={!editando} />
+              <input
+                name="telefone"
+                value={form.telefone}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>CEP</label>
-              <input name="cep" value={form.cep} onChange={handleChange} onBlur={editando ? buscarCep : undefined} disabled={!editando} />
+              <input
+                name="cep"
+                value={form.cep}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Rua</label>
-              <input name="rua" value={form.rua} onChange={handleChange} disabled={!editando} />
+              <input
+                name="rua"
+                value={form.rua}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Número</label>
-              <input name="numero" value={form.numero} onChange={handleChange} disabled={!editando} />
+              <input
+                name="numero"
+                value={form.numero}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Bairro</label>
-              <input name="bairro" value={form.bairro} onChange={handleChange} disabled={!editando} />
+              <input
+                name="bairro"
+                value={form.bairro}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Cidade</label>
-              <input name="cidade" value={form.cidade} onChange={handleChange} disabled={!editando} />
+              <input
+                name="cidade"
+                value={form.cidade}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
 
-            <div className="input-group">
+            <div className="modern-input-group">
               <label>Estado</label>
-              <input name="estado" value={form.estado} onChange={handleChange} disabled={!editando} />
+              <input
+                name="estado"
+                value={form.estado}
+                onChange={handleChange}
+                disabled={!editando}
+              />
             </div>
           </div>
 
           {editando && (
-            <button className="perfil-save-btn" type="submit">
-              Salvar Alterações
+            <button className="profile-save-button" type="submit" disabled={salvando}>
+              {salvando ? "Salvando..." : "Salvar Alterações"}
             </button>
           )}
         </form>
@@ -289,5 +423,3 @@ function Perfil() {
     </main>
   );
 }
-
-export default Perfil;
