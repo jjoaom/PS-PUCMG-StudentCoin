@@ -1,6 +1,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import "./Perfil.css";
-type TipoUsuario = "ALUNO" | "EMPRESA";
+
+type TipoUsuario = "ALUNO" | "EMPRESA" | "PROFESSOR";
 
 type PerfilForm = {
   nome: string;
@@ -20,6 +21,8 @@ type PerfilForm = {
   nomeFantasia: string;
   razaoSocial: string;
   cnpj: string;
+  departamento: string;
+  saldoMoedas: string;
 };
 
 export default function Perfil() {
@@ -46,6 +49,8 @@ export default function Perfil() {
     nomeFantasia: "",
     razaoSocial: "",
     cnpj: "",
+    departamento: "",
+    saldoMoedas: "",
   });
 
   const userId = localStorage.getItem("userId");
@@ -58,11 +63,29 @@ export default function Perfil() {
       localStorage.getItem("accessType") ||
       "";
 
-    return tipo.toUpperCase().includes("EMPRESA") ? "EMPRESA" : "ALUNO";
+    const tipoUpper = tipo.toUpperCase();
+
+    if (tipoUpper.includes("PROFESSOR")) {
+      return "PROFESSOR";
+    }
+
+    if (tipoUpper.includes("EMPRESA")) {
+      return "EMPRESA";
+    }
+
+    return "ALUNO";
   }
 
   function endpointBase(tipo: TipoUsuario) {
-    return tipo === "EMPRESA" ? "/api/empresa" : "/api/alunos";
+    if (tipo === "EMPRESA") {
+      return "/api/empresa";
+    }
+
+    if (tipo === "PROFESSOR") {
+      return "/api/professor";
+    }
+
+    return "/api/alunos";
   }
 
   useEffect(() => {
@@ -104,6 +127,8 @@ export default function Perfil() {
           nomeFantasia: dados.nomeFantasia || "",
           razaoSocial: dados.razaoSocial || "",
           cnpj: dados.cnpj || "",
+          departamento: dados.departamento || "",
+          saldoMoedas: String(dados.saldoMoedas ?? ""),
         }));
       } catch (error) {
         console.error(error);
@@ -143,7 +168,7 @@ export default function Perfil() {
               razaoSocial: form.razaoSocial,
               cnpj: form.cnpj,
               email: form.email,
-              senha: form.senha,
+              senha: form.senha || undefined,
               telefone: form.telefone,
               cep: form.cep,
               rua: form.rua,
@@ -152,10 +177,18 @@ export default function Perfil() {
               cidade: form.cidade,
               estado: form.estado,
             }
+          : tipoUsuario === "PROFESSOR"
+          ? {
+              name: form.nome,
+              email: form.email,
+              password: form.senha || undefined,
+              cpf: form.cpf,
+              departamento: form.departamento,
+            }
           : {
               nome: form.nome,
               email: form.email,
-              senha: form.senha,
+              senha: form.senha || undefined,
               cpf: form.cpf,
               rg: form.rg,
               telefone: form.telefone,
@@ -183,6 +216,11 @@ export default function Perfil() {
         return;
       }
 
+      localStorage.setItem("userName", form.nome);
+      localStorage.setItem("userEmail", form.email);
+      localStorage.setItem("userType", tipoUsuario);
+      localStorage.setItem("role", tipoUsuario);
+
       alert("Perfil atualizado com sucesso!");
       setEditando(false);
     } catch (error) {
@@ -209,7 +247,11 @@ export default function Perfil() {
         <div className="profile-header">
           <div>
             <span className="badge">
-              {tipoUsuario === "EMPRESA" ? "Empresa Parceira" : "Aluno"}
+              {tipoUsuario === "EMPRESA"
+                ? "Empresa Parceira"
+                : tipoUsuario === "PROFESSOR"
+                ? "Professor"
+                : "Aluno"}
             </span>
 
             <h1>Meu Perfil</h1>
@@ -256,6 +298,47 @@ export default function Perfil() {
                     value={form.cnpj}
                     onChange={handleChange}
                     disabled={!editando}
+                  />
+                </div>
+              </>
+            ) : tipoUsuario === "PROFESSOR" ? (
+              <>
+                <div className="modern-input-group">
+                  <label>Nome</label>
+                  <input
+                    name="nome"
+                    value={form.nome}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+
+                <div className="modern-input-group">
+                  <label>CPF</label>
+                  <input
+                    name="cpf"
+                    value={form.cpf}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+
+                <div className="modern-input-group">
+                  <label>Departamento</label>
+                  <input
+                    name="departamento"
+                    value={form.departamento}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+
+                <div className="modern-input-group">
+                  <label>Saldo de moedas</label>
+                  <input
+                    name="saldoMoedas"
+                    value={form.saldoMoedas}
+                    disabled
                   />
                 </div>
               </>
@@ -342,79 +425,87 @@ export default function Perfil() {
               />
             </div>
 
-            <div className="modern-input-group">
-              <label>Telefone</label>
-              <input
-                name="telefone"
-                value={form.telefone}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+            {tipoUsuario !== "PROFESSOR" && (
+              <>
+                <div className="modern-input-group">
+                  <label>Telefone</label>
+                  <input
+                    name="telefone"
+                    value={form.telefone}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
 
-            <div className="modern-input-group">
-              <label>CEP</label>
-              <input
-                name="cep"
-                value={form.cep}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+                <div className="modern-input-group">
+                  <label>CEP</label>
+                  <input
+                    name="cep"
+                    value={form.cep}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
 
-            <div className="modern-input-group">
-              <label>Rua</label>
-              <input
-                name="rua"
-                value={form.rua}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+                <div className="modern-input-group">
+                  <label>Rua</label>
+                  <input
+                    name="rua"
+                    value={form.rua}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
 
-            <div className="modern-input-group">
-              <label>Número</label>
-              <input
-                name="numero"
-                value={form.numero}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+                <div className="modern-input-group">
+                  <label>Número</label>
+                  <input
+                    name="numero"
+                    value={form.numero}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
 
-            <div className="modern-input-group">
-              <label>Bairro</label>
-              <input
-                name="bairro"
-                value={form.bairro}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+                <div className="modern-input-group">
+                  <label>Bairro</label>
+                  <input
+                    name="bairro"
+                    value={form.bairro}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
 
-            <div className="modern-input-group">
-              <label>Cidade</label>
-              <input
-                name="cidade"
-                value={form.cidade}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+                <div className="modern-input-group">
+                  <label>Cidade</label>
+                  <input
+                    name="cidade"
+                    value={form.cidade}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
 
-            <div className="modern-input-group">
-              <label>Estado</label>
-              <input
-                name="estado"
-                value={form.estado}
-                onChange={handleChange}
-                disabled={!editando}
-              />
-            </div>
+                <div className="modern-input-group">
+                  <label>Estado</label>
+                  <input
+                    name="estado"
+                    value={form.estado}
+                    onChange={handleChange}
+                    disabled={!editando}
+                  />
+                </div>
+              </>
+            )}
           </div>
 
           {editando && (
-            <button className="profile-save-button" type="submit" disabled={salvando}>
+            <button
+              className="profile-save-button"
+              type="submit"
+              disabled={salvando}
+            >
               {salvando ? "Salvando..." : "Salvar Alterações"}
             </button>
           )}

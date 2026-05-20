@@ -12,6 +12,16 @@ type LoginResponse = {
   };
 };
 
+type ProfessorResponse = {
+  id: number;
+  name?: string;
+  nome?: string;
+  email: string;
+  cpf?: string;
+  departamento?: string;
+  saldoMoedas?: number;
+};
+
 export function LoginForm() {
   const navigate = useNavigate();
 
@@ -37,7 +47,77 @@ export function LoginForm() {
       return "EMPRESA";
     }
 
+    const professor = await fetch(`/api/professor/${userId}`, { headers });
+
+    if (professor.ok) {
+      return "PROFESSOR";
+    }
+
     return "USUARIO";
+  }
+
+  async function tentarLoginGeral() {
+    const resposta = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password: senha,
+      }),
+    });
+
+    if (!resposta.ok) {
+      return null;
+    }
+
+    const data: LoginResponse = await resposta.json();
+
+    const token = data.accessToken || data.token;
+    const user = data.user;
+
+    if (!token || !user) {
+      return null;
+    }
+
+    const userType = await descobrirTipoUsuario(user.id, token);
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("userId", String(user.id));
+    localStorage.setItem("userName", user.name || user.nome || "");
+    localStorage.setItem("userEmail", user.email || "");
+    localStorage.setItem("userType", userType);
+
+    return userType;
+  }
+
+  async function tentarLoginProfessor() {
+    const resposta = await fetch("/api/professor/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password: senha,
+      }),
+    });
+
+    if (!resposta.ok) {
+      return null;
+    }
+
+    const professor: ProfessorResponse = await resposta.json();
+
+    localStorage.setItem("userId", String(professor.id));
+    localStorage.setItem("userName", professor.name || professor.nome || "");
+    localStorage.setItem("userEmail", professor.email || "");
+    localStorage.setItem("userType", "PROFESSOR");
+
+    localStorage.removeItem("token");
+
+    return "PROFESSOR";
   }
 
   async function fazerLogin(e: FormEvent<HTMLFormElement>) {
@@ -47,44 +127,22 @@ export function LoginForm() {
     setLoading(true);
 
     try {
-      const resposta = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password: senha,
-        }),
-      });
+      let userType = await tentarLoginGeral();
 
-      if (!resposta.ok) {
+      if (!userType) {
+        userType = await tentarLoginProfessor();
+      }
+
+      if (!userType) {
         setErro("Email ou senha inválidos.");
         return;
       }
 
-      const data: LoginResponse = await resposta.json();
-
-      const token = data.accessToken || data.token;
-      const user = data.user;
-
-      if (!token || !user) {
-        setErro("Resposta de login inválida.");
-        return;
-      }
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", String(user.id));
-      localStorage.setItem("userName", user.name || user.nome || "");
-      localStorage.setItem("userEmail", user.email || "");
-
-      const userType = await descobrirTipoUsuario(user.id, token);
-
-      localStorage.setItem("userType", userType);
-
       if (userType === "ALUNO") {
         navigate("/");
       } else if (userType === "EMPRESA") {
+        navigate("/");
+      } else if (userType === "PROFESSOR") {
         navigate("/");
       } else {
         navigate("/");

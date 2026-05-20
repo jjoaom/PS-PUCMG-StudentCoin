@@ -85,34 +85,57 @@ export default function CadastroAluno() {
   }
 
   async function cadastrarAluno(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  e.preventDefault();
+
+  try {
+    setLoadingCadastro(true);
+
+    const body = {
+      ...form,
+      instituicaoId: Number(form.instituicaoId),
+    };
+
+    console.log("Enviando aluno:", body);
+
+    const resposta = await fetch("/api/alunos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    const texto = await resposta.text();
+
+    let dados: any = null;
 
     try {
-      setLoadingCadastro(true);
-
-      const resposta = await fetch("/api/alunos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...form,
-          instituicaoId: Number(form.instituicaoId),
-        }),
-      });
-
-      if (!resposta.ok) {
-        alert("Erro ao cadastrar aluno");
-        return;
-      }
-
-      alert("Aluno cadastrado com sucesso!");
+      dados = texto ? JSON.parse(texto) : null;
     } catch {
-      alert("Erro ao conectar com o backend");
-    } finally {
-      setLoadingCadastro(false);
+      dados = texto;
     }
+
+    console.log("Status:", resposta.status);
+    console.log("Resposta do backend:", dados);
+
+    if (!resposta.ok) {
+      const mensagem =
+        dados?.erro ||
+        dados?.message ||
+        "Erro ao cadastrar aluno";
+
+      alert(mensagem);
+      return;
+    }
+
+    alert("Aluno cadastrado com sucesso!");
+  } catch (erro) {
+    console.error("Erro ao conectar com o backend:", erro);
+    alert("Erro ao conectar com o backend");
+  } finally {
+    setLoadingCadastro(false);
   }
+}
 
   return (
     <main className="student-register-page">
