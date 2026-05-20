@@ -1,0 +1,14 @@
+.navbar nav {
+  justify-self: center;
+
+  display: flex;
+  align-items: center;
+}
+
+.navbar nav.nav-publico {
+  gap: 120px;
+}
+
+.navbar nav.nav-logado {
+  gap: 320px;
+}

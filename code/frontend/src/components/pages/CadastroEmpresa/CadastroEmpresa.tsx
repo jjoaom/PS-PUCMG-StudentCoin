@@ -38,17 +38,68 @@ export default function CadastroEmpresa() {
 
   const API = "/api/empresa";
 
+  function limparMascara(value: string) {
+    return value.replace(/\D/g, "");
+  }
+
+  function aplicarMascaraCnpj(value: string) {
+    return value
+      .replace(/\D/g, "")
+      .slice(0, 14)
+      .replace(/^(\d{2})(\d)/, "$1.$2")
+      .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1/$2")
+      .replace(/(\d{4})(\d{1,2})$/, "$1-$2");
+  }
+
+  function aplicarMascaraTelefone(value: string) {
+    const somenteNumeros = value.replace(/\D/g, "").slice(0, 11);
+
+    if (somenteNumeros.length <= 10) {
+      return somenteNumeros
+        .replace(/^(\d{2})(\d)/, "($1) $2")
+        .replace(/(\d{4})(\d{1,4})$/, "$1-$2");
+    }
+
+    return somenteNumeros
+      .replace(/^(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+  }
+
+  function aplicarMascaraCep(value: string) {
+    return value
+      .replace(/\D/g, "")
+      .slice(0, 8)
+      .replace(/(\d{5})(\d{1,3})$/, "$1-$2");
+  }
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
+    let valorFormatado = value;
+
+    if (name === "cnpj") {
+      valorFormatado = aplicarMascaraCnpj(value);
+    }
+
+    if (name === "telefone") {
+      valorFormatado = aplicarMascaraTelefone(value);
+    }
+
+    if (name === "cep") {
+      valorFormatado = aplicarMascaraCep(value);
+    }
+
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: valorFormatado,
     }));
   }
 
   async function buscarCep() {
-    const cepLimpo = form.cep.replace(/\D/g, "");
+    const cepLimpo = limparMascara(form.cep);
+
+    if (!cepLimpo) return;
 
     if (cepLimpo.length !== 8) {
       alert("CEP inválido");
@@ -89,16 +140,24 @@ export default function CadastroEmpresa() {
     try {
       setLoadingCadastro(true);
 
+      const body = {
+        ...form,
+        cnpj: limparMascara(form.cnpj),
+        telefone: limparMascara(form.telefone),
+        cep: limparMascara(form.cep),
+      };
+
       const resposta = await fetch(API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(body),
       });
 
       if (!resposta.ok) {
-        alert("Erro ao cadastrar empresa");
+        const erro = await resposta.json().catch(() => null);
+        alert(erro?.erro || erro?.message || "Erro ao cadastrar empresa");
         return;
       }
 
@@ -197,6 +256,7 @@ export default function CadastroEmpresa() {
                 value={form.cnpj}
                 onChange={handleChange}
                 placeholder="00.000.000/0000-00"
+                maxLength={18}
                 required
               />
             </div>
@@ -235,6 +295,7 @@ export default function CadastroEmpresa() {
                 value={form.telefone}
                 onChange={handleChange}
                 placeholder="(31) 99999-9999"
+                maxLength={15}
                 required
               />
             </div>
@@ -255,13 +316,12 @@ export default function CadastroEmpresa() {
                 onChange={handleChange}
                 onBlur={buscarCep}
                 placeholder="00000-000"
+                maxLength={9}
                 required
               />
 
               {loadingCep && (
-                <span className="cep-loading">
-                  Buscando CEP...
-                </span>
+                <span className="cep-loading">Buscando CEP...</span>
               )}
             </div>
 
@@ -321,6 +381,7 @@ export default function CadastroEmpresa() {
                 value={form.estado}
                 onChange={handleChange}
                 placeholder="UF"
+                maxLength={2}
                 required
               />
             </div>
@@ -331,18 +392,14 @@ export default function CadastroEmpresa() {
             type="submit"
             disabled={loadingCadastro}
           >
-            {loadingCadastro
-              ? "Cadastrando..."
-              : "Cadastrar Empresa"}
+            {loadingCadastro ? "Cadastrando..." : "Cadastrar Empresa"}
           </button>
 
           <p className="register-login-link">
-            Já possui conta?{" "}
-            <Link to="/Login">Entrar agora</Link>
+            Já possui conta? <Link to="/Login">Entrar agora</Link>
           </p>
         </form>
       </section>
     </main>
   );
 }
-

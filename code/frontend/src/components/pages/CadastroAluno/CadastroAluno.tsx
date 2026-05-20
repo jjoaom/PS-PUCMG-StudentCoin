@@ -40,17 +40,77 @@ export default function CadastroAluno() {
   const [loadingCep, setLoadingCep] = useState(false);
   const [loadingCadastro, setLoadingCadastro] = useState(false);
 
+  function limparMascara(value: string) {
+    return value.replace(/\D/g, "");
+  }
+
+  function aplicarMascaraCpf(value: string) {
+    return value
+      .replace(/\D/g, "")
+      .slice(0, 11)
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  }
+
+  function aplicarMascaraRg(value: string) {
+    return value
+      .replace(/\D/g, "")
+      .slice(0, 9)
+      .replace(/(\d{2})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+  }
+
+  function aplicarMascaraTelefone(value: string) {
+    const somenteNumeros = value.replace(/\D/g, "").slice(0, 11);
+
+    if (somenteNumeros.length <= 10) {
+      return somenteNumeros
+        .replace(/^(\d{2})(\d)/, "($1) $2")
+        .replace(/(\d{4})(\d{1,4})$/, "$1-$2");
+    }
+
+    return somenteNumeros
+      .replace(/^(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+  }
+
+  function aplicarMascaraCep(value: string) {
+    return value
+      .replace(/\D/g, "")
+      .slice(0, 8)
+      .replace(/(\d{5})(\d{1,3})$/, "$1-$2");
+  }
+
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target;
 
+    let valorFormatado = value;
+
+    if (name === "cpf") {
+      valorFormatado = aplicarMascaraCpf(value);
+    }
+
+    if (name === "rg") {
+      valorFormatado = aplicarMascaraRg(value);
+    }
+
+    if (name === "telefone") {
+      valorFormatado = aplicarMascaraTelefone(value);
+    }
+
+    if (name === "cep") {
+      valorFormatado = aplicarMascaraCep(value);
+    }
+
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: valorFormatado,
     }));
   }
 
   async function buscarCep() {
-    const cepLimpo = form.cep.replace(/\D/g, "");
+    const cepLimpo = limparMascara(form.cep);
 
     if (!cepLimpo) return;
 
@@ -85,57 +145,61 @@ export default function CadastroAluno() {
   }
 
   async function cadastrarAluno(e: FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-
-  try {
-    setLoadingCadastro(true);
-
-    const body = {
-      ...form,
-      instituicaoId: Number(form.instituicaoId),
-    };
-
-    console.log("Enviando aluno:", body);
-
-    const resposta = await fetch("/api/alunos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    const texto = await resposta.text();
-
-    let dados: any = null;
+    e.preventDefault();
 
     try {
-      dados = texto ? JSON.parse(texto) : null;
-    } catch {
-      dados = texto;
+      setLoadingCadastro(true);
+
+      const body = {
+        ...form,
+        cpf: limparMascara(form.cpf),
+        rg: limparMascara(form.rg),
+        telefone: limparMascara(form.telefone),
+        cep: limparMascara(form.cep),
+        instituicaoId: Number(form.instituicaoId),
+      };
+
+      console.log("Enviando aluno:", body);
+
+      const resposta = await fetch("/api/alunos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const texto = await resposta.text();
+
+      let dados: any = null;
+
+      try {
+        dados = texto ? JSON.parse(texto) : null;
+      } catch {
+        dados = texto;
+      }
+
+      console.log("Status:", resposta.status);
+      console.log("Resposta do backend:", dados);
+
+      if (!resposta.ok) {
+        const mensagem =
+          dados?.erro ||
+          dados?.message ||
+          "Erro ao cadastrar aluno";
+
+        alert(mensagem);
+        return;
+      }
+
+      alert("Aluno cadastrado com sucesso!");
+    } catch (erro) {
+      console.error("Erro ao conectar com o backend:", erro);
+      alert("Erro ao conectar com o backend");
+    } finally {
+      setLoadingCadastro(false);
     }
-
-    console.log("Status:", resposta.status);
-    console.log("Resposta do backend:", dados);
-
-    if (!resposta.ok) {
-      const mensagem =
-        dados?.erro ||
-        dados?.message ||
-        "Erro ao cadastrar aluno";
-
-      alert(mensagem);
-      return;
-    }
-
-    alert("Aluno cadastrado com sucesso!");
-  } catch (erro) {
-    console.error("Erro ao conectar com o backend:", erro);
-    alert("Erro ao conectar com o backend");
-  } finally {
-    setLoadingCadastro(false);
   }
-}
 
   return (
     <main className="student-register-page">
@@ -219,6 +283,7 @@ export default function CadastroAluno() {
                 value={form.cpf}
                 onChange={handleChange}
                 placeholder="000.000.000-00"
+                maxLength={14}
                 required
               />
             </div>
@@ -229,7 +294,8 @@ export default function CadastroAluno() {
                 name="rg"
                 value={form.rg}
                 onChange={handleChange}
-                placeholder="Digite seu RG"
+                placeholder="00.000.000-0"
+                maxLength={12}
                 required
               />
             </div>
@@ -241,6 +307,7 @@ export default function CadastroAluno() {
                 value={form.telefone}
                 onChange={handleChange}
                 placeholder="(31) 99999-9999"
+                maxLength={15}
               />
             </div>
 
@@ -287,9 +354,12 @@ export default function CadastroAluno() {
                 onChange={handleChange}
                 onBlur={buscarCep}
                 placeholder="00000-000"
+                maxLength={9}
                 required
               />
-              {loadingCep && <span className="cep-loading">Buscando CEP...</span>}
+              {loadingCep && (
+                <span className="cep-loading">Buscando CEP...</span>
+              )}
             </div>
 
             <div className="modern-input-group">
@@ -343,12 +413,17 @@ export default function CadastroAluno() {
                 value={form.estado}
                 onChange={handleChange}
                 placeholder="UF"
+                maxLength={2}
                 required
               />
             </div>
           </div>
 
-          <button className="student-register-button" type="submit" disabled={loadingCadastro}>
+          <button
+            className="student-register-button"
+            type="submit"
+            disabled={loadingCadastro}
+          >
             {loadingCadastro ? "Cadastrando..." : "Cadastrar Aluno"}
           </button>
 
@@ -359,5 +434,4 @@ export default function CadastroAluno() {
       </section>
     </main>
   );
-}
-
+}   
