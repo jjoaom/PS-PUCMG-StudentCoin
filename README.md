@@ -30,7 +30,7 @@ Trabalho Laboratório 03 Disciplina Projeto de Software
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jjoaom_PS-PUCMG-StudentCoin&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jjoaom_PS-PUCMG-StudentCoin)
 
 
-**O escopo da atividade por ser acessado [por aqui](./docs/LABORATÓRIO%2003%20-%20Sistema%20de%20Moeda%20Estudantil%20(Release%201).pdf).**
+**O escopo da atividade por ser acessado [por aqui](./docs/LABORATÓRIO%2005%20-%20Sistema%20de%20Moeda%20Estudantil%20(Release%203).pdf).**
 
 ## Integrantes
 
