@@ -19,7 +19,7 @@ type FormAluno = {
   instituicaoId: string;
 };
 
-function CadastroAluno() {
+export default function CadastroAluno() {
   const [form, setForm] = useState<FormAluno>({
     nome: "",
     email: "",
@@ -338,4 +338,3 @@ function CadastroAluno() {
   );
 }
 
-export default CadastroAluno;
