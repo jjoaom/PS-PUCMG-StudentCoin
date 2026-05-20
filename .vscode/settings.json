@@ -1,5 +1,9 @@
 {
     "snyk.advanced.autoSelectOrganization": true,
     "java.configuration.updateBuildConfiguration": "interactive",
+<<<<<<< HEAD
+    "codeQL.githubDatabase.download": "never"
+=======
     "java.compile.nullAnalysis.mode": "automatic"
+>>>>>>> ed0fa69d815e513a40fd1bb69bb96766e938ced9
 }
