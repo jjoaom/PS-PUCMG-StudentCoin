@@ -3,11 +3,15 @@ package pucmg.ps.backend.Professor
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import pucmg.ps.backend.Aluno.AlunoRepository
+import pucmg.ps.backend.Moeda.MovimentacaoMoedaEntity
+import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
+import pucmg.ps.backend.shared.enums.TipoMovimentacao
 
 @Service
 class ProfessorService(
     private val professorRepository: ProfessorRepository,
-    private val alunoRepository: AlunoRepository
+    private val alunoRepository: AlunoRepository,
+    private val movimentacaoRepository: MovimentacaoMoedaRepository
 ) {
 
     fun cadastrar(dto: ProfessorCadastroDTO): Professor {
@@ -25,8 +29,8 @@ class ProfessorService(
             password = dto.password,
             cpf = dto.cpf,
             departamento = dto.departamento,
-            saldoMoedas = dto.saldoMoedas
         )
+        professor.carteira.saldo = 10000
 
         return professorRepository.save(professor)
     }
@@ -86,6 +90,7 @@ class ProfessorService(
 
     @Transactional
     fun enviarMoedas(professorId: Long, dto: EnviarMoedasDTO): Professor {
+
         if (dto.quantidade <= 0) {
             throw RuntimeException("A quantidade de moedas deve ser maior que zero.")
         }
@@ -96,12 +101,29 @@ class ProfessorService(
         val aluno = alunoRepository.findById(dto.alunoId)
             .orElseThrow { RuntimeException("Aluno não encontrado.") }
 
-        if (professor.saldoMoedas < dto.quantidade) {
+        if (professor.carteira.saldo < dto.quantidade) {
             throw RuntimeException("Saldo insuficiente para enviar moedas.")
         }
 
-        professor.saldoMoedas -= dto.quantidade
-        aluno.saldoMoedas += dto.quantidade
+        professor.carteira.saldo -= dto.quantidade
+        aluno.carteira.saldo += dto.quantidade
+
+        val debito = MovimentacaoMoedaEntity(
+            valor = dto.quantidade,
+            descricao = dto.descricao ?: "Envio de moedas",
+            tipo = TipoMovimentacao.DEBITO,
+            carteira = professor.carteira
+        )
+
+        val credito = MovimentacaoMoedaEntity(
+            valor = dto.quantidade,
+            descricao = dto.descricao ?: "Recebimento de moedas",
+            tipo = TipoMovimentacao.CREDITO,
+            carteira = aluno.carteira
+        )
+
+        movimentacaoRepository.save(debito)
+        movimentacaoRepository.save(credito)
 
         alunoRepository.save(aluno)
 

@@ -186,6 +186,16 @@ img {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
+
+.navbar,
+.hero-content,
+.auth-container,
+.profile-card,
+.company-register-shell,
+.student-register-shell {
+  width: min(100%, 100%);
+}
+
 .app {
   min-height: 100vh;
 }
@@ -470,6 +480,181 @@ img {
 
 .login-register a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+  .navbar {
+    width: calc(100% - 40px);
+    padding: 16px 20px;
+  }
+
+  .hero,
+  .auth-page,
+  .profile-page,
+  .company-register-page,
+  .student-register-page {
+    padding: 32px 20px;
+  }
+
+  .hero-content {
+    padding: 44px 36px;
+  }
+
+  .auth-container,
+  .profile-card,
+  .company-register-shell,
+  .student-register-shell {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 980px) {
+  .navbar {
+    width: calc(100% - 24px);
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navbar nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .nav-actions {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 28px 20px 40px;
+  }
+
+  .hero-content {
+    padding: 36px 28px;
+  }
+
+  .hero-actions {
+    flex-wrap: wrap;
+  }
+
+  .auth-container {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-right {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .auth-left,
+  .auth-right {
+    padding: 42px 32px;
+  }
+
+  .modern-form-grid,
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modern-input-group.full,
+  .profile-input-group.full {
+    grid-column: auto;
+  }
+
+  .profile-header {
+    flex-direction: column;
+  }
+
+  .profile-edit-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    width: calc(100% - 16px);
+    margin-top: 12px;
+    padding: 14px 16px;
+    border-radius: 20px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .hero-content,
+  .profile-card,
+  .company-register-form,
+  .student-register-form,
+  .auth-left,
+  .auth-right {
+    padding: 28px 20px;
+  }
+
+  .hero-content h1,
+  .auth-left h1,
+  .profile-header h1,
+  .company-register-intro h1,
+  .student-register-intro h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .hero-content p,
+  .auth-left p,
+  .company-register-intro p,
+  .student-register-intro p,
+  .profile-header p {
+    font-size: 1rem;
+  }
+
+  .hero-actions,
+  .nav-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions > *,
+  .nav-actions > *,
+  .profile-save-button,
+  .login-submit,
+  .student-register-button {
+    width: 100%;
+  }
+
+  .register-login-link,
+  .login-register {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-container,
+  .hero,
+  .auth-page,
+  .profile-page,
+  .company-register-page,
+  .student-register-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero-content,
+  .profile-card,
+  .auth-left,
+  .auth-right,
+  .company-register-form,
+  .student-register-form {
+    padding: 22px 16px;
+  }
+
+  .badge {
+    font-size: 0.78rem;
+  }
 }
 .form-section-title h2 {
   font-size: 1.5rem;

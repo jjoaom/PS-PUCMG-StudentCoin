@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { IMaskInput } from "react-imask";
 import "./CadastroAluno.css";
 
 type FormAluno = {
@@ -44,77 +45,35 @@ export default function CadastroAluno() {
     return value.replace(/\D/g, "");
   }
 
-  function aplicarMascaraCpf(value: string) {
-    return value
-      .replace(/\D/g, "")
-      .slice(0, 11)
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-  }
-
-  function aplicarMascaraRg(value: string) {
-    return value
-      .replace(/\D/g, "")
-      .slice(0, 9)
-      .replace(/(\d{2})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d)/, "$1.$2")
-  }
-
-  function aplicarMascaraTelefone(value: string) {
-    const somenteNumeros = value.replace(/\D/g, "").slice(0, 11);
-
-    if (somenteNumeros.length <= 10) {
-      return somenteNumeros
-        .replace(/^(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{4})(\d{1,4})$/, "$1-$2");
-    }
-
-    return somenteNumeros
-      .replace(/^(\d{2})(\d)/, "($1) $2")
-      .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
-  }
-
-  function aplicarMascaraCep(value: string) {
-    return value
-      .replace(/\D/g, "")
-      .slice(0, 8)
-      .replace(/(\d{5})(\d{1,3})$/, "$1-$2");
-  }
-
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target;
 
-    let valorFormatado = value;
-
-    if (name === "cpf") {
-      valorFormatado = aplicarMascaraCpf(value);
-    }
-
-    if (name === "rg") {
-      valorFormatado = aplicarMascaraRg(value);
-    }
-
-    if (name === "telefone") {
-      valorFormatado = aplicarMascaraTelefone(value);
-    }
-
-    if (name === "cep") {
-      valorFormatado = aplicarMascaraCep(value);
-    }
-
     setForm((prev) => ({
       ...prev,
-      [name]: valorFormatado,
+      [name]: value,
     }));
+  }
+
+  function atualizarCampo(campo: keyof FormAluno, valor: string) {
+    setForm((prev) => ({
+      ...prev,
+      [campo]: valor,
+    }));
+  }
+
+  function handleTelefoneDispatch(appended: string, dynamicMasked: any) {
+    const numeros = `${dynamicMasked.unmaskedValue}${appended}`.replace(
+      /\D/g,
+      ""
+    );
+
+    return dynamicMasked.compiledMasks[numeros.length > 10 ? 1 : 0];
   }
 
   async function buscarCep() {
     const cepLimpo = limparMascara(form.cep);
 
-    if (!cepLimpo) return;
-
-    if (cepLimpo.length !== 8) {
+    if (!cepLimpo || cepLimpo.length !== 8) {
       alert("CEP inválido");
       return;
     }
@@ -122,7 +81,10 @@ export default function CadastroAluno() {
     try {
       setLoadingCep(true);
 
-      const resposta = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+      const resposta = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
+      );
+
       const dados = await resposta.json();
 
       if (dados.erro) {
@@ -137,8 +99,6 @@ export default function CadastroAluno() {
         cidade: dados.localidade || "",
         estado: dados.uf || "",
       }));
-    } catch {
-      alert("Erro ao buscar CEP");
     } finally {
       setLoadingCep(false);
     }
@@ -159,8 +119,6 @@ export default function CadastroAluno() {
         instituicaoId: Number(form.instituicaoId),
       };
 
-      console.log("Enviando aluno:", body);
-
       const resposta = await fetch("/api/alunos", {
         method: "POST",
         headers: {
@@ -169,33 +127,31 @@ export default function CadastroAluno() {
         body: JSON.stringify(body),
       });
 
-      const texto = await resposta.text();
-
-      let dados: any = null;
-
-      try {
-        dados = texto ? JSON.parse(texto) : null;
-      } catch {
-        dados = texto;
-      }
-
-      console.log("Status:", resposta.status);
-      console.log("Resposta do backend:", dados);
+      const dados = await resposta.json().catch(() => null);
 
       if (!resposta.ok) {
-        const mensagem =
-          dados?.erro ||
-          dados?.message ||
-          "Erro ao cadastrar aluno";
-
-        alert(mensagem);
+        alert(dados?.erro || dados?.message || "Erro ao cadastrar aluno");
         return;
       }
 
       alert("Aluno cadastrado com sucesso!");
-    } catch (erro) {
-      console.error("Erro ao conectar com o backend:", erro);
-      alert("Erro ao conectar com o backend");
+
+      setForm({
+        nome: "",
+        email: "",
+        senha: "",
+        cpf: "",
+        rg: "",
+        telefone: "",
+        cep: "",
+        rua: "",
+        numero: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        curso: "",
+        instituicaoId: "",
+      });
     } finally {
       setLoadingCadastro(false);
     }
@@ -243,6 +199,7 @@ export default function CadastroAluno() {
           <div className="modern-form-grid">
             <div className="modern-input-group full">
               <label>Nome completo</label>
+
               <input
                 name="nome"
                 value={form.nome}
@@ -254,6 +211,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Email</label>
+
               <input
                 name="email"
                 type="email"
@@ -266,6 +224,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Senha</label>
+
               <input
                 name="senha"
                 type="password"
@@ -278,41 +237,49 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>CPF</label>
-              <input
+
+              <IMaskInput
                 name="cpf"
                 value={form.cpf}
-                onChange={handleChange}
+                onAccept={(value: string) => atualizarCampo("cpf", value)}
+                mask="000.000.000-00"
                 placeholder="000.000.000-00"
-                maxLength={14}
                 required
               />
             </div>
 
             <div className="modern-input-group">
               <label>RG</label>
-              <input
+
+              <IMaskInput
                 name="rg"
                 value={form.rg}
-                onChange={handleChange}
+                onAccept={(value: string) => atualizarCampo("rg", value)}
+                mask="00.000.000-0"
                 placeholder="00.000.000-0"
-                maxLength={12}
                 required
               />
             </div>
 
             <div className="modern-input-group">
               <label>Telefone</label>
-              <input
+
+              <IMaskInput
                 name="telefone"
                 value={form.telefone}
-                onChange={handleChange}
+                onAccept={(value: string) => atualizarCampo("telefone", value)}
+                mask={[
+                  { mask: "(00) 0000-0000" },
+                  { mask: "(00) 00000-0000" },
+                ]}
+                dispatch={handleTelefoneDispatch}
                 placeholder="(31) 99999-9999"
-                maxLength={15}
               />
             </div>
 
             <div className="modern-input-group">
               <label>Curso</label>
+
               <input
                 name="curso"
                 value={form.curso}
@@ -324,6 +291,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group full">
               <label>Instituição</label>
+
               <select
                 name="instituicaoId"
                 value={form.instituicaoId}
@@ -348,15 +316,17 @@ export default function CadastroAluno() {
           <div className="modern-form-grid">
             <div className="modern-input-group">
               <label>CEP</label>
-              <input
+
+              <IMaskInput
                 name="cep"
                 value={form.cep}
-                onChange={handleChange}
+                onAccept={(value: string) => atualizarCampo("cep", value)}
                 onBlur={buscarCep}
+                mask="00000-000"
                 placeholder="00000-000"
-                maxLength={9}
                 required
               />
+
               {loadingCep && (
                 <span className="cep-loading">Buscando CEP...</span>
               )}
@@ -364,6 +334,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Rua</label>
+
               <input
                 name="rua"
                 value={form.rua}
@@ -375,6 +346,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Número</label>
+
               <input
                 name="numero"
                 value={form.numero}
@@ -386,6 +358,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Bairro</label>
+
               <input
                 name="bairro"
                 value={form.bairro}
@@ -397,6 +370,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Cidade</label>
+
               <input
                 name="cidade"
                 value={form.cidade}
@@ -408,6 +382,7 @@ export default function CadastroAluno() {
 
             <div className="modern-input-group">
               <label>Estado</label>
+
               <input
                 name="estado"
                 value={form.estado}
@@ -434,4 +409,4 @@ export default function CadastroAluno() {
       </section>
     </main>
   );
-}   
+}

@@ -59,23 +59,20 @@ docker compose -f docker-compose.prod.yml up --build
 
 # Documentação
 
-> TO DO SPRINT 1 -> Modelagem do sistema: Diagrama de Casos de Uso, Histórias do Usuário,
-Diagrama de Classes e Diagrama de Componentes.
-
 * Modelagem do sistema
 ![Sistema](./docs/sistema.png)
 
 * Diagrama de Casos de Uso
-> ![Diagrama de Casos de Uso](./docs/CasosdeUso.png)
+![Diagrama de Casos de Uso](./docs/CasosdeUso.png)
 
 * Diagrama de Classes
->![Diagrama de Classes](./docs/DiagramadeClasses.svg)
+![Diagrama de Classes](./docs/classe.png)
 
 * Diagrama de Componentes
->![Diagrama de Componentes](./docs/DiagramadeComponentes.svg)
+![Diagrama de Componentes](./docs/DiagramadeComponentes.svg)
 
 * Diagrama ER
->![Diagrama de Componentes](./docs/diagramaER.png)
+![Diagrama de Componentes](./docs/diagramaER.png)
 
 * Histórias do Usuário
 

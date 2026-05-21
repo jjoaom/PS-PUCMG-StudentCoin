@@ -3,12 +3,14 @@ package pucmg.ps.backend.Aluno
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pucmg.ps.backend.features.auth.permission.PermissionDAO
+import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 
 @Service
 class AlunoService(
     private val alunoRepository: AlunoRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val permissionDao: PermissionDAO
+    private val permissionDao: PermissionDAO,
+    private val movimentacaoRepository: MovimentacaoMoedaRepository
 ) {
 
     fun cadastrar(dto: AlunoCadastroDTO): Aluno {
@@ -73,5 +75,30 @@ class AlunoService(
         aluno.instituicaoId = dto.instituicaoId
 
         return alunoRepository.save(aluno)
+    }
+    fun consultarSaldo(id: Long): SaldoDTO {
+
+        val aluno = alunoRepository.findById(id)
+            .orElseThrow { RuntimeException("Aluno não encontrado") }
+
+        return SaldoDTO(
+            saldo = aluno.carteira.saldo
+        )
+    }
+    fun consultarExtrato(id: Long): List<ExtratoDTO> {
+
+        val aluno = alunoRepository.findById(id)
+            .orElseThrow { RuntimeException("Aluno não encontrado") }
+
+        return movimentacaoRepository
+            .findByCarteiraId(aluno.carteira.id!!)
+            .map {
+                ExtratoDTO(
+                    valor = it.valor,
+                    descricao = it.descricao,
+                    tipo = it.tipo,
+                    data = it.data
+                )
+            }
     }
 }

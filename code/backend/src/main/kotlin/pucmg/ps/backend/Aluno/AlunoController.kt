@@ -51,4 +51,22 @@ class AlunoController(
             ResponseEntity.badRequest().body(mapOf("erro" to e.message))
         }
     }
+
+    @GetMapping("/{id}/saldo")
+    fun consultarSaldo(@PathVariable id: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(alunoService.consultarSaldo(id))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
+
+    @GetMapping("/{id}/extrato")
+    fun consultarExtrato(@PathVariable id: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(alunoService.consultarExtrato(id))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
 }

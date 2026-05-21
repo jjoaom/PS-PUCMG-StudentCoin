@@ -2,10 +2,12 @@ package pucmg.ps.backend.Aluno
 
 import jakarta.persistence.*
 import pucmg.ps.backend.features.auth.user.UserEntity
+import pucmg.ps.backend.Moeda.CarteiraEntity
 
 @Entity
 @Table(name = "alunos")
 class Aluno(
+
     name: String = "",
     email: String = "",
     password: String = "",
@@ -33,5 +35,11 @@ class Aluno(
 
     var instituicaoId: Long,
 
-    var saldoMoedas: Int = 0
+    @OneToOne(
+        cascade = [CascadeType.ALL],
+        fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "carteira_id")
+    var carteira: CarteiraEntity = CarteiraEntity()
+
 ) : UserEntity(name = name, email = email, password = password)

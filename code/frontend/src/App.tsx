@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <Header/>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<Login />} />
@@ -19,7 +19,6 @@ function App() {
           <Route path="/CadastroEmpresa" element={<CadastroEmpresa />} />
           <Route path="/Cadastro" element={<Cadastro />} />
           <Route path="/Perfil" element={<Perfil />} />
-
         </Routes>
       </BrowserRouter>
     </>

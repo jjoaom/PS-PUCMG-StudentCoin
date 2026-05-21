@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { IMaskInput } from "react-imask";
 import "./CadastroEmpresa.css";
 
 type FormEmpresa = {
@@ -38,103 +39,50 @@ export default function CadastroEmpresa() {
 
   const API = "/api/empresa";
 
-  function limparMascara(value: string) {
-    return value.replace(/\D/g, "");
-  }
+  const limpar = (v: string) => v.replace(/\D/g, "");
 
-  function aplicarMascaraCnpj(value: string) {
-    return value
-      .replace(/\D/g, "")
-      .slice(0, 14)
-      .replace(/^(\d{2})(\d)/, "$1.$2")
-      .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
-      .replace(/\.(\d{3})(\d)/, ".$1/$2")
-      .replace(/(\d{4})(\d{1,2})$/, "$1-$2");
-  }
+  const setCampo = (campo: keyof FormEmpresa, valor: string) => {
+    setForm((p) => ({ ...p, [campo]: valor }));
+  };
 
-  function aplicarMascaraTelefone(value: string) {
-    const somenteNumeros = value.replace(/\D/g, "").slice(0, 11);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCampo(e.target.name as keyof FormEmpresa, e.target.value);
+  };
 
-    if (somenteNumeros.length <= 10) {
-      return somenteNumeros
-        .replace(/^(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{4})(\d{1,4})$/, "$1-$2");
-    }
+  const handleTelefoneDispatch = (appended: string, dynamicMasked: any) => {
+    const numeros = `${dynamicMasked.unmaskedValue}${appended}`.replace(
+      /\D/g,
+      ""
+    );
 
-    return somenteNumeros
-      .replace(/^(\d{2})(\d)/, "($1) $2")
-      .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
-  }
-
-  function aplicarMascaraCep(value: string) {
-    return value
-      .replace(/\D/g, "")
-      .slice(0, 8)
-      .replace(/(\d{5})(\d{1,3})$/, "$1-$2");
-  }
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-
-    let valorFormatado = value;
-
-    if (name === "cnpj") {
-      valorFormatado = aplicarMascaraCnpj(value);
-    }
-
-    if (name === "telefone") {
-      valorFormatado = aplicarMascaraTelefone(value);
-    }
-
-    if (name === "cep") {
-      valorFormatado = aplicarMascaraCep(value);
-    }
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: valorFormatado,
-    }));
-  }
+    return dynamicMasked.compiledMasks[numeros.length > 10 ? 1 : 0];
+  };
 
   async function buscarCep() {
-    const cepLimpo = limparMascara(form.cep);
-
-    if (!cepLimpo) return;
-
-    if (cepLimpo.length !== 8) {
-      alert("CEP inválido");
-      return;
-    }
+    const cep = limpar(form.cep);
+    if (cep.length !== 8) return alert("CEP inválido");
 
     try {
       setLoadingCep(true);
 
-      const resposta = await fetch(
-        `https://viacep.com.br/ws/${cepLimpo}/json/`
-      );
+      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await res.json();
 
-      const dados = await resposta.json();
+      if (data.erro) return alert("CEP não encontrado");
 
-      if (dados.erro) {
-        alert("CEP não encontrado");
-        return;
-      }
-
-      setForm((prev) => ({
-        ...prev,
-        rua: dados.logradouro || "",
-        bairro: dados.bairro || "",
-        cidade: dados.localidade || "",
-        estado: dados.uf || "",
+      setForm((p) => ({
+        ...p,
+        rua: data.logradouro || "",
+        bairro: data.bairro || "",
+        cidade: data.localidade || "",
+        estado: data.uf || "",
       }));
-    } catch {
-      alert("Erro ao buscar CEP");
     } finally {
       setLoadingCep(false);
     }
   }
 
-  async function cadastrarEmpresa(e: FormEvent<HTMLFormElement>) {
+  async function cadastrar(e: FormEvent) {
     e.preventDefault();
 
     try {
@@ -142,23 +90,21 @@ export default function CadastroEmpresa() {
 
       const body = {
         ...form,
-        cnpj: limparMascara(form.cnpj),
-        telefone: limparMascara(form.telefone),
-        cep: limparMascara(form.cep),
+        cnpj: limpar(form.cnpj),
+        telefone: limpar(form.telefone),
+        cep: limpar(form.cep),
       };
 
-      const resposta = await fetch(API, {
+      const res = await fetch(API, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (!resposta.ok) {
-        const erro = await resposta.json().catch(() => null);
-        alert(erro?.erro || erro?.message || "Erro ao cadastrar empresa");
-        return;
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        return alert(data?.erro || data?.message || "Erro ao cadastrar");
       }
 
       alert("Empresa cadastrada com sucesso!");
@@ -177,8 +123,6 @@ export default function CadastroEmpresa() {
         cidade: "",
         estado: "",
       });
-    } catch {
-      alert("Erro ao conectar com o backend");
     } finally {
       setLoadingCadastro(false);
     }
@@ -217,7 +161,7 @@ export default function CadastroEmpresa() {
           </div>
         </div>
 
-        <form onSubmit={cadastrarEmpresa} className="company-register-form">
+        <form onSubmit={cadastrar} className="company-register-form">
           <div className="form-section-title">
             <h2>Dados da empresa</h2>
             <p>Preencha as informações da empresa parceira.</p>
@@ -251,12 +195,12 @@ export default function CadastroEmpresa() {
             <div className="modern-input-group">
               <label>CNPJ</label>
 
-              <input
+              <IMaskInput
                 name="cnpj"
                 value={form.cnpj}
-                onChange={handleChange}
+                onAccept={(v: string) => setCampo("cnpj", v)}
+                mask="00.000.000/0000-00"
                 placeholder="00.000.000/0000-00"
-                maxLength={18}
                 required
               />
             </div>
@@ -290,12 +234,16 @@ export default function CadastroEmpresa() {
             <div className="modern-input-group">
               <label>Telefone</label>
 
-              <input
+              <IMaskInput
                 name="telefone"
                 value={form.telefone}
-                onChange={handleChange}
+                onAccept={(v: string) => setCampo("telefone", v)}
+                mask={[
+                  { mask: "(00) 0000-0000" },
+                  { mask: "(00) 00000-0000" },
+                ]}
+                dispatch={handleTelefoneDispatch}
                 placeholder="(31) 99999-9999"
-                maxLength={15}
                 required
               />
             </div>
@@ -310,13 +258,13 @@ export default function CadastroEmpresa() {
             <div className="modern-input-group">
               <label>CEP</label>
 
-              <input
+              <IMaskInput
                 name="cep"
                 value={form.cep}
-                onChange={handleChange}
+                onAccept={(v: string) => setCampo("cep", v)}
                 onBlur={buscarCep}
+                mask="00000-000"
                 placeholder="00000-000"
-                maxLength={9}
                 required
               />
 
@@ -387,11 +335,7 @@ export default function CadastroEmpresa() {
             </div>
           </div>
 
-          <button
-            className="student-register-button"
-            type="submit"
-            disabled={loadingCadastro}
-          >
+          <button className="student-register-button" disabled={loadingCadastro}>
             {loadingCadastro ? "Cadastrando..." : "Cadastrar Empresa"}
           </button>
 

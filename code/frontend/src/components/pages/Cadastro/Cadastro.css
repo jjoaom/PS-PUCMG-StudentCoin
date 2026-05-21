@@ -1,16 +1,16 @@
 .cadastro-page {
-  min-height: 100vh;
+  min-height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 16px;
+  padding: 24px 16px;
 }
 
 .cadastro-switch-container {
   width: 100%;
   max-width: 520px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   position: relative;
   z-index: 10;
 }
@@ -46,4 +46,19 @@
   background: #22d3ee;
   color: #06202b;
   box-shadow: 0 8px 22px rgba(34, 211, 238, 0.35);
+}
+
+.cadastro-form-container {
+  width: 100%;
+}
+
+.cadastro-form-container .student-register-page,
+.cadastro-form-container .company-register-page {
+  min-height: auto;
+  padding: 0;
+}
+
+.cadastro-form-container .student-register-shell,
+.cadastro-form-container .company-register-shell {
+  max-width: 1280px;
 }

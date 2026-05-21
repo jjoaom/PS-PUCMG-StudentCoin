@@ -1,5 +1,8 @@
 @startuml
-' Classes do Sistema
+
+' =========================
+' ENUMS
+' =========================
 
 enum Setor {
     ALIMENTACAO
@@ -12,18 +15,22 @@ enum Setor {
     SERVICOS
 }
 
-class UserEntity {
+enum TipoMovimentacao {
+    CREDITO
+    DEBITO
+    RESGATE
+}
+
+' =========================
+' USUÁRIOS
+' =========================
+
+abstract class UserEntity {
     -email: String
     -senha: String
     --
-    +Autenticar(): Boolean
-    +AlterarSenha(): Void
-}
-
-class Instituicao {
-    nome: String
-    cnpj: String
-    endereço: String
+    +autenticar(): Boolean
+    +alterarSenha(): void
 }
 
 class Aluno {
@@ -32,10 +39,9 @@ class Aluno {
     -rg: String
     -endereco: String
     -curso: String
-    -saldoMoedas: Integer
     --
     +cadastrar(): void
-    +consultarExtrato(): List<Transacao>
+    +consultarExtrato(): List<MovimentacaoMoeda>
     +trocarMoedas(vantagem: Vantagem): Cupom
 }
 
@@ -45,69 +51,86 @@ class Professor {
     -departamento: String
     --
     +cadastrar(): void
-    +consultarExtrato(): List<Transacao>
+    +enviarMoedas(aluno: Aluno, valor: Integer): void
 }
 
+UserEntity <|-- Aluno
+UserEntity <|-- Professor
+
+' =========================
+' INSTITUIÇÃO
+' =========================
+
+class Instituicao {
+    -nome: String
+    -cnpj: String
+    -endereco: String
+}
+
+Instituicao "1" o-- "*" Aluno
+Instituicao "1" o-- "*" Professor
+
+' =========================
+' CARTEIRA / MOEDA
+' =========================
+
+class Carteira {
+    -saldo: Integer
+    --
+    +creditar(valor: Integer): void
+    +debitar(valor: Integer): void
+    +consultarSaldo(): Integer
+}
+
+class MovimentacaoMoeda {
+    -valor: Integer
+    -data: Date
+    -descricao: String
+    -tipo: TipoMovimentacao
+    --
+    +registrar(): void
+}
+
+Aluno "1" *-- "1" Carteira
+Carteira "1" --> "*" MovimentacaoMoeda
+
+Professor "1" --> "*" MovimentacaoMoeda : autoriza
+
+' =========================
+' EMPRESA / VANTAGENS
+' =========================
+
 class EmpresaParceira {
-    -razãoSocial: String
+    -razaoSocial: String
     -cnpj: String
     -setor: Setor
     --
     +cadastrar(): void
 }
 
-class Transacao {
-    -valor: Double
-    -data: String
-    -descricao: String
-    --
-}
-
-class TransacaoEnvio {
-   -alunoBeneficiado: Aluno
-    --
-    +enviar(): void
-}
-
-class TransacaoCompra {
-    #{field} vantagem: Vantagem
-    --
-    +comprar(): void
-}
-
-class Cupom {
-    -{field} codigo: String
-    -{field} dataEmissao: String
-    -{field} dataValidade: String
-    --
-    +usar(): Boolean
-}
-
 class Vantagem {
     -descricao: String
-    -preco: Integer
+    -custoMoedas: Integer
     --
     +descrever(): String
 }
 
-' Relacionamentos
+EmpresaParceira "1" *-- "*" Vantagem
 
-UserEntity <|-- Aluno
-UserEntity <|-- Professor
+' =========================
+' CUPOM
+' =========================
 
-Instituicao "1" o-- "*" Aluno : vincula-se
-Instituicao "1" o-- "*" Professor : faz parte
-
-Professor "1" --> "*" TransacaoEnvio : realiza
-TransacaoEnvio "1" --> "*" Aluno : recebe
+class Cupom {
+    -codigo: String
+    -dataEmissao: Date
+    -dataValidade: Date
+    -utilizado: Boolean
+    --
+    +usar(): Boolean
+}
 
 Aluno "1" --> "*" Cupom : resgata
-
-Transacao <|-- TransacaoEnvio
-Transacao <|-- TransacaoCompra
-Transacao <|-- Cupom
-
-EmpresaParceira "1" *-- "*" Vantagem : oferece
-
 Cupom "*" --> "1" Vantagem : referente a
+
 @enduml
