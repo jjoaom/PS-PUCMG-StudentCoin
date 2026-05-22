@@ -74,6 +74,12 @@ docker compose -f docker-compose.prod.yml up --build
 * Diagrama ER
 ![Diagrama de Componentes](./docs/diagramaER.png)
 
+* Diagramas de Sequência
+
+* Diagrama de Login Geral (Aluno, Professor, Empresa Parceira)
+
+![Diagrama de Sequência: Login](./docs/sequence-diagrams/Login.png)
+
 * Histórias do Usuário
 
 **HU01**  

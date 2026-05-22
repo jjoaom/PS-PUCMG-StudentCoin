@@ -1,0 +1,26 @@
+@startuml
+actor Usuario as "Aluno/Professor/Empresa"
+participant "Página Web" as Frontend
+participant "Backend" as Backend
+database "Banco de Dados" as DB
+
+Usuario -> Frontend: Acessa página de login
+Frontend -> Usuario: Exibe formulário
+
+Usuario -> Frontend: Envia usuário e senha
+Frontend -> Backend: Requisição de autenticação (credenciais)
+
+Backend -> DB: Consulta usuário
+DB --> Backend: Retorna dados do usuário
+
+Backend -> Backend: Valida senha
+
+alt Credenciais válidas
+    Backend --> Frontend: Token de acesso JWT / Sucesso
+    Frontend --> Usuario: Redireciona para dashboard
+else Credenciais inválidas
+    Backend --> Frontend: Erro de autenticação
+    Frontend --> Usuario: Exibe mensagem de erro
+end
+
+@enduml
