@@ -1,0 +1,37 @@
+@startuml
+title Sistema de Moeda Estudantil - Visão Geral
+
+actor Aluno
+actor Professor
+actor Empresa
+
+participant Frontend
+participant Backend
+database DB
+participant Email
+
+
+Aluno -> Frontend: Faz login
+Professor -> Frontend: Faz login
+Empresa -> Frontend: Faz login
+Frontend -> Backend: Envia credenciais
+Backend -> DB: Valida usuário
+DB --> Backend: OK
+Backend --> Frontend: Login confirmado
+
+
+Professor -> Frontend: Envia moedas
+Frontend -> Backend: Solicita envio
+Backend -> DB: Atualiza saldo do aluno
+Backend -> Email: Notifica aluno
+
+Aluno -> Frontend: Resgata vantagem
+Frontend -> Backend: Solicita resgate
+Backend -> DB: Debita moedas
+Backend -> Email: Envia cupom
+
+Empresa -> Frontend: Cadastra vantagem
+Frontend -> Backend: Salva vantagem
+Backend -> DB: Persiste dados
+
+@enduml

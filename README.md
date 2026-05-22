@@ -59,24 +59,22 @@ docker compose -f docker-compose.prod.yml up --build
 
 # Documentação
 
-* Modelagem do sistema
+### Modelagem do sistema
 ![Sistema](./docs/sistema.png)
 
-* Diagrama de Casos de Uso
+### Diagrama de Casos de Uso
 ![Diagrama de Casos de Uso](./docs/CasosdeUso.png)
 
-* Diagrama de Classes
+### Diagrama de Classes
 ![Diagrama de Classes](./docs/classe.png)
 
-* Diagrama de Componentes
+### Diagrama de Componentes
 ![Diagrama de Componentes](./docs/DiagramadeComponentes.svg)
 
-* Diagrama ER
+### Diagrama ER
 ![Diagrama de Componentes](./docs/diagramaER.png)
 
-* Diagramas de Sequência
-
-* Diagrama de Login Geral (Aluno, Professor, Empresa Parceira)
+## Diagramas de Sequência
 
 ![Diagrama de Sequência: Login](./docs/sequence-diagrams/Login.png)
 
@@ -87,6 +85,10 @@ docker compose -f docker-compose.prod.yml up --build
 ![Diagrama de Sequência: Evento de atualização de Moeda dos professores](./docs/sequence-diagrams/EnvioSemestralMoeda.png)
 
 ![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessor.png)
+
+
+
+![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeral.png)
 
 ## Histórias do Usuário
 
