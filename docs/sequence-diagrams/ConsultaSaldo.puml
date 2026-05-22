@@ -1,0 +1,21 @@
+@startuml
+title "Diagrama de Sequência Consulta de Saldo e Extrato"
+actor Usuario as "Aluno/Professor"
+participant Frontend as "Página Web"
+participant Backend as "Backend"
+database DB as "Banco de Dados"
+
+Usuario -> Frontend: Faz login
+Frontend -> Backend: Envia credenciais
+Backend -> DB: Valida usuário
+DB --> Backend: OK
+Backend --> Frontend: Login confirmado
+Usuario -> Frontend: Acessa página de perfil
+Usuario -> Frontend: Visualizar histórico
+Frontend -> Backend: Buscar carteira
+Backend -> DB: SELECT Carteira
+DB --> Backend: Carteira contendo saldo e extrato completo
+Backend --> Frontend: Retorna lista
+Frontend --> Usuario: Exibe histórico
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+title "Distribuição de moedas no início do semestre"
+
+participant "Cron do Backend" as Cron
+participant "Backend" as Backend
+database "Banco de Dados" as DB
+
+Cron -> Backend: Evento: início de novo semestre
+
+Backend -> DB: Buscar professores ativos
+DB --> Backend: Lista de professores
+
+loop Para cada professor
+    Backend -> Backend: Calcula moedas (10.000)
+    Backend -> DB: Atualiza saldo de moedas
+    DB --> Backend: Confirma atualização
+end
+
+Backend --> Cron: Processo finalizado
+
+@enduml

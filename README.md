@@ -80,7 +80,15 @@ docker compose -f docker-compose.prod.yml up --build
 
 ![Diagrama de Sequência: Login](./docs/sequence-diagrams/Login.png)
 
-* Histórias do Usuário
+![Diagrama de Sequência: Cadastro Aluno](./docs/sequence-diagrams/CadastroAluno.png)
+
+![Diagrama de Sequência: Consultar Saldo e Histórico](./docs/sequence-diagrams/ConsultaSaldo.png)
+
+![Diagrama de Sequência: Evento de atualização de Moeda dos professores](./docs/sequence-diagrams/EnvioSemestralMoeda.png)
+
+![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessor.png)
+
+## Histórias do Usuário
 
 **HU01**  
 Como aluno, quero me cadastrar na plataforma, para participar do sistema de moeda estudantil.

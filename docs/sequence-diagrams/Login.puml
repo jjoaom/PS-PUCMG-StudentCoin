@@ -1,4 +1,5 @@
 @startuml
+title "Diagrama de Sequência Fluxo de Login"
 actor Usuario as "Aluno/Professor/Empresa"
 participant "Página Web" as Frontend
 participant "Backend" as Backend

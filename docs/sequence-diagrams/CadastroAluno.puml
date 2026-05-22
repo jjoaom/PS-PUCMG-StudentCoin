@@ -1,0 +1,33 @@
+@startuml
+title "Cadastro de Aluno"
+
+actor Aluno
+participant "Página Web" as Frontend
+participant "Backend" as Backend
+database "Banco de Dados" as DB
+
+Aluno -> Frontend: Acessa cadastro
+Frontend -> Backend: Solicita lista de instituições
+Backend -> DB: Buscar instituições
+DB --> Backend: Lista de instituições
+Backend --> Frontend: Retorna instituições
+Frontend --> Aluno: Exibe formulário + instituições
+
+Aluno -> Frontend: Preenche dados + seleciona instituição
+Frontend -> Backend: Envia dados de cadastro
+
+Backend -> DB: Verifica email existente
+DB --> Backend: Resultado
+
+alt Email disponível
+    Backend -> DB: Cria usuário
+    Backend -> DB: Vincula aluno à instituição
+    DB --> Backend: Confirma criação
+    Backend --> Frontend: Cadastro realizado
+    Frontend --> Aluno: Redireciona login
+else Email já existe
+    Backend --> Frontend: Erro: email já cadastrado
+    Frontend --> Aluno: Exibe erro
+end
+
+@enduml
