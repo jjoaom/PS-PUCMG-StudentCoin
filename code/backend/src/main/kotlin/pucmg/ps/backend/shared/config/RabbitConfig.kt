@@ -1,33 +1,45 @@
 package pucmg.ps.backend.shared.config
 
+import org.springframework.amqp.core.Binding
+import org.springframework.amqp.core.BindingBuilder
+import org.springframework.amqp.core.Queue
+import org.springframework.amqp.core.TopicExchange
+import org.springframework.amqp.rabbit.connection.ConnectionFactory
+import org.springframework.amqp.rabbit.core.RabbitTemplate
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
+import org.springframework.amqp.support.converter.MessageConverter
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+
 @Configuration
 class RabbitConfig {
 
     companion object {
-        const val QUEUE = "user.created.queue"
-        const val EXCHANGE = "user.exchange"
-        const val ROUTING_KEY = "user.created"
+        const val MOEDA_QUEUE = "moeda.enviar.queue"
+        const val MOEDA_EXCHANGE = "moeda.exchange"
+        const val MOEDA_ROUTING_KEY = "moeda.enviar"
     }
 
     @Bean
-    fun queue(): Queue {
-        return Queue(QUEUE, true)
+    fun moedaQueue(): Queue {
+        return Queue(MOEDA_QUEUE, true)
     }
 
     @Bean
-    fun exchange(): TopicExchange {
-        return TopicExchange(EXCHANGE)
+    fun moedaExchange(): TopicExchange {
+        return TopicExchange(MOEDA_EXCHANGE)
     }
 
     @Bean
-    fun binding(
-        queue: Queue,
-        exchange: TopicExchange
+    fun moedaBinding(
+        moedaQueue: Queue,
+        moedaExchange: TopicExchange
     ): Binding {
+
         return BindingBuilder
-            .bind(queue)
-            .to(exchange)
-            .with(ROUTING_KEY)
+            .bind(moedaQueue)
+            .to(moedaExchange)
+            .with(MOEDA_ROUTING_KEY)
     }
 
     @Bean
@@ -40,6 +52,7 @@ class RabbitConfig {
         connectionFactory: ConnectionFactory,
         converter: MessageConverter
     ): RabbitTemplate {
+
         return RabbitTemplate(connectionFactory).apply {
             messageConverter = converter
         }

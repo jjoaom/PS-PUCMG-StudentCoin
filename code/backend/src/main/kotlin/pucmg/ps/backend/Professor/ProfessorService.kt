@@ -6,12 +6,14 @@ import pucmg.ps.backend.Aluno.AlunoRepository
 import pucmg.ps.backend.Moeda.MovimentacaoMoedaEntity
 import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 import pucmg.ps.backend.shared.enums.TipoMovimentacao
+import pucmg.ps.backend.Professor.EnviarMoedasDTO
+import pucmg.ps.backend.shared.events.EnviarMoedasEvent
+import pucmg.ps.backend.shared.events.MoedaProducer
 
 @Service
 class ProfessorService(
     private val professorRepository: ProfessorRepository,
-    private val alunoRepository: AlunoRepository,
-    private val movimentacaoRepository: MovimentacaoMoedaRepository
+    private val moedaProducer: MoedaProducer
 ) {
 
     fun cadastrar(dto: ProfessorCadastroDTO): Professor {
@@ -88,45 +90,25 @@ class ProfessorService(
         return professorRepository.save(professor)
     }
 
-    @Transactional
-    fun enviarMoedas(professorId: Long, dto: EnviarMoedasDTO): Professor {
+    fun enviarMoedas(professorId: Long, dto: EnviarMoedasDTO): String {
 
         if (dto.quantidade <= 0) {
-            throw RuntimeException("A quantidade de moedas deve ser maior que zero.")
+            throw RuntimeException("Quantidade inválida")
         }
 
-        val professor = professorRepository.findById(professorId)
-            .orElseThrow { RuntimeException("Professor não encontrado.") }
-
-        val aluno = alunoRepository.findById(dto.alunoId)
-            .orElseThrow { RuntimeException("Aluno não encontrado.") }
-
-        if (professor.carteira.saldo < dto.quantidade) {
-            throw RuntimeException("Saldo insuficiente para enviar moedas.")
+        if (!professorRepository.existsById(professorId)) {
+            throw RuntimeException("Professor não encontrado")
         }
 
-        professor.carteira.saldo -= dto.quantidade
-        aluno.carteira.saldo += dto.quantidade
-
-        val debito = MovimentacaoMoedaEntity(
-            valor = dto.quantidade,
-            descricao = dto.descricao ?: "Envio de moedas",
-            tipo = TipoMovimentacao.DEBITO,
-            carteira = professor.carteira
+        val event = EnviarMoedasEvent(
+            professorId = professorId,
+            alunoId = dto.alunoId,
+            quantidade = dto.quantidade,
+            descricao = dto.descricao
         )
 
-        val credito = MovimentacaoMoedaEntity(
-            valor = dto.quantidade,
-            descricao = dto.descricao ?: "Recebimento de moedas",
-            tipo = TipoMovimentacao.CREDITO,
-            carteira = aluno.carteira
-        )
+        moedaProducer.enviar(event)
 
-        movimentacaoRepository.save(debito)
-        movimentacaoRepository.save(credito)
-
-        alunoRepository.save(aluno)
-
-        return professorRepository.save(professor)
+        return "Solicitação enviada para processamento."
     }
 }
