@@ -42,4 +42,14 @@ class EmpresaController(
             ResponseEntity.badRequest().body(mapOf("erro" to e.message))
         }
     }
+    
+    @DeleteMapping("/{id}")
+    fun deletar(@PathVariable id: Long): ResponseEntity<Any> {
+        return try {
+            empresaService.deletar(id)
+            ResponseEntity.noContent().build()
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
     }

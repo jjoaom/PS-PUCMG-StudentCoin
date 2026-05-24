@@ -1,27 +1,21 @@
 package pucmg.ps.backend.Professor
 
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import pucmg.ps.backend.Aluno.AlunoRepository
-import pucmg.ps.backend.Moeda.MovimentacaoMoedaEntity
-import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
-import pucmg.ps.backend.shared.enums.TipoMovimentacao
-import pucmg.ps.backend.Professor.EnviarMoedasDTO
 import pucmg.ps.backend.shared.events.EnviarMoedasEvent
 import pucmg.ps.backend.shared.events.MoedaProducer
 
 @Service
 class ProfessorService(
-    private val professorRepository: ProfessorRepository,
+    private val professorDao: ProfessorDao,
     private val moedaProducer: MoedaProducer
 ) {
 
     fun cadastrar(dto: ProfessorCadastroDTO): Professor {
-        if (professorRepository.existsByEmail(dto.email)) {
+        if (professorDao.existsByEmail(dto.email)) {
             throw RuntimeException("Já existe um professor cadastrado com este e-mail.")
         }
 
-        if (professorRepository.existsByCpf(dto.cpf)) {
+        if (professorDao.existsByCpf(dto.cpf)) {
             throw RuntimeException("Já existe um professor cadastrado com este CPF.")
         }
 
@@ -32,14 +26,14 @@ class ProfessorService(
             cpf = dto.cpf,
             departamento = dto.departamento,
         )
+
         professor.carteira.saldo = 10000
 
-        return professorRepository.save(professor)
+        return professorDao.save(professor)
     }
 
     fun login(dto: ProfessorLoginDTO): Professor {
-        val professor = professorRepository.findByEmail(dto.email)
-            ?: throw RuntimeException("Professor não encontrado.")
+        val professor = professorDao.findByEmail(dto.email)
 
         if (professor.password != dto.password) {
             throw RuntimeException("Senha inválida.")
@@ -49,27 +43,25 @@ class ProfessorService(
     }
 
     fun listarTodos(): List<Professor> {
-        return professorRepository.findAll()
+        return professorDao.findAll()
     }
 
     fun buscarPorId(id: Long): Professor {
-        return professorRepository.findById(id)
-            .orElseThrow { RuntimeException("Professor não encontrado.") }
+        return professorDao.findById(id)
     }
 
     fun atualizar(id: Long, dto: ProfessorUpdateDTO): Professor {
-        val professor = professorRepository.findById(id)
-            .orElseThrow { RuntimeException("Professor não encontrado.") }
+        val professor = professorDao.findById(id)
 
         dto.email?.let { novoEmail ->
-            if (novoEmail != professor.email && professorRepository.existsByEmail(novoEmail)) {
+            if (novoEmail != professor.email && professorDao.existsByEmail(novoEmail)) {
                 throw RuntimeException("Já existe outro professor usando este e-mail.")
             }
             professor.email = novoEmail
         }
 
         dto.cpf?.let { novoCpf ->
-            if (novoCpf != professor.cpf && professorRepository.existsByCpf(novoCpf)) {
+            if (novoCpf != professor.cpf && professorDao.existsByCpf(novoCpf)) {
                 throw RuntimeException("Já existe outro professor usando este CPF.")
             }
             professor.cpf = novoCpf
@@ -87,16 +79,15 @@ class ProfessorService(
             professor.departamento = it
         }
 
-        return professorRepository.save(professor)
+        return professorDao.save(professor)
     }
 
     fun enviarMoedas(professorId: Long, dto: EnviarMoedasDTO): String {
-
         if (dto.quantidade <= 0) {
             throw RuntimeException("Quantidade inválida")
         }
 
-        if (!professorRepository.existsById(professorId)) {
+        if (!professorDao.existsById(professorId)) {
             throw RuntimeException("Professor não encontrado")
         }
 

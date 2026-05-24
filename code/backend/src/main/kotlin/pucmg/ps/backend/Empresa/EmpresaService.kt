@@ -6,23 +6,27 @@ import pucmg.ps.backend.features.auth.permission.PermissionDAO
 
 @Service
 class EmpresaService(
-    private val empresaRepository: EmpresaRepository,
+    private val empresaDao: EmpresaDao,
     private val passwordEncoder: PasswordEncoder,
     private val permissionDao: PermissionDAO
 ) {
 
     fun cadastrar(dto: EmpresaCadastroDTO): Empresa {
 
-        if (empresaRepository.existsByEmail(dto.email)) {
+        if (empresaDao.existsByEmail(dto.email)) {
             throw RuntimeException("Email já cadastrado")
         }
 
-        if (empresaRepository.existsByCnpj(dto.cnpj)) {
+        if (empresaDao.existsByCnpj(dto.cnpj)) {
             throw RuntimeException("CNPJ já cadastrado")
         }
 
         val permissaoEmpresa = permissionDao.findByName("EMPRESA")
-        val permissoes = if (permissaoEmpresa != null) mutableSetOf(permissaoEmpresa) else mutableSetOf()
+        val permissoes = if (permissaoEmpresa != null) {
+            mutableSetOf(permissaoEmpresa)
+        } else {
+            mutableSetOf()
+        }
 
         val empresa = Empresa(
             name = dto.nomeFantasia,
@@ -42,23 +46,23 @@ class EmpresaService(
             this.permissions = permissoes
         }
 
-        return empresaRepository.save(empresa)
+        return empresaDao.save(empresa)
     }
 
     fun buscarPorId(id: Long): Empresa {
-        return empresaRepository.findById(id)
-            .orElseThrow { RuntimeException("Empresa não encontrada") }
+        return empresaDao.findById(id)
     }
 
     fun atualizar(id: Long, dto: EmpresaCadastroDTO): Empresa {
-        val empresa = empresaRepository.findById(id)
-            .orElseThrow { RuntimeException("Empresa não encontrada") }
+        val empresa = empresaDao.findById(id)
 
         empresa.name = dto.nomeFantasia
         empresa.email = dto.email
+
         if (dto.senha.isNotBlank()) {
             empresa.password = passwordEncoder.encode(dto.senha).toString()
         }
+
         empresa.nomeFantasia = dto.nomeFantasia
         empresa.razaoSocial = dto.razaoSocial
         empresa.cnpj = dto.cnpj
@@ -70,6 +74,10 @@ class EmpresaService(
         empresa.cidade = dto.cidade
         empresa.estado = dto.estado
 
-        return empresaRepository.save(empresa)
+        return empresaDao.save(empresa)
+    }
+
+    fun deletar(id: Long) {
+        empresaDao.deleteById(id)
     }
 }

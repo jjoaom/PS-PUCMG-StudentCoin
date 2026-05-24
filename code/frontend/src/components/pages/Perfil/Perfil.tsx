@@ -111,26 +111,20 @@ export default function Perfil() {
         }
 
         // 1. Buscar usuário autenticado
-        const meResponse = await fetch("/api/auth/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include",
-        });
+        const idSalvo = localStorage.getItem("userId");
+        const tipoSalvo = localStorage.getItem("userType") as TipoUsuario | null;
 
-        if (!meResponse.ok) {
-          alert("Erro ao buscar usuário autenticado.");
+        if (!idSalvo || !tipoSalvo) {
+          alert("Usuário não autenticado.");
           return;
         }
 
-        const me: MeResponse = await meResponse.json();
-
-        setTipoUsuario(me.role);
-        setUserId(me.id);
+        setTipoUsuario(tipoSalvo);
+        setUserId(Number(idSalvo));
 
         // 2. Buscar perfil completo
         const perfilResponse = await fetch(
-          `${endpointBase(me.role)}/${me.id}`,
+          `${endpointBase(tipoSalvo)}/${idSalvo}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -7,7 +7,7 @@ import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 
 @Service
 class AlunoService(
-    private val alunoRepository: AlunoRepository,
+    private val alunoDao: AlunoDao,
     private val passwordEncoder: PasswordEncoder,
     private val permissionDao: PermissionDAO,
     private val movimentacaoRepository: MovimentacaoMoedaRepository
@@ -15,11 +15,11 @@ class AlunoService(
 
     fun cadastrar(dto: AlunoCadastroDTO): Aluno {
 
-        if (alunoRepository.existsByEmail(dto.email)) {
+        if (alunoDao.existsByEmail(dto.email)) {
             throw RuntimeException("Email já cadastrado")
         }
 
-        if (alunoRepository.existsByCpf(dto.cpf)) {
+        if (alunoDao.existsByCpf(dto.cpf)) {
             throw RuntimeException("CPF já cadastrado")
         }
 
@@ -45,23 +45,23 @@ class AlunoService(
             this.permissions = permissoes
         }
 
-        return alunoRepository.save(aluno)
+        return alunoDao.save(aluno)
     }
 
     fun buscarPorId(id: Long): Aluno {
-        return alunoRepository.findById(id)
-            .orElseThrow { RuntimeException("Aluno não encontrado") }
+        return alunoDao.findById(id)
     }
 
     fun atualizar(id: Long, dto: AlunoCadastroDTO): Aluno {
-        val aluno = alunoRepository.findById(id)
-            .orElseThrow { RuntimeException("Aluno não encontrado") }
+        val aluno = alunoDao.findById(id)
 
         aluno.name = dto.nome
         aluno.email = dto.email
+
         if (dto.senha.isNotBlank()) {
             aluno.password = passwordEncoder.encode(dto.senha).toString()
         }
+
         aluno.cpf = dto.cpf
         aluno.rg = dto.rg
         aluno.telefone = dto.telefone
@@ -74,21 +74,19 @@ class AlunoService(
         aluno.curso = dto.curso
         aluno.instituicaoId = dto.instituicaoId
 
-        return alunoRepository.save(aluno)
+        return alunoDao.save(aluno)
     }
-    fun consultarSaldo(id: Long): SaldoDTO {
 
-        val aluno = alunoRepository.findById(id)
-            .orElseThrow { RuntimeException("Aluno não encontrado") }
+    fun consultarSaldo(id: Long): SaldoDTO {
+        val aluno = alunoDao.findById(id)
 
         return SaldoDTO(
             saldo = aluno.carteira.saldo
         )
     }
-    fun consultarExtrato(id: Long): List<ExtratoDTO> {
 
-        val aluno = alunoRepository.findById(id)
-            .orElseThrow { RuntimeException("Aluno não encontrado") }
+    fun consultarExtrato(id: Long): List<ExtratoDTO> {
+        val aluno = alunoDao.findById(id)
 
         return movimentacaoRepository
             .findByCarteiraId(aluno.carteira.id!!)
