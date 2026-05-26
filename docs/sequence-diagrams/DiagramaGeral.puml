@@ -11,27 +11,88 @@ database DB
 participant Email
 
 
+== Login ==
+
+
 Aluno -> Frontend: Faz login
+activate Frontend
 Professor -> Frontend: Faz login
 Empresa -> Frontend: Faz login
+
 Frontend -> Backend: Envia credenciais
+activate Backend
+
 Backend -> DB: Valida usuário
+activate DB
 DB --> Backend: OK
+deactivate DB
+
 Backend --> Frontend: Login confirmado
+deactivate Backend
+deactivate Frontend
 
 
-Professor -> Frontend: Envia moedas
+== Envio de Moedas pelo Professor ==
+
+Professor -> Frontend: Envia moedas para aluno
+activate Frontend
+
 Frontend -> Backend: Solicita envio
+activate Backend
+
 Backend -> DB: Atualiza saldo do aluno
+activate DB
+DB --> Backend: OK
+deactivate DB
+
 Backend -> Email: Notifica aluno
+activate Email
+Email --> Backend: Notificação enviada
+deactivate Email
+
+Backend --> Frontend: Confirma envio
+deactivate Backend
+deactivate Frontend
+
+
+== Resgate de Moedas ==
 
 Aluno -> Frontend: Resgata vantagem
+activate Frontend
+
 Frontend -> Backend: Solicita resgate
+activate Backend
+
 Backend -> DB: Debita moedas
+activate DB
+DB --> Backend: OK
+deactivate DB
+
 Backend -> Email: Envia cupom
+activate Email
+Email --> Backend: Cupom enviado
+deactivate Email
+
+Backend --> Frontend: Resgate confirmado
+deactivate Backend
+deactivate Frontend
+
+
+== Cadastro de Vantagens ==
 
 Empresa -> Frontend: Cadastra vantagem
+activate Frontend
+
 Frontend -> Backend: Salva vantagem
+activate Backend
+
 Backend -> DB: Persiste dados
+activate DB
+DB --> Backend: OK
+deactivate DB
+
+Backend --> Frontend: Vantagem cadastrada
+deactivate Backend
+deactivate Frontend
 
 @enduml

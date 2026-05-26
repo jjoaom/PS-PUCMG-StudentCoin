@@ -6,8 +6,11 @@ participant "Backend" as Backend
 database "Banco de Dados" as DB
 
 Cron -> Backend: Evento: início de novo semestre
+activate Cron
+activate Backend
 
 Backend -> DB: Buscar professores ativos
+activate DB
 DB --> Backend: Lista de professores
 
 loop Para cada professor
@@ -15,7 +18,9 @@ loop Para cada professor
     Backend -> DB: Atualiza saldo de moedas
     DB --> Backend: Confirma atualização
 end
-
+deactivate DB
 Backend --> Cron: Processo finalizado
+deactivate Backend
+deactivate Cron
 
 @enduml

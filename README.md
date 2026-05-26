@@ -87,6 +87,8 @@ docker compose -f docker-compose.prod.yml up --build
 
 ![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessor.png)
 
+![Diagrama de Sequência: Cadastro de empresa parceira](./docs/sequence-diagrams/CadastroEmpresaParceira.png)
+
 
 
 ![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeral.png)
