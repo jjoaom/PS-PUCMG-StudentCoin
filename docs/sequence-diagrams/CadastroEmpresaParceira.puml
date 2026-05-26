@@ -1,0 +1,26 @@
+@startuml
+autonumber
+title "Cadastro de empresa parceira"
+actor "Empresa Parceira" as Empresa
+participant "Interface/Sistema" as Sistema
+database "Banco de Dados" as BD
+
+Empresa -> Sistema : Solicitar cadastro (Dados da Empresa, CNPJ, Senha, etc.)
+activate Sistema
+
+Sistema -> Sistema : Validar formato dos dados
+Sistema -> BD : Verificar duplicidade
+BD --> Sistema : Dados valido
+
+alt Dados válidos e CNPJ não cadastrado
+    Sistema -> BD : Inserir novo registro de Empresa Parceira
+    activate BD
+    BD --> Sistema : Confirmação de gravação
+    deactivate BD
+    Sistema --> Empresa : Exibir mensagem de sucesso
+else Dados inválidos ou CNPJ já existente
+    Sistema --> Empresa : Exibir mensagem de erro correspondente
+end
+
+deactivate Sistema
+@enduml
