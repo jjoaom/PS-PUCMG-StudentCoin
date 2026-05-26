@@ -6,16 +6,28 @@ participant Backend as "Backend"
 database DB as "Banco de Dados"
 
 Usuario -> Frontend: Faz login
+activate Frontend
 Frontend -> Backend: Envia credenciais
+activate Backend
 Backend -> DB: Valida usuário
+activate DB
 DB --> Backend: OK
+deactivate DB
 Backend --> Frontend: Login confirmado
+deactivate Backend
+deactivate Frontend
 Usuario -> Frontend: Acessa página de perfil
+activate Frontend
 Usuario -> Frontend: Visualizar histórico
 Frontend -> Backend: Buscar carteira
+activate Backend
 Backend -> DB: SELECT Carteira
+activate DB
 DB --> Backend: Carteira contendo saldo e extrato completo
+deactivate DB
 Backend --> Frontend: Retorna lista
+deactivate Backend
 Frontend --> Usuario: Exibe histórico
+deactivate Frontend
 
 @enduml

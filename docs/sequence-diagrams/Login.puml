@@ -1,27 +1,35 @@
 @startuml
-title "Diagrama de Sequência Fluxo de Login"
+title "Diagrama de Sequência - Fluxo de Login"
+
 actor Usuario as "Aluno/Professor/Empresa"
 participant "Página Web" as Frontend
 participant "Backend" as Backend
 database "Banco de Dados" as DB
 
 Usuario -> Frontend: Acessa página de login
-Frontend -> Usuario: Exibe formulário
 
 Usuario -> Frontend: Envia usuário e senha
+activate Frontend
+
 Frontend -> Backend: Requisição de autenticação (credenciais)
+activate Backend
 
 Backend -> DB: Consulta usuário
-DB --> Backend: Retorna dados do usuário
+activate DB
+DB --> Backend: Dados do usuário
+deactivate DB
 
 Backend -> Backend: Valida senha
 
 alt Credenciais válidas
-    Backend --> Frontend: Token de acesso JWT / Sucesso
+    Backend --> Frontend: JWT / Sucesso
     Frontend --> Usuario: Redireciona para dashboard
 else Credenciais inválidas
     Backend --> Frontend: Erro de autenticação
     Frontend --> Usuario: Exibe mensagem de erro
 end
+
+deactivate Backend
+deactivate Frontend
 
 @enduml
