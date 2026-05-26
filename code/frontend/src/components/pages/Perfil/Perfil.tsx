@@ -79,7 +79,7 @@ export default function Perfil() {
   function endpointBase(tipo: TipoUsuario) {
     switch (tipo) {
       case "PROFESSOR":
-        return "/api/professores";
+        return "/api/professor";
 
       case "EMPRESA":
         return "/api/empresa";
