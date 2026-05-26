@@ -7,27 +7,60 @@ participant "Backend" as Backend
 database "Banco de Dados" as DB
 
 Aluno -> Frontend: Acessa cadastro
+activate Frontend
+
 Frontend -> Backend: Solicita lista de instituições
+activate Backend
+
 Backend -> DB: Buscar instituições
+activate DB
+
 DB --> Backend: Lista de instituições
+deactivate DB
+
 Backend --> Frontend: Retorna instituições
+deactivate Backend
+
 Frontend --> Aluno: Exibe formulário + instituições
+deactivate Frontend
+
 
 Aluno -> Frontend: Preenche dados + seleciona instituição
+activate Frontend
+
 Frontend -> Backend: Envia dados de cadastro
+activate Backend
 
 Backend -> DB: Verifica email existente
+activate DB
+
 DB --> Backend: Resultado
+deactivate DB
 
 alt Email disponível
+
     Backend -> DB: Cria usuário
+    activate DB
+
     Backend -> DB: Vincula aluno à instituição
+
     DB --> Backend: Confirma criação
+    deactivate DB
+
     Backend --> Frontend: Cadastro realizado
+    deactivate Backend
+
     Frontend --> Aluno: Redireciona login
+    deactivate Frontend
+
 else Email já existe
+
     Backend --> Frontend: Erro: email já cadastrado
+    deactivate Backend
+
     Frontend --> Aluno: Exibe erro
+    deactivate Frontend
+
 end
 
 @enduml
