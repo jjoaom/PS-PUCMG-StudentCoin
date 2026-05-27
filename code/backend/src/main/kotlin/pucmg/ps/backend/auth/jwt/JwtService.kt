@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*
+import org.slf4j.LoggerFactory
 
 @Service
 class JwtService {
+
+    private val log = LoggerFactory.getLogger(JwtService::class.java)
 
     @Value("\${jwt.secret}")
     private lateinit var secret: String
@@ -51,11 +54,16 @@ class JwtService {
         extractAllClaims(token).expiration.before(Date())
 
     private fun extractAllClaims(token: String) =
-        Jwts.parser()
-            .verifyWith(signingKey)
-            .build()
-            .parseSignedClaims(token)
-            .payload
+        try {
+            Jwts.parser()
+                .verifyWith(signingKey)
+                .build()
+                .parseSignedClaims(token)
+                .payload
+        } catch (e: Exception) {
+            log.error("Falha ao parsear token JWT: {}", e.message, e)
+            throw e
+        }
 
     fun extractTokenFromCookies(request: HttpServletRequest, cookieName: String): String? =
         request.cookies?.firstOrNull { it.name == cookieName }?.value

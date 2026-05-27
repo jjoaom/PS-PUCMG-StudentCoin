@@ -1,6 +1,6 @@
 @echo off
 SET SCRIPT_DIR=%~dp0
-SET OUTPUT_DIR=%SCRIPT_DIR%..\..\..\Documentacao\security\checkov
+SET OUTPUT_DIR=%SCRIPT_DIR%..\..\..\docs\security\checkov
 
 IF NOT EXIST "%OUTPUT_DIR%" mkdir "%OUTPUT_DIR%"
 

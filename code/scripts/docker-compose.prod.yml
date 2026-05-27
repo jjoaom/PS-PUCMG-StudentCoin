@@ -1,17 +1,20 @@
 services:
 
-  mysql:
-    build: ../db
-    container_name: mysql-db
+  postgres:
+    image: postgres:17
+    container_name: postgres-db
     restart: unless-stopped
     env_file:
       - ../db/.env
+    ports:
+      - "5432:5432"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
+      - ../db/init:/docker-entrypoint-initdb.d
     networks:
       - backend-net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -43,7 +46,7 @@ services:
     env_file:
       - ../backend/.env
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
@@ -66,7 +69,7 @@ services:
       - backend-net
 
 volumes:
-  mysql-data:
+  postgres-data:
     driver: local
   rabbitmq-data:
     driver: local

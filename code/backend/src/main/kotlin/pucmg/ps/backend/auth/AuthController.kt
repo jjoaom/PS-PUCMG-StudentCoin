@@ -37,10 +37,14 @@ class AuthController(
         request: HttpServletRequest,
         response: HttpServletResponse
     ): ResponseEntity<AuthResponse> {
-        val rawRefreshToken = extractRefreshCookie(request)
-        val (authResponse, newRawRefreshToken) = authService.refresh(rawRefreshToken)
-        setRefreshCookie(response, newRawRefreshToken)
-        return ResponseEntity.ok(authResponse)
+        return try {
+            val rawRefreshToken = extractRefreshCookie(request)
+            val (authResponse, newRawRefreshToken) = authService.refresh(rawRefreshToken)
+            setRefreshCookie(response, newRawRefreshToken)
+            ResponseEntity.ok(authResponse)
+        } catch (e: RefreshTokenNotFoundException) {
+            ResponseEntity.status(401).build()
+        }
     }
 
     @PostMapping("/logout")
@@ -48,21 +52,46 @@ class AuthController(
         request: HttpServletRequest,
         response: HttpServletResponse
     ): ResponseEntity<Void> {
-        val rawRefreshToken = extractRefreshCookie(request)
-        authService.logout(rawRefreshToken)
-        clearRefreshCookie(response)
-        return ResponseEntity.noContent().build()
+        return try {
+            val rawRefreshToken = extractRefreshCookie(request)
+            authService.logout(rawRefreshToken)
+            clearRefreshCookie(response)
+            ResponseEntity.noContent().build()
+        } catch (e: RefreshTokenNotFoundException) {
+            clearRefreshCookie(response)
+            ResponseEntity.noContent().build()
+        }
     }
 
     @GetMapping("/me")
-    fun me(@AuthenticationPrincipal currentUser: UserDetails): ResponseEntity<MeResponse> =
-        ResponseEntity.ok(authService.me(currentUser))
+    fun me(
+        request: HttpServletRequest,
+        @AuthenticationPrincipal currentUser: UserDetails?
+    ): ResponseEntity<MeResponse> {
+        if (currentUser != null) {
+            return ResponseEntity.ok(authService.me(currentUser))
+        }
+
+        val authHeader = request.getHeader("Authorization")
+        val bearerToken = authHeader?.takeIf { it.startsWith("Bearer ") }?.substring(7)
+            ?: return ResponseEntity.status(401).build()
+
+        return try {
+            val username = authService.extractUsername(bearerToken)
+            ResponseEntity.ok(authService.meByEmail(username))
+        } catch (_: Exception) {
+            ResponseEntity.status(401).build()
+        }
+    }
 
     private fun setRefreshCookie(response: HttpServletResponse, token: String) {
         val cookie = Cookie(REFRESH_COOKIE, token).apply {
             isHttpOnly = true
             secure = isSecure
-            path = "/auth/refresh"
+            // use root path so cookie is sent even when frontend proxies under /api
+            // (dev proxy often maps /api -> backend). In production you may
+            // scope this more tightly if desired.
+            path = "/"
             maxAge = REFRESH_TOKEN_MAX_AGE
         }
         response.addCookie(cookie)
@@ -72,7 +101,7 @@ class AuthController(
         val cookie = Cookie(REFRESH_COOKIE, "").apply {
             isHttpOnly = true
             secure = isSecure
-            path = "/auth/refresh"
+            path = "/"
             maxAge = 0
         }
         response.addCookie(cookie)

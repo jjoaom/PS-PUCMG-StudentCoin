@@ -1,6 +1,6 @@
 @echo off
 
-SET OUTPUT_DIR=%~dp0..\..\..\Documentacao\security\semgrep
+SET OUTPUT_DIR=%~dp0..\..\..\docs\security\semgrep
 
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set TIMESTAMP=%%i
 

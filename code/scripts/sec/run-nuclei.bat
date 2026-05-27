@@ -3,7 +3,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 SET SCRIPT_DIR=%~dp0
 SET COMPOSE_FILE=%SCRIPT_DIR%..\docker-compose.dev.yml
-SET OUTPUT_DIR=%SCRIPT_DIR%..\..\..\Documentacao\security\nuclei
+SET OUTPUT_DIR=%SCRIPT_DIR%..\..\..\docs\security\nuclei
 SET TARGET=http://localhost:8080
 
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set TIMESTAMP=%%i

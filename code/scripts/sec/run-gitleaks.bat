@@ -1,5 +1,5 @@
 @echo off
-SET OUTPUT_DIR=%~dp0..\..\..\Documentacao\security\gitleaks
+SET OUTPUT_DIR=%~dp0..\..\..\docs\security\gitleaks
 
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set TIMESTAMP=%%i
 

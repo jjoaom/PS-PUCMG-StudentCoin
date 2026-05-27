@@ -15,25 +15,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import pucmg.ps.backend.features.auth.jwt.JwtAuthFilter
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-
-import pucmg.ps.backend.features.auth.CustomUserDetailsService
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 
 @Configuration
-@EnableWebSecurity
 @Profile("dev")
+@EnableMethodSecurity
 @Order(1)
-internal class SecurityConfigDev(
-    private val customUserDetailsService: CustomUserDetailsService
-) {
-
-    @Bean
-    fun authenticationProvider(): DaoAuthenticationProvider =
-    DaoAuthenticationProvider(customUserDetailsService).apply {
-        setPasswordEncoder(passwordEncoder())
-    }
+internal class SecurityConfigDev {
 
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager =
@@ -43,7 +33,7 @@ internal class SecurityConfigDev(
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity, jwtAuthFilter: JwtAuthFilter): SecurityFilterChain {
         http
             .csrf { it.disable() }
             .httpBasic { it.disable() }
@@ -52,10 +42,12 @@ internal class SecurityConfigDev(
                 it.requestMatchers(
                     "/swagger-ui/**",
                     "/swagger-ui.html",
-                    "/v3/api-docs/**"
+                    "/v3/api-docs/**",
+                    "/auth/**"
                 ).permitAll()
                 it.anyRequest().permitAll()
             }
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
@@ -77,7 +69,7 @@ internal class SecurityConfigDev(
     @Bean
     fun jwtFilterRegistration(jwtAuthFilter: JwtAuthFilter): FilterRegistrationBean<JwtAuthFilter> {
         val registration = FilterRegistrationBean(jwtAuthFilter)
-        registration.isEnabled = false
+        registration.isEnabled = true
         return registration
     }
 }

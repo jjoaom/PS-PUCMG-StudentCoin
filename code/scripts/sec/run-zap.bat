@@ -1,5 +1,5 @@
 @echo off
-SET OUTPUT_DIR=%~dp0..\..\..\Documentacao\security\zap
+SET OUTPUT_DIR=%~dp0..\..\..\docs\security\zap
 
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set TIMESTAMP=%%i
 

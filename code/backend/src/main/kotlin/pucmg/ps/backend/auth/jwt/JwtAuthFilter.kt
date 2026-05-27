@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import pucmg.ps.backend.features.auth.CustomUserDetailsService
 
+
 @Component
 class JwtAuthFilter(
     private val jwtService: JwtService,
@@ -53,6 +54,7 @@ class JwtAuthFilter(
             true
         } catch (e: Exception) {
             log.debug("Token JWT inválido ou expirado: {}", e.message)
+            log.error("Erro ao processar autenticação JWT", e)
             true
         }
     }
@@ -75,7 +77,10 @@ class JwtAuthFilter(
         userDetails: UserDetails,
         request: HttpServletRequest
     ) {
-        if (!jwtService.isTokenValid(token, userDetails)) return
+        if (!jwtService.isTokenValid(token, userDetails)) {
+            log.debug("Token JWT não válido para usuário {}", userDetails.username)
+            return
+        }
         val authToken = UsernamePasswordAuthenticationToken(
             userDetails,
             null,

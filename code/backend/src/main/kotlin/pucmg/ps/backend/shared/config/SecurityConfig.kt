@@ -1,5 +1,4 @@
 package pucmg.ps.backend.shared.config
-
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -17,10 +16,7 @@ import org.springframework.security.web.header.writers.StaticHeadersWriter
 import pucmg.ps.backend.features.auth.CustomUserDetailsService
 import pucmg.ps.backend.features.auth.jwt.JwtAuthFilter
 
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-
 @Configuration
-@EnableWebSecurity
 @Profile("prod")
 @EnableMethodSecurity
 internal class SecurityConfig(

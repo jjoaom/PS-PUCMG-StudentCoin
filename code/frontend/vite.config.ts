@@ -17,6 +17,12 @@ export default defineConfig({
     },
   },
   server: {
+    host: true,
+    strictPort: true,
+    watch: {
+      usePolling: false,
+      ignored: ['**/node_modules/**', '**/dist/**', '**/android**'],
+    },
     proxy: {
       '/api': {
         target: 'http://backend:8080',

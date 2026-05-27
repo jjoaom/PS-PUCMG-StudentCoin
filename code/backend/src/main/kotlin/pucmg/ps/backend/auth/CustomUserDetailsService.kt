@@ -16,8 +16,9 @@ class CustomUserDetailsService(
         val user = userRepository.findByEmail(username)
             ?: throw UsernameNotFoundException("Usuário não encontrado")
 
+        // Convert permission enums to Spring ROLE_ authorities so hasRole('ADMIN') works
         val authorities = user.permissions
-            .map { SimpleGrantedAuthority(it.name) }
+            .map { SimpleGrantedAuthority("ROLE_${it.name}") }
 
         return org.springframework.security.core.userdetails.User(
             user.email,

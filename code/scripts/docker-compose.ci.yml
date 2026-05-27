@@ -1,24 +1,22 @@
 services:
 
-  mysql:
-    build: ../db
-    container_name: mysql-db
+  postgres:
+    image: postgres:17
+    container_name: postgres-db
     restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ci_root
-      MYSQL_DATABASE: animongs_db
-      MYSQL_USER: ci_user
-      MYSQL_PASSWORD: ci_password
+    env_file:
+      - ../db/.env
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
+      - postgres-data:/var/lib/postgresql/data
       - ../db/init:/docker-entrypoint-initdb.d
     networks:
       - backend-net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
-      timeout: 10s
+      timeout: 5s
       retries: 10
       start_period: 30s
 
@@ -29,14 +27,14 @@ services:
     container_name: springboot-backend
     restart: unless-stopped
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/animongs_db
+      SPRING_DATASOURCE_URL: jdbc:postgres://postgres:3306/animongs_db
       SPRING_DATASOURCE_USERNAME: ci_user
       SPRING_DATASOURCE_PASSWORD: ci_password
       SPRING_PROFILES_ACTIVE: ci
     ports:
       - "8080:8080"
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
     networks:
       - backend-net
@@ -54,7 +52,7 @@ services:
       - backend-net
 
 volumes:
-  mysql-data:
+  postgres-data:
     driver: local
 
 networks:
