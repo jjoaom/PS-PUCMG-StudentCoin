@@ -1,0 +1,45 @@
+@startuml
+
+!include <azure/AzureCommon>
+!include <azure/Compute/AzureVirtualMachine>
+
+title Diagrama de Implantação
+
+
+
+skinparam rectangleBackgroundColor #E6F2FF
+skinparam rectangleBorderColor #0078D4
+
+skinparam componentBackgroundColor #E6F2FF
+skinparam componentBorderColor #0078D4
+
+skinparam databaseBackgroundColor #E6F2FF
+skinparam databaseBorderColor #0078D4
+
+skinparam nodeBackgroundColor #E6F2FF
+skinparam nodeBorderColor #0078D4
+
+skinparam cloudBackgroundColor #E6F2FF
+skinparam cloudBorderColor #0078D4
+
+cloud "Internet" as Internet
+
+AzureVirtualMachine(vm, "Ubuntu Azure VM", "Docker Compose")
+
+component "Caddy" as caddy
+component "Frontend React/Vite" as frontend
+component "Backend Spring Boot Kotlin" as backend
+database "PostgreSQL" as postgres
+component "RabbitMQ" as rabbitmq
+
+Internet --> caddy : HTTPS
+
+caddy --> frontend
+caddy --> backend
+
+backend --> postgres
+backend --> rabbitmq
+
+vm --> caddy
+
+@enduml
