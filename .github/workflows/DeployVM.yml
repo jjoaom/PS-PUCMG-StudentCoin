@@ -1,0 +1,33 @@
+name: Deploy VM
+
+on:
+workflow_dispatch:
+
+jobs:
+deploy:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Deploy na Azure VM
+    uses: appleboy/ssh-action@v1.0.3
+    with:
+      host: ${{ secrets.AZURE_HOST }}
+      username: ${{ secrets.AZURE_USER }}
+      key: ${{ secrets.AZURE_SSH_KEY }}
+      script: |
+        cd /home/azureuser/PS-PUCMG-StudentCoin/code
+
+        git fetch origin
+        git reset --hard origin/main
+
+        docker compose -f scripts/docker-compose.prod.yml down -v
+
+        docker image prune -af
+
+        docker compose \
+          -f scripts/docker-compose.prod.yml \
+          up -d --build
+
+        docker ps
+```
