@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     env_file:
       - ../db/.env
-    ports:
-      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ../db/init:/docker-entrypoint-initdb.d
@@ -26,7 +24,7 @@ services:
     restart: unless-stopped
     environment:
       RABBITMQ_DEFAULT_USER: app
-      RABBITMQ_DEFAULT_PASS: strong_password_here
+      RABBITMQ_DEFAULT_PASS: DXuuT5bLZLupYK3jBW0
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     networks:
