@@ -1,7 +1,9 @@
 package pucmg.ps.backend.Empresa
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import pucmg.ps.backend.Vantagem.VantagemCadastroDTO
 
 @RestController
 @RequestMapping("/empresa")
@@ -52,4 +54,46 @@ class EmpresaController(
             ResponseEntity.badRequest().body(mapOf("erro" to e.message))
         }
     }
+
+    @GetMapping("/{empresaId}/vantagens")
+    fun listarVantagens(@PathVariable empresaId: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(empresaService.listarVantagens(empresaId))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
     }
+
+    @GetMapping("/{empresaId}/vantagens/ativas")
+    fun listarVantagensAtivas(@PathVariable empresaId: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(empresaService.listarVantagensAtivas(empresaId))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
+
+    @PostMapping("/{empresaId}/vantagens")
+    fun criarVantagem(
+        @PathVariable empresaId: Long,
+        @RequestBody dto: VantagemCadastroDTO
+    ): ResponseEntity<Any> {
+        return try {
+            val vantagem = empresaService.criarVantagem(empresaId, dto)
+            ResponseEntity.status(HttpStatus.CREATED).body(vantagem)
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
+
+    @GetMapping("/{empresaId}/relatorio/cupons")
+    fun gerarRelatorioCupons(@PathVariable empresaId: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(empresaService.gerarRelatorioCupons(empresaId))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
+}

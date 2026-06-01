@@ -4,13 +4,18 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pucmg.ps.backend.features.auth.permission.PermissionDAO
 import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
+import pucmg.ps.backend.Vantagem.VantagemDAO
+import pucmg.ps.backend.Cupom.CupomService
+import pucmg.ps.backend.Cupom.CupomDTO
 
 @Service
 class AlunoService(
     private val alunoDao: AlunoDao,
     private val passwordEncoder: PasswordEncoder,
     private val permissionDao: PermissionDAO,
-    private val movimentacaoRepository: MovimentacaoMoedaRepository
+    private val movimentacaoRepository: MovimentacaoMoedaRepository,
+    private val vantagemDAO: VantagemDAO? = null,
+    private val cupomService: CupomService? = null
 ) {
 
     fun cadastrar(dto: AlunoCadastroDTO): Aluno {
@@ -98,5 +103,45 @@ class AlunoService(
                     data = it.data
                 )
             }
+    }
+
+    fun resgatarVantagem(alunoId: Long, vantagemId: Long): CupomDTO {
+        if (cupomService == null) throw RuntimeException("CupomService não disponível")
+        
+        val aluno = alunoDao.findById(alunoId)
+        val vantagem = vantagemDAO?.findById(vantagemId) 
+            ?: throw RuntimeException("Vantagem não encontrada")
+
+        if (!vantagem.ativa) {
+            throw RuntimeException("Vantagem não está ativa")
+        }
+
+        if (aluno.carteira.saldo < vantagem.custoMoedas) {
+            throw RuntimeException("Saldo insuficiente para resgatar esta vantagem")
+        }
+
+        return cupomService.gerarCupom(alunoId, vantagemId)
+    }
+
+    fun listarCuponsDisponiveis(alunoId: Long): List<CupomDTO> {
+        if (cupomService == null) throw RuntimeException("CupomService não disponível")
+        
+        alunoDao.findById(alunoId)
+        
+        return cupomService.listarCuponsAlunoNaoUtilizados(alunoId)
+    }
+
+    fun listarHistoricoCupons(alunoId: Long): List<CupomDTO> {
+        if (cupomService == null) throw RuntimeException("CupomService não disponível")
+        
+        alunoDao.findById(alunoId)
+        
+        return cupomService.listarCuponsAluno(alunoId)
+    }
+
+    fun usarCupom(codigo: String): CupomDTO {
+        if (cupomService == null) throw RuntimeException("CupomService não disponível")
+        
+        return cupomService.usarCupom(codigo)
     }
 }

@@ -2,6 +2,7 @@ package pucmg.ps.backend.Empresa
 
 import jakarta.persistence.*
 import pucmg.ps.backend.features.auth.user.UserEntity
+import pucmg.ps.backend.Vantagem.VantagemEntity
 
 @Entity
 @Table(name = "empresas")
@@ -25,4 +26,12 @@ class Empresa(
     var bairro: String,
     var cidade: String,
     var estado: String
-) : UserEntity(name = name, email = email, password = password)
+) : UserEntity(name = name, email = email, password = password) {
+    
+    @OneToMany(
+        mappedBy = "empresa",
+        cascade = [CascadeType.REMOVE],
+        fetch = FetchType.LAZY
+    )
+    var vantagens: MutableList<VantagemEntity> = mutableListOf()
+}

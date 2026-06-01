@@ -3,12 +3,19 @@ package pucmg.ps.backend.Empresa
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pucmg.ps.backend.features.auth.permission.PermissionDAO
+import pucmg.ps.backend.Vantagem.VantagemResponseDTO
+import pucmg.ps.backend.Vantagem.VantagemDAO
+import pucmg.ps.backend.Vantagem.VantagemCadastroDTO
+import pucmg.ps.backend.Vantagem.toResponseDTO
+import pucmg.ps.backend.Cupom.CupomDAO
 
 @Service
 class EmpresaService(
     private val empresaDao: EmpresaDao,
     private val passwordEncoder: PasswordEncoder,
-    private val permissionDao: PermissionDAO
+    private val permissionDao: PermissionDAO,
+    private val vantagemDAO: VantagemDAO? = null,
+    private val cupomDAO: CupomDAO? = null
 ) {
 
     fun cadastrar(dto: EmpresaCadastroDTO): Empresa {
@@ -79,5 +86,64 @@ class EmpresaService(
 
     fun deletar(id: Long) {
         empresaDao.deleteById(id)
+    }
+
+    fun listarVantagens(empresaId: Long): List<VantagemResponseDTO> {
+        empresaDao.findById(empresaId)
+        return vantagemDAO?.findByEmpresaId(empresaId)?.map { it.toResponseDTO() } ?: emptyList()
+    }
+
+    fun listarVantagensAtivas(empresaId: Long): List<VantagemResponseDTO> {
+        empresaDao.findById(empresaId)
+        return vantagemDAO?.findByEmpresaIdAndAtiva(empresaId, true)?.map { it.toResponseDTO() } ?: emptyList()
+    }
+
+    fun criarVantagem(empresaId: Long, dto: VantagemCadastroDTO): VantagemResponseDTO {
+        if (vantagemDAO == null) throw RuntimeException("VantagemDAO não disponível")
+        
+        val empresa = empresaDao.findById(empresaId)
+        
+        if (dto.custoMoedas <= 0) {
+            throw IllegalArgumentException("O custo em moedas deve ser maior que zero")
+        }
+
+        if (dto.descricao.isBlank()) {
+            throw IllegalArgumentException("A descrição não pode estar vazia")
+        }
+
+        val vantagem = pucmg.ps.backend.Vantagem.VantagemEntity(
+            descricao = dto.descricao,
+            custoMoedas = dto.custoMoedas,
+            empresa = empresa,
+            detalhes = dto.detalhes,
+            ativa = true
+        )
+
+        val vantagemSalva = vantagemDAO.save(vantagem)
+        return vantagemSalva.toResponseDTO()
+    }
+
+    fun gerarRelatorioCupons(empresaId: Long): Map<String, Any> {
+        if (vantagemDAO == null || cupomDAO == null) throw RuntimeException("DAOs não disponíveis")
+        
+        val empresa = empresaDao.findById(empresaId)
+        val vantagens = vantagemDAO.findByEmpresaId(empresaId)
+        
+        val relatorio = vantagens.map { vantagem ->
+            mapOf(
+                "vantagemId" to vantagem.id,
+                "descricao" to vantagem.descricao,
+                "custoMoedas" to vantagem.custoMoedas,
+                "cuponsGerados" to cupomDAO.findByVantagemId(vantagem.id!!).count { !it.utilizado },
+                "cuponsUtilizados" to cupomDAO.findByVantagemId(vantagem.id!!).count { it.utilizado }
+            )
+        }
+        
+        return mapOf(
+            "empresa" to empresa.nomeFantasia,
+            "vantagens" to relatorio,
+            "totalCuponsGerados" to relatorio.sumOf { (it["cuponsGerados"] as Int) },
+            "totalCuponsUtilizados" to relatorio.sumOf { (it["cuponsUtilizados"] as Int) }
+        )
     }
 }
