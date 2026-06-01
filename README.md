@@ -85,13 +85,13 @@ docker compose -f docker-compose.prod.yml up --build
 
 ![Diagrama de Sequência: Evento de atualização de Moeda dos professores](./docs/sequence-diagrams/EnvioSemestralMoeda.png)
 
-![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessor.png)
+![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessorV2.png)
 
 ![Diagrama de Sequência: Cadastro de empresa parceira](./docs/sequence-diagrams/CadastroEmpresaParceira.png)
 
 
 
-![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeral.png)
+![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeralV2.png)
 
 ## Histórias do Usuário
 
