@@ -1,0 +1,55 @@
+@startuml
+title "Envio de moedas para aluno"
+
+actor Professor
+participant "Página Web" as Frontend
+participant "Backend" as Backend
+database "Banco de Dados" as DB
+participant "Email" as Email
+
+Professor -> Frontend: Faz login
+activate Frontend
+Frontend -> Backend: Envia credenciais
+activate Backend
+Backend -> DB: Valida usuário
+activate DB
+DB --> Backend: OK
+Backend --> Frontend: Login confirmado
+deactivate DB
+deactivate Backend
+deactivate Frontend
+
+Professor -> Frontend: Acessa lista de alunos
+activate Frontend
+Frontend -> Backend: Solicita alunos
+activate Backend
+Backend -> DB: Buscar alunos
+activate DB
+DB --> Backend: Lista de alunos
+deactivate DB
+Backend --> Frontend: Retorna lista
+deactivate Backend
+deactivate Frontend
+
+
+Professor -> Frontend: Seleciona aluno + informa moedas
+activate Frontend
+Frontend -> Backend: Envia transferência de moedas
+activate Backend
+
+Backend -> DB: Atualiza saldo do aluno
+activate DB
+DB --> Backend: Confirma atualização
+deactivate DB
+
+Backend -> Email: Envia email para o aluno\ninformando o recebimento das moedas
+activate Email
+Email --> Backend: Email de notificação enviado
+deactivate Email
+
+Backend --> Frontend: Operação concluída
+deactivate Backend
+Frontend --> Professor: Exibe confirmação
+deactivate Frontend
+
+@enduml
