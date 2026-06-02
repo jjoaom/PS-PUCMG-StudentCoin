@@ -20,6 +20,7 @@ class CustomUserDetailsService(
         val authorities = user.permissions
             .map { SimpleGrantedAuthority("ROLE_${it.name}") }
 
+
         return org.springframework.security.core.userdetails.User(
             user.email,
             user.password,
@@ -30,4 +31,5 @@ class CustomUserDetailsService(
             authorities
         )
     }
+    
 }

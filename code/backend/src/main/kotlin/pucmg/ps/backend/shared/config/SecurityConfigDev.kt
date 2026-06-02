@@ -17,7 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-
+import org.springframework.security.config.Customizer
 
 @Configuration
 @Profile("dev")
@@ -37,7 +37,7 @@ internal class SecurityConfigDev {
         http
             .csrf { it.disable() }
             .httpBasic { it.disable() }
-            .cors { }
+            .cors(Customizer.withDefaults())
             .authorizeHttpRequests {
                 it.requestMatchers(
                     "/swagger-ui/**",
@@ -64,12 +64,5 @@ internal class SecurityConfigDev {
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", config)
         return source
-    }
-
-    @Bean
-    fun jwtFilterRegistration(jwtAuthFilter: JwtAuthFilter): FilterRegistrationBean<JwtAuthFilter> {
-        val registration = FilterRegistrationBean(jwtAuthFilter)
-        registration.isEnabled = true
-        return registration
     }
 }

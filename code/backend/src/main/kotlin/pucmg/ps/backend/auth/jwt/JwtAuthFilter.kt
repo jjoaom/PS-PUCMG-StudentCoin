@@ -30,63 +30,49 @@ class JwtAuthFilter(
         filterChain: FilterChain
     ) {
         val token = extractToken(request)
+
         if (token != null) {
-            val shouldContinue = processAuthentication(token, request, response)
-            if (!shouldContinue) return
+            try {
+                val username = jwtService.extractUsername(token)
+
+                val authentication = SecurityContextHolder.getContext().authentication
+                if (authentication == null) {
+
+                    val userDetails = userDetailsService.loadUserByUsername(username)
+
+                    if (jwtService.isTokenValid(token, userDetails)) {
+                        authenticate(userDetails, request)
+                        println("JWT AUTH: ${userDetails.authorities}")
+                    }
+                }
+
+            } catch (e: Exception) {
+                log.error("JWT inválido ou expirado", e)
+                SecurityContextHolder.clearContext()
+            }
         }
+
         filterChain.doFilter(request, response)
     }
 
-    private fun processAuthentication(
-        token: String,
-        request: HttpServletRequest,
-        response: HttpServletResponse
-    ): Boolean {
-        return try {
-            val username = jwtService.extractUsername(token)
-            if (SecurityContextHolder.getContext().authentication != null) return true
-            val userDetails = userDetailsService.loadUserByUsername(username)
-            if (!userDetails.isEnabled) {
-                respondUserDisabled(username, response)
-                return false
-            }
-            authenticateIfValid(token, userDetails, request)
-            true
-        } catch (e: Exception) {
-            log.debug("Token JWT inválido ou expirado: {}", e.message)
-            log.error("Erro ao processar autenticação JWT", e)
-            true
-        }
-    }
-
-    private fun extractToken(request: HttpServletRequest): String? {
-        val authHeader = request.getHeader("Authorization")
-        return if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            authHeader.substring(7)
-        } else null
-    }
-
-    private fun respondUserDisabled(username: String?, response: HttpServletResponse) {
-        response.status = HttpServletResponse.SC_FORBIDDEN
-        response.contentType = "application/json"
-        response.writer.write("{\"error\": \"Usuário desativado\"}")
-    }
-
-    private fun authenticateIfValid(
-        token: String,
+    private fun authenticate(
         userDetails: UserDetails,
         request: HttpServletRequest
     ) {
-        if (!jwtService.isTokenValid(token, userDetails)) {
-            log.debug("Token JWT não válido para usuário {}", userDetails.username)
-            return
-        }
         val authToken = UsernamePasswordAuthenticationToken(
             userDetails,
             null,
             userDetails.authorities
         )
+
         authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
         SecurityContextHolder.getContext().authentication = authToken
+    }
+
+    private fun extractToken(request: HttpServletRequest): String? {
+        val header = request.getHeader("Authorization")
+        return if (header != null && header.startsWith("Bearer ")) {
+            header.substring(7)
+        } else null
     }
 }
