@@ -7,6 +7,9 @@ import CadastroAluno from "./components/pages/CadastroAluno/CadastroAluno";
 import CadastroEmpresa from "./components/pages/CadastroEmpresa/CadastroEmpresa";
 import Cadastro from "./components/pages/Cadastro/Cadastro";
 import Perfil from "./components/pages/Perfil/Perfil"
+import GerenciarBeneficios from "./components/pages/GerenciarBeneficios/GerenciarBeneficios";
+import Beneficios from "./components/pages/Beneficios/Beneficios";
+
 function App() {
   return (
     <>
@@ -19,6 +22,8 @@ function App() {
           <Route path="/CadastroEmpresa" element={<CadastroEmpresa />} />
           <Route path="/Cadastro" element={<Cadastro />} />
           <Route path="/Perfil" element={<Perfil />} />
+          <Route path="/gerenciar-beneficios" element={<GerenciarBeneficios />} />
+          <Route path="/beneficios" element={<Beneficios />} />
         </Routes>
       </BrowserRouter>
     </>
