@@ -111,4 +111,13 @@ class AlunoController(
             ResponseEntity.badRequest().body(mapOf("erro" to e.message))
         }
     }
+
+    @GetMapping
+    fun listarTodos(): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(alunoService.listarTodos())
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
 }

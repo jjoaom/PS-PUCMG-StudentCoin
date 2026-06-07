@@ -73,6 +73,7 @@ export default function Header() {
         <>
           <Link to="/perfil">Perfil</Link>
           <Link to="/beneficios">Benefícios</Link>
+          <Link to="/extrato">Extrato</Link>
         </>
       );
     }
@@ -82,6 +83,7 @@ export default function Header() {
         <>
           <Link to="/perfil">Perfil</Link>
           <Link to="/alunos">Alunos</Link>
+          <Link to="/extrato">Extrato</Link>
         </>
       );
     }

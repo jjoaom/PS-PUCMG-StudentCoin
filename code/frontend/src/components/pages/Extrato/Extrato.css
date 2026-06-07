@@ -1,0 +1,228 @@
+.extrato-page {
+  min-height: auto;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.extrato-hero {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  padding: 42px;
+
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.extrato-hero h1 {
+  margin-top: 18px;
+
+  font-size: clamp(2.2rem, 4vw, 4.3rem);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.extrato-hero h1 span {
+  color: var(--color-primary);
+}
+
+.extrato-hero p {
+  max-width: 700px;
+  margin-top: 18px;
+
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  font-size: 1.05rem;
+}
+
+.extrato-saldo-card {
+  padding: 28px;
+
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+
+  background: rgba(34, 211, 238, 0.08);
+  box-shadow: var(--shadow-glow);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extrato-saldo-card span,
+.extrato-saldo-card small {
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+
+.extrato-saldo-card strong {
+  font-size: 3rem;
+  color: var(--color-primary-light);
+  line-height: 1;
+}
+
+.extrato-list-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  padding: 32px;
+}
+
+.extrato-list-header {
+  margin-bottom: 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.extrato-list-header h2 {
+  margin-top: 8px;
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.extrato-refresh {
+  padding: 12px 16px;
+
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+
+  font-weight: 800;
+}
+
+.extrato-refresh:hover {
+  border-color: var(--color-primary);
+}
+
+.extrato-empty {
+  padding: 18px;
+
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
+
+  color: var(--color-text-secondary);
+}
+
+.extrato-message {
+  margin-bottom: 18px;
+  padding: 13px 15px;
+
+  border-radius: var(--radius-md);
+
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.extrato-message.error {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.extrato-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.extrato-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.extrato-table th,
+.extrato-table td {
+  padding: 16px;
+
+  border-bottom: 1px solid var(--color-border);
+
+  text-align: left;
+}
+
+.extrato-table th {
+  color: var(--color-primary-light);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.extrato-table td {
+  color: var(--color-text-secondary);
+}
+
+.tipo-pill {
+  display: inline-flex;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.tipo-pill.credito {
+  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.14);
+}
+
+.tipo-pill.debito {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.tipo-pill.resgate {
+  color: #fed7aa;
+  background: rgba(249, 115, 22, 0.14);
+}
+
+.valor {
+  font-weight: 900;
+}
+
+.valor.credito {
+  color: #86efac;
+}
+
+.valor.debito,
+.valor.resgate {
+  color: #fca5a5;
+}
+
+@media (max-width: 900px) {
+  .extrato-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .extrato-saldo-card {
+    max-width: 360px;
+  }
+}
+.envolvido-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.envolvido-cell span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.envolvido-cell strong {
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+}

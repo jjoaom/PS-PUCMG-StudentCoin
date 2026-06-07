@@ -9,6 +9,8 @@ import Cadastro from "./components/pages/Cadastro/Cadastro";
 import Perfil from "./components/pages/Perfil/Perfil"
 import GerenciarBeneficios from "./components/pages/GerenciarBeneficios/GerenciarBeneficios";
 import Beneficios from "./components/pages/Beneficios/Beneficios";
+import Alunos from "./components/pages/Alunos/Alunos";
+import Extrato from "./components/pages/Extrato/Extrato";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/Perfil" element={<Perfil />} />
           <Route path="/gerenciar-beneficios" element={<GerenciarBeneficios />} />
           <Route path="/beneficios" element={<Beneficios />} />
+          <Route path="/alunos" element={<Alunos />} />
+          <Route path="/extrato" element={<Extrato />} />
         </Routes>
       </BrowserRouter>
     </>

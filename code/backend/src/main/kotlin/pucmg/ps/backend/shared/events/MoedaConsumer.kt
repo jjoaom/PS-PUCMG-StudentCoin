@@ -9,7 +9,6 @@ import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 import pucmg.ps.backend.Professor.ProfessorRepository
 import pucmg.ps.backend.shared.config.RabbitConfig
 import pucmg.ps.backend.shared.enums.TipoMovimentacao
-import pucmg.ps.backend.shared.events.EnviarMoedasEvent
 
 @Service
 class MoedaConsumer(
@@ -21,7 +20,6 @@ class MoedaConsumer(
     @RabbitListener(queues = [RabbitConfig.MOEDA_QUEUE])
     @Transactional
     fun consumir(event: EnviarMoedasEvent) {
-
         val professor = professorRepository.findById(event.professorId)
             .orElseThrow { RuntimeException("Professor não encontrado") }
 
@@ -39,22 +37,26 @@ class MoedaConsumer(
         professor.carteira.saldo -= event.quantidade
         aluno.carteira.saldo += event.quantidade
 
-        val debito = MovimentacaoMoedaEntity(
+        val motivo = event.descricao.ifBlank {
+            "Sem motivo informado"
+        }
+
+        val movimentacaoProfessor = MovimentacaoMoedaEntity(
             valor = event.quantidade,
-            descricao = event.descricao ?: "Envio de moedas",
             tipo = TipoMovimentacao.DEBITO,
+            descricao = "Envio para ${aluno.name}: $motivo",
             carteira = professor.carteira
         )
 
-        val credito = MovimentacaoMoedaEntity(
+        val movimentacaoAluno = MovimentacaoMoedaEntity(
             valor = event.quantidade,
-            descricao = event.descricao ?: "Recebimento de moedas",
             tipo = TipoMovimentacao.CREDITO,
+            descricao = "Recebido de ${professor.name}: $motivo",
             carteira = aluno.carteira
         )
 
-        movimentacaoRepository.save(debito)
-        movimentacaoRepository.save(credito)
+        movimentacaoRepository.save(movimentacaoProfessor)
+        movimentacaoRepository.save(movimentacaoAluno)
 
         alunoRepository.save(aluno)
         professorRepository.save(professor)

@@ -145,4 +145,17 @@ class AlunoService(
         
         return cupomService.usarCupom(codigo)
     }
+
+    fun listarTodos(): List<Map<String, Any?>> {
+        return alunoDao.findAll().map { aluno ->
+            mapOf(
+                "id" to aluno.id,
+                "nome" to aluno.name,
+                "email" to aluno.email,
+                "cpf" to aluno.cpf,
+                "curso" to aluno.curso,
+                "saldo" to aluno.carteira.saldo
+            )
+        }
+    }
 }

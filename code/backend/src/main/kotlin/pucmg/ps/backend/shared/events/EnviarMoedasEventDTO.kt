@@ -1,8 +1,8 @@
 package pucmg.ps.backend.shared.events
 
 data class EnviarMoedasEvent(
-    val professorId: Long,
-    val alunoId: Long,
-    val quantidade: Int,
-    val descricao: String?
+    val professorId: Long = 0,
+    val alunoId: Long = 0,
+    val quantidade: Int = 0,
+    val descricao: String = ""
 )

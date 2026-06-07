@@ -69,4 +69,22 @@ class ProfessorController(
             ResponseEntity.badRequest().body(mapOf("erro" to e.message))
         }
     }
+
+    @GetMapping("/{id}/saldo")
+    fun consultarSaldo(@PathVariable id: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(professorService.consultarSaldo(id))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
+
+    @GetMapping("/{id}/extrato")
+    fun consultarExtrato(@PathVariable id: Long): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(professorService.consultarExtrato(id))
+        } catch (e: RuntimeException) {
+            ResponseEntity.badRequest().body(mapOf("erro" to e.message))
+        }
+    }
 }
