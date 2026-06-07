@@ -31,12 +31,7 @@ type PerfilForm = {
   saldo: string;
 };
 
-type MeResponse = {
-  id: number;
-  role: TipoUsuario;
-  name: string;
-  email: string;
-};
+
 
 export default function Perfil() {
   const [loading, setLoading] = useState(true);

@@ -7,6 +7,7 @@ import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 import pucmg.ps.backend.Vantagem.VantagemDAO
 import pucmg.ps.backend.Cupom.CupomService
 import pucmg.ps.backend.Cupom.CupomDTO
+import pucmg.ps.backend.Cupom.CupomResgatoDTO
 
 @Service
 class AlunoService(
@@ -139,7 +140,7 @@ class AlunoService(
         return cupomService.listarCuponsAluno(alunoId)
     }
 
-    fun usarCupom(codigo: String): CupomDTO {
+    fun usarCupom(codigo: String): CupomResgatoDTO {
         if (cupomService == null) throw RuntimeException("CupomService não disponível")
         
         return cupomService.usarCupom(codigo)

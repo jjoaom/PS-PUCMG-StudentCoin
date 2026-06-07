@@ -41,7 +41,7 @@ class CupomService(
         }
 
         // Debita moedas
-        carteira.debitar(vantagem.custoMoedas)
+        carteira.saldo -= vantagem.custoMoedas
 
         // Registra movimentação
         val movimentacao = MovimentacaoMoedaEntity(

@@ -53,7 +53,7 @@ export function LoginForm() {
       return "PROFESSOR";
     }
 
-    return "USUARIO";
+    return "EMPRESA";
   }
 
   async function tentarLoginGeral() {
