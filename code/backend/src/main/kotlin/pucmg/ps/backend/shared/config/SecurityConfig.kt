@@ -19,9 +19,11 @@ import pucmg.ps.backend.features.auth.jwt.JwtAuthFilter
 @Configuration
 @Profile("prod")
 @EnableMethodSecurity
+
 internal class SecurityConfig(
     private val customUserDetailsService: CustomUserDetailsService,
-    private val jwtAuthFilter: JwtAuthFilter
+    private val jwtAuthFilter: JwtAuthFilter,
+    @Value("\${app.cors.allowed-origins}") private val allowedOrigins: String
 ) {
 
     @Bean
@@ -51,12 +53,17 @@ internal class SecurityConfig(
         }
 
         http
-            .csrf { it.disable() }
+            .cors(Customizer.withDefaults())
+            .csrf {
+                it.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests {
-                it.requestMatchers("/auth/**").permitAll()
+                                it.requestMatchers(
+                    "/auth/**"
+                ).permitAll()
                 it.anyRequest().authenticated()
             }
 
@@ -75,4 +82,16 @@ internal class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val config = CorsConfiguration()
+        config.allowedOriginPatterns = allowedOrigins.split(",").map { it.trim() }
+        config.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+        config.allowedHeaders = listOf("*")
+        config.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", config)
+        return source
+    }
 }

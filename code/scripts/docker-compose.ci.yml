@@ -27,7 +27,7 @@ services:
     container_name: springboot-backend
     restart: unless-stopped
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgres://postgres:3306/animongs_db
+      SPRING_DATASOURCE_URL: jdbc:postgres://postgres:3306/app_db
       SPRING_DATASOURCE_USERNAME: ci_user
       SPRING_DATASOURCE_PASSWORD: ci_password
       SPRING_PROFILES_ACTIVE: ci
