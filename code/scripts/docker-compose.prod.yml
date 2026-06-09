@@ -38,11 +38,12 @@ services:
   backend:
     build:
       context: ../backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: springboot-backend
     restart: unless-stopped
     env_file:
       - ../backend/.env
+      - ../backend/.env.prod
     depends_on:
       postgres:
         condition: service_healthy
@@ -60,7 +61,7 @@ services:
     ports:
       - "80:80"
       # quando for HTTPS:
-      # - "443:443"
+      - "443:443"
     depends_on:
       - backend
     networks:
@@ -70,6 +71,10 @@ volumes:
   postgres-data:
     driver: local
   rabbitmq-data:
+    driver: local
+  caddy-data:
+    driver: local
+  caddy-config:
     driver: local
 
 networks:
