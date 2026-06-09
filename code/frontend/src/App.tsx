@@ -11,6 +11,8 @@ import GerenciarBeneficios from "./components/pages/GerenciarBeneficios/Gerencia
 import Beneficios from "./components/pages/Beneficios/Beneficios";
 import Alunos from "./components/pages/Alunos/Alunos";
 import Extrato from "./components/pages/Extrato/Extrato";
+import Sobre from "./components/pages/Sobre/Sobre";
+import EmpresasParceiras from "./components/pages/EmpresasParceiras/EmpresasParceiras";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/beneficios" element={<Beneficios />} />
           <Route path="/alunos" element={<Alunos />} />
           <Route path="/extrato" element={<Extrato />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/empresas-parceiras" element={<EmpresasParceiras />} />
         </Routes>
       </BrowserRouter>
     </>

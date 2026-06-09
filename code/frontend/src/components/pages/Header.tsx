@@ -1,5 +1,17 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { 
+  FiInfo, 
+  FiGift, 
+  FiBriefcase, 
+  FiUser, 
+  FiFileText, 
+  FiUsers, 
+  FiSliders, 
+  FiLogIn, 
+  FiUserPlus, 
+  FiLogOut 
+} from "react-icons/fi";
 import "./Header.css";
 
 type TipoUsuario = "ALUNO" | "PROFESSOR" | "EMPRESA";
@@ -61,9 +73,15 @@ export default function Header() {
     if (!usuarioLogado) {
       return (
         <>
-          <Link to="/sobre">Sobre</Link>
-          <Link to="/beneficios">Benefícios</Link>
-          <Link to="/empresas-parceiras">Empresas Parceiras</Link>
+          <Link to="/sobre" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiInfo /> Sobre
+          </Link>
+          <Link to="/beneficios" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiGift /> Benefícios
+          </Link>
+          <Link to="/empresas-parceiras" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiBriefcase /> Empresas Parceiras
+          </Link>
         </>
       );
     }
@@ -71,9 +89,15 @@ export default function Header() {
     if (usuarioLogado.tipo === "ALUNO") {
       return (
         <>
-          <Link to="/perfil">Perfil</Link>
-          <Link to="/beneficios">Benefícios</Link>
-          <Link to="/extrato">Extrato</Link>
+          <Link to="/perfil" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiUser /> Perfil
+          </Link>
+          <Link to="/beneficios" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiGift /> Benefícios
+          </Link>
+          <Link to="/extrato" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiFileText /> Extrato
+          </Link>
         </>
       );
     }
@@ -81,9 +105,15 @@ export default function Header() {
     if (usuarioLogado.tipo === "PROFESSOR") {
       return (
         <>
-          <Link to="/perfil">Perfil</Link>
-          <Link to="/alunos">Alunos</Link>
-          <Link to="/extrato">Extrato</Link>
+          <Link to="/perfil" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiUser /> Perfil
+          </Link>
+          <Link to="/alunos" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiUsers /> Alunos
+          </Link>
+          <Link to="/extrato" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiFileText /> Extrato
+          </Link>
         </>
       );
     }
@@ -91,8 +121,12 @@ export default function Header() {
     if (usuarioLogado.tipo === "EMPRESA") {
       return (
         <>
-          <Link to="/perfil">Perfil</Link>
-          <Link to="/gerenciar-beneficios">Gerenciar Benefícios</Link>
+          <Link to="/perfil" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiUser /> Perfil
+          </Link>
+          <Link to="/gerenciar-beneficios" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiSliders /> Gerenciar Benefícios
+          </Link>
         </>
       );
     }
@@ -103,7 +137,18 @@ export default function Header() {
   return (
     <header className="navbar">
       <Link to="/" className="logo">
-        💎 StudentCoin
+        <img 
+          src="/logo.png" 
+          alt="StudentCoin Logo" 
+          className="logo-img" 
+          style={{ 
+            height: "72px", 
+            width: "128px", 
+            aspectRatio: "16/9", 
+            objectFit: "contain", 
+            display: "block" 
+          }} 
+        />
       </Link>
 
       <nav className={usuarioLogado ? "nav-logado" : "nav-publico"}>
@@ -114,16 +159,20 @@ export default function Header() {
         {!usuarioLogado ? (
           <>
             <Link to="/Login">
-              <button className="secondary-button">Login</button>
+              <button className="secondary-button" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                <FiLogIn /> Login
+              </button>
             </Link>
 
             <Link to="/Cadastro">
-              <button className="primary-button">Cadastre-se</button>
+              <button className="primary-button" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                <FiUserPlus /> Cadastre-se
+              </button>
             </Link>
           </>
         ) : (
-          <button className="secondary-button" onClick={sair}>
-            Sair
+          <button className="secondary-button" onClick={sair} style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <FiLogOut /> Sair
           </button>
         )}
       </div>

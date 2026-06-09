@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FiLock } from "react-icons/fi";
 
 type LoginResponse = {
   accessToken?: string;
@@ -158,7 +159,9 @@ export function LoginForm() {
   return (
     <div className="login-form-card">
       <div className="login-form-header">
-        <span className="login-icon">🔐</span>
+        <span className="login-icon">
+          <FiLock style={{ color: "var(--color-primary)" }} />
+        </span>
 
         <div>
           <h2>Entrar na conta</h2>
