@@ -1,0 +1,47 @@
+@startuml
+title "Envio de moedas para aluno"
+
+object Professor
+object "Página Web" as Frontend
+object "Backend" as Backend
+object "Banco de Dados" as DB
+object Email
+Object Aluno
+
+Professor --> Frontend : 1.Acessa o sistema
+Professor --> Frontend : 2.Realiza o login
+
+Frontend --> Backend : 3.Envia credenciais
+
+Backend --> DB : 4.Valida usuário
+
+DB --> Backend : 5. Usuário OK
+Backend --> Frontend : 6.Login confirmado
+
+Professor --> Frontend : 7.Acessa lista de alunos
+
+Frontend --> Backend : 8.Solicita alunos
+
+Backend --> DB : 9.Buscar alunos
+
+DB --> Backend : 10.Lista de alunos
+
+Backend --> Frontend : 11.Retorna lista dos alunos
+
+Professor --> Frontend : 12.Seleciona o aluno e informa moedas
+
+Frontend --> Backend : 13.Envia transferência de moedas
+
+Backend --> DB : 14.Atualiza saldo do aluno
+
+DB --> Backend : 15.Confirma atualização
+
+Backend --> Email : 16. Envia email para aluno
+Email --> Aluno: 17. Recebe email com novo saldo
+
+Backend --> Frontend : 18.Operação concluída
+
+Frontend --> Professor : 19.Exibe confirmação
+
+
+@enduml

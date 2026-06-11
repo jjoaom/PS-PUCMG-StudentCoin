@@ -15,6 +15,7 @@ data class VantagemResponseDTO(
     val detalhes: String?,
     val ativa: Boolean,
     val empresaId: Long,
+    val nomeEmpresa: String,
     val criadoEm: Instant?,
     val atualizadoEm: Instant?
 )
@@ -27,6 +28,7 @@ fun VantagemEntity.toResponseDTO(): VantagemResponseDTO =
         detalhes = this.detalhes,
         ativa = this.ativa,
         empresaId = this.empresa.id!!,
+        nomeEmpresa = this.empresa.nomeFantasia,
         criadoEm = this.criadoEm,
         atualizadoEm = this.atualizadoEm
     )

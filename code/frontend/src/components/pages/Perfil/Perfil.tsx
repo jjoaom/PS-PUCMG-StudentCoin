@@ -152,7 +152,7 @@ export default function Perfil() {
           estado: dados.estado || "",
 
           curso: dados.curso || "",
-          instituicaoId: String(dados.instituicaoId || ""),
+          instituicaoId: String(dados.instituicao?.id ?? dados.instituicaoId ?? ""),
 
           departamento: dados.departamento || "",
 

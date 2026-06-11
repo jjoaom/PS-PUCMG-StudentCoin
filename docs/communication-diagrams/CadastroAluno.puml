@@ -1,0 +1,33 @@
+@startuml
+title "Cadastro de Aluno"
+
+
+object Aluno
+object "Página Web" as Frontend
+object "Backend" as Backend
+object "Banco de Dados" as DB
+object Email
+
+Aluno -> Frontend : 1. Acessa página de cadastro
+Frontend -> Backend : 2. Solicita instituições
+Backend -> DB : 3. Buscar instituições
+DB --> Backend : 4. Lista de instituições
+Backend --> Frontend : 5. Retorna instituições
+Frontend --> Aluno : 6. Exibe formulário
+
+Aluno -> Frontend : 7. Preenche dados
+Frontend -> Backend : 8. Envia cadastro
+
+Backend -> DB : 9. Verifica e-mail
+DB --> Backend : 10. E-mail disponível
+
+Backend -> DB : 11. Salva aluno
+DB --> Backend : 12. Cadastro realizado
+
+Backend -> Email : 13. Envia e-mail de confirmação
+Backend --> Frontend : 14. Cadastro realizado
+Frontend --> Aluno : 15. Exibe mensagem de sucesso
+
+Email --> Aluno : 16. Recebe e-mail de confirmação
+
+@enduml

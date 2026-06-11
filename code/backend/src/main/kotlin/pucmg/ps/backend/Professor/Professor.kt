@@ -2,11 +2,12 @@ package pucmg.ps.backend.Professor
 
 import jakarta.persistence.*
 import pucmg.ps.backend.features.auth.user.UserEntity
+import pucmg.ps.backend.Instituicao.Instituicao
 import pucmg.ps.backend.Moeda.CarteiraEntity
 
 @Entity
 @Table(name = "professores")
-class Professor(
+open class Professor(
     name: String = "",
     email: String = "",
     password: String = "",
@@ -15,6 +16,10 @@ class Professor(
     var cpf: String = "",
 
     var departamento: String = "",
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instituicao_id")
+    var instituicao: Instituicao? = null,
 
     @OneToOne(
         cascade = [CascadeType.ALL],

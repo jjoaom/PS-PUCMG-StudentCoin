@@ -3,6 +3,7 @@ package pucmg.ps.backend.Aluno
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pucmg.ps.backend.features.auth.permission.PermissionDAO
+import pucmg.ps.backend.Instituicao.InstituicaoRepository
 import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 import pucmg.ps.backend.Vantagem.VantagemDAO
 import pucmg.ps.backend.Cupom.CupomService
@@ -15,6 +16,7 @@ class AlunoService(
     private val passwordEncoder: PasswordEncoder,
     private val permissionDao: PermissionDAO,
     private val movimentacaoRepository: MovimentacaoMoedaRepository,
+    private val instituicaoRepository: InstituicaoRepository,
     private val vantagemDAO: VantagemDAO? = null,
     private val cupomService: CupomService? = null
 ) {
@@ -32,6 +34,9 @@ class AlunoService(
         val permissaoAluno = permissionDao.findByName("ALUNO")
         val permissoes = if (permissaoAluno != null) mutableSetOf(permissaoAluno) else mutableSetOf()
 
+        val instituicao = instituicaoRepository.findById(dto.instituicaoId)
+            .orElseThrow { RuntimeException("Instituição não encontrada") }
+
         val aluno = Aluno(
             name = dto.nome,
             email = dto.email,
@@ -46,7 +51,7 @@ class AlunoService(
             cidade = dto.cidade,
             estado = dto.estado,
             curso = dto.curso,
-            instituicaoId = dto.instituicaoId
+            instituicao = instituicao
         ).apply {
             this.permissions = permissoes
         }
@@ -78,7 +83,8 @@ class AlunoService(
         aluno.cidade = dto.cidade
         aluno.estado = dto.estado
         aluno.curso = dto.curso
-        aluno.instituicaoId = dto.instituicaoId
+        aluno.instituicao = instituicaoRepository.findById(dto.instituicaoId)
+            .orElseThrow { RuntimeException("Instituição não encontrada") }
 
         return alunoDao.save(aluno)
     }

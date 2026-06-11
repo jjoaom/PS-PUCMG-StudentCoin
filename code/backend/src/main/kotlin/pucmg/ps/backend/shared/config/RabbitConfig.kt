@@ -18,6 +18,10 @@ class RabbitConfig {
         const val MOEDA_QUEUE = "moeda.enviar.queue"
         const val MOEDA_EXCHANGE = "moeda.exchange"
         const val MOEDA_ROUTING_KEY = "moeda.enviar"
+
+        const val RESGATE_QUEUE = "resgate.email.queue"
+        const val RESGATE_EXCHANGE = "resgate.exchange"
+        const val RESGATE_ROUTING_KEY = "resgate.email"
     }
 
     @Bean
@@ -40,6 +44,28 @@ class RabbitConfig {
             .bind(moedaQueue)
             .to(moedaExchange)
             .with(MOEDA_ROUTING_KEY)
+    }
+
+    @Bean
+    fun resgateQueue(): Queue {
+        return Queue(RESGATE_QUEUE, true)
+    }
+
+    @Bean
+    fun resgateExchange(): TopicExchange {
+        return TopicExchange(RESGATE_EXCHANGE)
+    }
+
+    @Bean
+    fun resgateBinding(
+        resgateQueue: Queue,
+        resgateExchange: TopicExchange
+    ): Binding {
+
+        return BindingBuilder
+            .bind(resgateQueue)
+            .to(resgateExchange)
+            .with(RESGATE_ROUTING_KEY)
     }
 
     @Bean

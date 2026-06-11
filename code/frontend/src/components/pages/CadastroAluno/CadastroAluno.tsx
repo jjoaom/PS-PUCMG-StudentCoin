@@ -255,8 +255,8 @@ export default function CadastroAluno() {
                 name="rg"
                 value={form.rg}
                 onAccept={(value: string) => atualizarCampo("rg", value)}
-                mask="00.000.000-0"
-                placeholder="00.000.000-0"
+                mask="00.000.000"
+                placeholder="00.000.000"
                 required
               />
             </div>

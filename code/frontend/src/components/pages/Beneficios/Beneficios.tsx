@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FiRefreshCw, FiInfo, FiGift } from "react-icons/fi";
+import { FiRefreshCw, FiInfo, FiGift, FiCheckCircle, FiCopy } from "react-icons/fi";
 import { IoDiamond } from "react-icons/io5";
 import "./Beneficios.css";
 
@@ -12,6 +12,20 @@ type Vantagem = {
   ativa: boolean;
   empresaId?: number;
   nomeEmpresa?: string;
+};
+
+type CupomResposta = {
+  id: number;
+  codigo: string;
+  dataEmissao: string;
+  dataValidade: string;
+  utilizado: boolean;
+  dataUtilizacao: string | null;
+  alunoId: number;
+  vantagemId: number;
+  vantagemDescricao: string;
+  custoMoedas: number;
+  nomeEmpresa: string;
 };
 
 const BENEFICIOS_MOCK: Vantagem[] = [
@@ -71,7 +85,12 @@ export default function Beneficios() {
   const [erro, setErro] = useState<string | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [selecionado, setSelecionado] = useState<Vantagem | null>(null);
+  const [resgatando, setResgatando] = useState(false);
+  const [erroResgate, setErroResgate] = useState<string | null>(null);
+  const [cupomResgatado, setCupomResgatado] = useState<CupomResposta | null>(null);
+  const [copiado, setCopiado] = useState(false);
 
+  const userId = localStorage.getItem("userId");
   const userType = localStorage.getItem("userType");
   const token = localStorage.getItem("token");
   const isAluno = userType === "ALUNO";
@@ -129,14 +148,63 @@ export default function Beneficios() {
     }
   }
 
+  async function resgatarVantagem() {
+    if (!selecionado || !userId) return;
+
+    setResgatando(true);
+    setErroResgate(null);
+    setCupomResgatado(null);
+
+    try {
+      const resposta = await fetch(`/api/alunos/${userId}/resgatar-vantagem/${selecionado.id}`, {
+        method: "POST",
+        headers: getHeaders(),
+      });
+
+      const data = await resposta.json().catch(() => null);
+
+      if (!resposta.ok) {
+        setErroResgate(data?.erro || data?.message || "Erro ao resgatar benefício.");
+        return;
+      }
+
+      setCupomResgatado(data);
+      carregarBeneficios();
+    } catch {
+      setErroResgate("Erro ao conectar com o servidor.");
+    } finally {
+      setResgatando(false);
+    }
+  }
+
+  function copiarCodigo(codigo: string) {
+    navigator.clipboard.writeText(codigo);
+    setCopiado(true);
+    setTimeout(() => setCopiado(false), 2000);
+  }
+
   function abrirModalResgate(beneficio: Vantagem) {
     setSelecionado(beneficio);
+    setErroResgate(null);
+    setCupomResgatado(null);
+    setCopiado(false);
     setModalAberto(true);
   }
 
   function fecharModal() {
     setModalAberto(false);
     setSelecionado(null);
+    setCupomResgatado(null);
+    setErroResgate(null);
+    setCopiado(false);
+  }
+
+  function formatarData(data: string) {
+    try {
+      return new Date(data).toLocaleString("pt-BR");
+    } catch {
+      return data;
+    }
   }
 
   return (
@@ -232,22 +300,86 @@ export default function Beneficios() {
 
             {isAluno ? (
               <>
-                <div className="modal-image-box">
-                  <img
-                    src="/cachorro-pedreiro.png"
-                    alt="Estamos trabalhando nisso"
-                  />
-                </div>
+                {cupomResgatado ? (
+                  <>
+                    <div className="modal-success-icon">
+                      <FiCheckCircle />
+                    </div>
 
-                <h2>Estamos trabalhando nisso!</h2>
+                    <h2>Benefício resgatado!</h2>
 
-                <p>
-                  A funcionalidade de resgate para o benefício <strong>"{selecionado?.descricao}"</strong> ainda está em desenvolvimento.
-                </p>
+                    <p>
+                      Seu cupom para <strong>"{selecionado?.descricao}"</strong> foi gerado com sucesso.
+                    </p>
 
-                <button className="modal-action primary-button" onClick={fecharModal}>
-                  Entendi
-                </button>
+                    <div className="cupom-code-box">
+                      <span className="cupom-code-label">Código do cupom</span>
+                      <strong className="cupom-code">{cupomResgatado.codigo}</strong>
+                      <button
+                        className="cupom-copy-btn"
+                        onClick={() => copiarCodigo(cupomResgatado.codigo)}
+                      >
+                        <FiCopy /> {copiado ? "Copiado!" : "Copiar código"}
+                      </button>
+                    </div>
+
+                    <div className="cupom-detalhes">
+                      <div className="cupom-detalhe-item">
+                        <span>Empresa</span>
+                        <strong>{cupomResgatado.nomeEmpresa}</strong>
+                      </div>
+                      <div className="cupom-detalhe-item">
+                        <span>Validade</span>
+                        <strong>{formatarData(cupomResgatado.dataValidade)}</strong>
+                      </div>
+                      <div className="cupom-detalhe-item">
+                        <span>Moedas gastas</span>
+                        <strong>{cupomResgatado.custoMoedas}</strong>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", gap: "12px", width: "100%", marginTop: "8px" }}>
+                      <Link to="/meus-cupons" style={{ flex: 1 }}>
+                        <button className="primary-button" style={{ width: "100%" }}>
+                          Ver meus cupons
+                        </button>
+                      </Link>
+                      <button className="secondary-button" style={{ flex: 1 }} onClick={fecharModal}>
+                        Fechar
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="modal-icon-box" style={{ fontSize: "3rem", color: "var(--color-primary)", display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+                      <IoDiamond />
+                    </div>
+
+                    <h2>Resgatar benefício</h2>
+
+                    <p style={{ color: "var(--color-text-secondary)", marginBottom: "24px" }}>
+                    Você está prestes a resgatar <strong>"{selecionado?.descricao}"</strong> por <strong>{selecionado?.custoMoedas} StudentCoins</strong>.
+                    </p>
+
+                    {erroResgate && (
+                      <p className="beneficios-message error" style={{ marginBottom: "16px" }}>{erroResgate}</p>
+                    )}
+
+                    <div style={{ display: "flex", gap: "12px", width: "100%" }}>
+                      <button
+                        className="primary-button"
+                        style={{ flex: 1 }}
+                        onClick={resgatarVantagem}
+                        disabled={resgatando}
+                      >
+                        {resgatando ? "Resgatando..." : "Confirmar resgate"}
+                      </button>
+                      <button className="secondary-button" style={{ flex: 1 }} onClick={fecharModal}>
+                        Cancelar
+                      </button>
+                    </div>
+                  </>
+                )}
               </>
             ) : (
               <>

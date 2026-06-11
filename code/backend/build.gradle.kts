@@ -2,7 +2,8 @@ plugins {
 	kotlin("jvm") version "2.2.21"
 	kotlin("plugin.spring") version "2.2.21"
 	kotlin("plugin.jpa") version "2.2.21"
-	id("org.springframework.boot") version "4.0.3"
+
+	id("org.springframework.boot") version "4.0.6"
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -35,10 +36,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2")
-	implementation("com.fasterxml.jackson.core:jackson-core") {
-			version { require("2.21.1") }
-            because("Mitigates GHSA-72hv-8253-57qq")
-        }
+	implementation("com.fasterxml.jackson.core:jackson-core")
 	implementation("tools.jackson.module:jackson-module-kotlin:3.1.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
@@ -49,6 +47,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")

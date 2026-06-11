@@ -1,0 +1,23 @@
+@startuml
+title "Diagrama de Comunicação - Fluxo de Login"
+
+object Usuario
+object "Página Web" as Frontend
+object "Backend" as Backend
+object "Banco de Dados" as DB
+
+Usuario --> Frontend : 1. Acessa página de login
+Usuario --> Frontend : 2. Envia credenciais
+
+Frontend --> Backend : 3. Solicita autenticação
+
+Backend --> DB : 4. Busca usuário por login
+DB --> Backend : 5. Retorna dados do usuário
+
+Backend --> Backend : 6. Valida senha
+
+Backend --> Frontend : 7. Retorna resultado da autenticação
+
+Frontend --> Usuario : 8. Exibe resultado (sucesso/erro)
+
+@enduml

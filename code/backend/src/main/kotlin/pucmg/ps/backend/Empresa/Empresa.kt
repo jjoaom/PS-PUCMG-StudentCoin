@@ -6,7 +6,7 @@ import pucmg.ps.backend.Vantagem.VantagemEntity
 
 @Entity
 @Table(name = "empresas")
-class Empresa(
+open class Empresa(
     name: String = "",
     email: String = "",
     password: String = "",

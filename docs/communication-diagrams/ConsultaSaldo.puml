@@ -1,0 +1,32 @@
+@startuml
+title "Diagrama de Comunicação Consulta de Saldo e Extrato"
+
+object "Aluno/Professor" as Usuario
+object "Página Web" as Frontend
+object Backend
+object "Banco de Dados" as DB
+
+Usuario -> Frontend : 1.Faz login
+
+Frontend -> Backend : 2.Envia credenciais do usuario
+
+Backend -> DB : 3.Verifica usuário
+
+DB --> Backend: 4.Usuario validado
+
+Backend --> Frontend : 5.Login confirmado
+
+Usuario -> Frontend : 6.Acessa página de perfil
+
+Usuario -> Frontend : 7.Acessar página de histórico
+Frontend -> Backend : 8. Selecionar extrato do usuario
+
+Backend -> DB : 9.SELECT Carteira
+
+DB --> Backend : 10.Carteira contendo saldo e extrato completo
+
+Backend --> Frontend : 11. Retorna lista
+
+Frontend --> Usuario : 12. Exibe histórico de saldo e extrato
+
+@enduml

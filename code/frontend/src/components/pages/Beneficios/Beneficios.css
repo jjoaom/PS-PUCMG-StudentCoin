@@ -398,6 +398,108 @@
   animation: pulse 2s infinite;
 }
 
+.modal-success-icon {
+  font-size: 3.5rem;
+  color: #22c55e;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  animation: successPop 0.4s ease;
+}
+
+.cupom-code-box {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 2px dashed var(--color-primary);
+  background: rgba(255, 158, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.cupom-code-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cupom-code {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  letter-spacing: 2px;
+  font-family: "Courier New", monospace;
+}
+
+.cupom-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cupom-copy-btn:hover {
+  border-color: var(--color-primary);
+  background: rgba(255, 158, 0, 0.1);
+}
+
+.cupom-detalhes {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.cupom-detalhe-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border);
+}
+
+.cupom-detalhe-item span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.cupom-detalhe-item strong {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);

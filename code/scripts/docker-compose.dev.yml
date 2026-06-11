@@ -34,7 +34,7 @@ services:
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: app
-      RABBITMQ_DEFAULT_PASS: app123
+      RABBITMQ_DEFAULT_PASS: DXuuT5bLZLupYK3jBW0
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     networks:
@@ -61,6 +61,7 @@ services:
     restart: unless-stopped
     env_file:
       - ../backend/.env
+      - ../backend/.env.dev
     ports:
       - "8080:8080"
     depends_on:

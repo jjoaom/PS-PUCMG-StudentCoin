@@ -10,7 +10,8 @@ import {
   FiSliders, 
   FiLogIn, 
   FiUserPlus, 
-  FiLogOut 
+  FiLogOut,
+  FiTag
 } from "react-icons/fi";
 import "./Header.css";
 
@@ -94,6 +95,9 @@ export default function Header() {
           </Link>
           <Link to="/beneficios" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
             <FiGift /> Benefícios
+          </Link>
+          <Link to="/meus-cupons" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <FiTag /> Meus Cupons
           </Link>
           <Link to="/extrato" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
             <FiFileText /> Extrato

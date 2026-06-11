@@ -9,6 +9,7 @@ import Cadastro from "./components/pages/Cadastro/Cadastro";
 import Perfil from "./components/pages/Perfil/Perfil"
 import GerenciarBeneficios from "./components/pages/GerenciarBeneficios/GerenciarBeneficios";
 import Beneficios from "./components/pages/Beneficios/Beneficios";
+import Cupons from "./components/pages/Cupons/Cupons";
 import Alunos from "./components/pages/Alunos/Alunos";
 import Extrato from "./components/pages/Extrato/Extrato";
 import Sobre from "./components/pages/Sobre/Sobre";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/Perfil" element={<Perfil />} />
           <Route path="/gerenciar-beneficios" element={<GerenciarBeneficios />} />
           <Route path="/beneficios" element={<Beneficios />} />
+          <Route path="/meus-cupons" element={<Cupons />} />
           <Route path="/alunos" element={<Alunos />} />
           <Route path="/extrato" element={<Extrato />} />
           <Route path="/sobre" element={<Sobre />} />
