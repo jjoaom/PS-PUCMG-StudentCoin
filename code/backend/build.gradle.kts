@@ -51,6 +51,8 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
+    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.google.zxing:javase:3.5.3")
 }
 
 kotlin {

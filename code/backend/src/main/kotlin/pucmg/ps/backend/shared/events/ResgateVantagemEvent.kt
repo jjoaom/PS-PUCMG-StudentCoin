@@ -8,5 +8,6 @@ data class ResgateVantagemEvent(
     val custoMoedas: Int = 0,
     val nomeEmpresa: String = "",
     val codigoCupom: String = "",
-    val dataValidade: String = ""
+    val dataValidade: String = "",
+    val qrCodeBase64: String = ""
 )

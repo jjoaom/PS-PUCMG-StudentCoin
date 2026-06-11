@@ -27,6 +27,7 @@ class EmailService(
             setVariable("dataValidade", event.dataValidade)
             setVariable("appUrl", appUrl)
             setVariable("logoUrl", "$appUrl/logo.png")
+            setVariable("qrCodeBase64", event.qrCodeBase64)
         }
 
         val html = templateEngine.process("email/resgate-cupom", context)

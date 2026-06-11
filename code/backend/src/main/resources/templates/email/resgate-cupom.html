@@ -293,6 +293,13 @@
           <div class="label">Código do cupom</div>
           <div class="codigo" th:text="${codigoCupom}">CUPOM-XXXXXXXX</div>
           <div class="validade" th:text="'Válido até ' + ${dataValidade}">Válido até 30/06/2026</div>
+          <div style="margin-top: 18px;">
+            <img th:src="'data:image/png;base64,' + ${qrCodeBase64}"
+                 alt="QR Code do cupom"
+                 width="160"
+                 height="160"
+                 style="display:inline-block; border-radius:8px;" />
+          </div>
         </div>
 
         <div class="divider"></div>

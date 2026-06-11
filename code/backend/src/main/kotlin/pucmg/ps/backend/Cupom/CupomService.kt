@@ -9,6 +9,7 @@ import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
 import pucmg.ps.backend.shared.enums.TipoMovimentacao
 import pucmg.ps.backend.shared.events.ResgateProducer
 import pucmg.ps.backend.shared.events.ResgateVantagemEvent
+import pucmg.ps.backend.shared.qrcode.QRCodeService
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -19,7 +20,8 @@ class CupomService(
     private val vantagemDAO: VantagemDAO,
     private val alunoDao: AlunoDao,
     private val movimentacaoRepository: MovimentacaoMoedaRepository,
-    private val resgateProducer: ResgateProducer
+    private val resgateProducer: ResgateProducer,
+    private val qrCodeService: QRCodeService
 ) {
 
     /**
@@ -63,6 +65,8 @@ class CupomService(
 
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneId.of("America/Sao_Paulo"))
 
+        val qrCodeBase64 = qrCodeService.gerarBase64(cupomSalvo.codigo)
+
         val event = ResgateVantagemEvent(
             alunoId = aluno.id!!,
             alunoNome = aluno.name,
@@ -71,7 +75,8 @@ class CupomService(
             custoMoedas = vantagem.custoMoedas,
             nomeEmpresa = vantagem.empresa.nomeFantasia,
             codigoCupom = cupomSalvo.codigo,
-            dataValidade = formatter.format(cupomSalvo.dataValidade)
+            dataValidade = formatter.format(cupomSalvo.dataValidade),
+            qrCodeBase64 = qrCodeBase64
         )
 
         resgateProducer.publicar(event)
