@@ -1,0 +1,28 @@
+@startuml
+title "Cadastro de Vantagem / Benefício pela Empresa"
+
+object Empresa
+object "Página Web" as Frontend
+object "Backend" as Backend
+object "Banco de Dados" as DB
+object Email
+
+Empresa -> Frontend : 1. Acessa página de cadastro de vantagem
+Frontend --> Empresa : 2. Exibe formulário
+
+Empresa -> Frontend : 3. Preenche dados da vantagem
+Frontend -> Backend : 4. Envia cadastro da vantagem
+
+Backend -> DB : 5. Verifica empresa
+DB --> Backend : 6. Empresa encontrada
+
+Backend -> DB : 7. Salva vantagem
+DB --> Backend : 8. Vantagem cadastrada
+
+Backend -> Email : 9. Envia e-mail de confirmação
+Backend --> Frontend : 10. Cadastro realizado
+Frontend --> Empresa : 11. Exibe mensagem de sucesso
+
+Email --> Empresa : 12. Recebe e-mail de confirmação
+
+@enduml

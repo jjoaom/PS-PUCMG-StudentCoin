@@ -1,0 +1,42 @@
+@startuml
+title "Resgate de Vantagem pelo Aluno"
+
+object Aluno
+object "Página Web" as Frontend
+object "Backend" as Backend
+object "Banco de Dados" as DB
+object Email
+object Empresa
+
+Aluno -> Frontend : 1. Acessa lista de vantagens
+Frontend -> Backend : 2. Solicita vantagens disponíveis
+Backend -> DB : 3. Busca vantagens
+DB --> Backend : 4. Lista de vantagens
+Backend --> Frontend : 5. Retorna vantagens
+Frontend --> Aluno : 6. Exibe vantagens disponíveis
+
+Aluno -> Frontend : 7. Seleciona vantagem para resgate
+Frontend -> Backend : 8. Envia solicitação de resgate
+
+Backend -> DB : 9. Verifica saldo do aluno
+DB --> Backend : 10. Saldo disponível
+
+Backend -> DB : 11. Verifica disponibilidade da vantagem
+DB --> Backend : 12. Vantagem disponível
+
+Backend -> DB : 13. Debita moedas do aluno
+DB --> Backend : 14. Saldo atualizado
+
+Backend -> DB : 15. Gera cupom de resgate
+DB --> Backend : 16. Cupom registrado
+
+Backend --> Email : 17. Envia e-mail\ncom cupom para aluno
+Backend --> Email : 18. Envia e-mail\nde notificação\npara empresa
+
+Backend --> Frontend : 19. Resgate realizado
+Frontend --> Aluno : 20. Exibe mensagem de sucesso
+
+Email --> Aluno : 21. Recebe e-mail com cupom
+Email --> Empresa : 22. Recebe e-mail de notificação do resgate
+
+@enduml
