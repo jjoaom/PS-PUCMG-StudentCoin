@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring6.SpringTemplateEngine
 import pucmg.ps.backend.shared.events.ResgateVantagemEvent
+import pucmg.ps.backend.shared.events.MoedaRecebidaEvent
 
 @Service
 class EmailService(
@@ -38,6 +39,29 @@ class EmailService(
         helper.setFrom(from)
         helper.setTo(event.alunoEmail)
         helper.setSubject("StudentCoin - Cupom resgatado: ${event.vantagemDescricao}")
+        helper.setText(html, true)
+
+        mailSender.send(mensagem)
+    }
+
+    fun enviarEmailMoedaRecebida(event: MoedaRecebidaEvent) {
+        val context = Context().apply {
+            setVariable("alunoNome", event.alunoNome)
+            setVariable("professorNome", event.professorNome)
+            setVariable("quantidadeMoedas", event.quantidadeMoedas)
+            setVariable("descricao", event.descricao)
+            setVariable("appUrl", appUrl)
+            setVariable("logoUrl", "$appUrl/logo.png")
+        }
+
+        val html = templateEngine.process("email/moeda-recebida", context)
+
+        val mensagem: MimeMessage = mailSender.createMimeMessage()
+        val helper = MimeMessageHelper(mensagem, true, "UTF-8")
+
+        helper.setFrom(from)
+        helper.setTo(event.alunoEmail)
+        helper.setSubject("StudentCoin - Você recebeu moedas")
         helper.setText(html, true)
 
         mailSender.send(mensagem)

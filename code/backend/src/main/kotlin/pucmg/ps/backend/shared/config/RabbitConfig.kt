@@ -22,6 +22,10 @@ class RabbitConfig {
         const val RESGATE_QUEUE = "resgate.email.queue"
         const val RESGATE_EXCHANGE = "resgate.exchange"
         const val RESGATE_ROUTING_KEY = "resgate.email"
+
+        const val MOEDA_EMAIL_QUEUE = "moeda.email.queue"
+        const val MOEDA_EMAIL_EXCHANGE = "moeda.email.exchange"
+        const val MOEDA_EMAIL_ROUTING_KEY = "moeda.email.routing-key"
     }
 
     @Bean
@@ -39,7 +43,6 @@ class RabbitConfig {
         moedaQueue: Queue,
         moedaExchange: TopicExchange
     ): Binding {
-
         return BindingBuilder
             .bind(moedaQueue)
             .to(moedaExchange)
@@ -61,11 +64,31 @@ class RabbitConfig {
         resgateQueue: Queue,
         resgateExchange: TopicExchange
     ): Binding {
-
         return BindingBuilder
             .bind(resgateQueue)
             .to(resgateExchange)
             .with(RESGATE_ROUTING_KEY)
+    }
+
+    @Bean
+    fun moedaEmailQueue(): Queue {
+        return Queue(MOEDA_EMAIL_QUEUE, true)
+    }
+
+    @Bean
+    fun moedaEmailExchange(): TopicExchange {
+        return TopicExchange(MOEDA_EMAIL_EXCHANGE)
+    }
+
+    @Bean
+    fun moedaEmailBinding(
+        moedaEmailQueue: Queue,
+        moedaEmailExchange: TopicExchange
+    ): Binding {
+        return BindingBuilder
+            .bind(moedaEmailQueue)
+            .to(moedaEmailExchange)
+            .with(MOEDA_EMAIL_ROUTING_KEY)
     }
 
     @Bean
@@ -78,7 +101,6 @@ class RabbitConfig {
         connectionFactory: ConnectionFactory,
         converter: MessageConverter
     ): RabbitTemplate {
-
         return RabbitTemplate(connectionFactory).apply {
             messageConverter = converter
         }

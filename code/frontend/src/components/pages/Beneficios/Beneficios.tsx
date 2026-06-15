@@ -28,6 +28,18 @@ type CupomResposta = {
   nomeEmpresa: string;
 };
 
+type AlunoSaldoResponse = {
+  id: number;
+  name?: string;
+  email?: string;
+  saldo?: number;
+  saldoCarteira?: number;
+  carteira?: {
+    id: number;
+    saldo: number;
+  };
+};
+
 const BENEFICIOS_MOCK: Vantagem[] = [
   {
     id: 101,
@@ -95,9 +107,13 @@ export default function Beneficios() {
   const token = localStorage.getItem("token");
   const isAluno = userType === "ALUNO";
 
+  const [saldoMoedas, setSaldoMoedas] = useState<number | null>(null);
+  const [loadingSaldo, setLoadingSaldo] = useState(false);  
+
   useEffect(() => {
     if (isAluno) {
       carregarBeneficios();
+      carregarSaldoAluno();
     } else {
       setBeneficios(BENEFICIOS_MOCK);
     }
@@ -114,7 +130,37 @@ export default function Beneficios() {
 
     return headers;
   }
+  async function carregarSaldoAluno() {
+    if (!userId || !isAluno) return;
 
+    try {
+      setLoadingSaldo(true);
+
+      const resposta = await fetch(`/api/alunos/${userId}`, {
+        headers: getHeaders(),
+      });
+
+      const data: AlunoSaldoResponse | null = await resposta.json().catch(() => null);
+
+      if (!resposta.ok || !data) {
+        setSaldoMoedas(null);
+        return;
+      }
+
+      const saldo =
+        data.carteira?.saldo ??
+        data.saldoCarteira ??
+        data.saldo ??
+        null;
+
+      setSaldoMoedas(saldo);
+    } catch (error) {
+      console.error("Erro ao carregar saldo do aluno:", error);
+      setSaldoMoedas(null);
+    } finally {
+      setLoadingSaldo(false);
+    }
+  }
   async function carregarBeneficios() {
     setErro(null);
 
@@ -170,6 +216,7 @@ export default function Beneficios() {
 
       setCupomResgatado(data);
       carregarBeneficios();
+      carregarSaldoAluno();
     } catch {
       setErroResgate("Erro ao conectar com o servidor.");
     } finally {
@@ -238,9 +285,26 @@ export default function Beneficios() {
         </div>
 
         {isAluno && (
-          <button onClick={carregarBeneficios} className="beneficios-refresh primary-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <FiRefreshCw /> Atualizar
-          </button>
+          <div className="beneficios-hero-actions">
+            <div className="saldo-moedas-card">
+              <span>Seu saldo</span>
+              <strong>
+                <IoDiamond />
+                {loadingSaldo ? "..." : saldoMoedas ?? 0}
+              </strong>
+              <small>moedas disponíveis</small>
+            </div>
+
+            <button
+              onClick={() => {
+                carregarBeneficios();
+                carregarSaldoAluno();
+              }}
+              className="beneficios-refresh primary-button"
+            >
+              <FiRefreshCw /> Atualizar
+            </button>
+          </div>
         )}
       </section>
 

@@ -14,7 +14,8 @@ import pucmg.ps.backend.shared.enums.TipoMovimentacao
 class MoedaConsumer(
     private val professorRepository: ProfessorRepository,
     private val alunoRepository: AlunoRepository,
-    private val movimentacaoRepository: MovimentacaoMoedaRepository
+    private val movimentacaoRepository: MovimentacaoMoedaRepository,
+    private val moedaEmailProducer: MoedaEmailProducer
 ) {
 
     @RabbitListener(queues = [RabbitConfig.MOEDA_QUEUE])
@@ -60,5 +61,16 @@ class MoedaConsumer(
 
         alunoRepository.save(aluno)
         professorRepository.save(professor)
+
+        val moedaRecebidaEvent = MoedaRecebidaEvent(
+            alunoId = aluno.id!!,
+            alunoNome = aluno.name,
+            alunoEmail = aluno.email,
+            professorNome = professor.name,
+            quantidadeMoedas = event.quantidade,
+            descricao = motivo
+        )
+
+        moedaEmailProducer.publicar(moedaRecebidaEvent)
     }
 }

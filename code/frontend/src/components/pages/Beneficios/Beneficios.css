@@ -325,6 +325,56 @@
   }
 }
 
+.beneficios-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.saldo-moedas-card {
+  min-width: 180px;
+  padding: 16px 18px;
+
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 158, 0, 0.35);
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 158, 0, 0.14),
+    rgba(15, 23, 42, 0.72)
+  );
+
+  box-shadow: var(--shadow-glow);
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.saldo-moedas-card span {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.saldo-moedas-card strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.saldo-moedas-card small {
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 @media (max-width: 1050px) {
   .beneficios-hero {
     flex-direction: column;
@@ -334,6 +384,16 @@
   .beneficios-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .beneficios-hero-actions {
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.saldo-moedas-card {
+  width: 100%;
+}
 
   .beneficios-refresh {
     width: 100%;
