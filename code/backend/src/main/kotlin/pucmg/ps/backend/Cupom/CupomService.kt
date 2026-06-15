@@ -13,6 +13,7 @@ import pucmg.ps.backend.shared.qrcode.QRCodeService
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CupomService(
@@ -28,6 +29,7 @@ class CupomService(
      * Gera um cupom quando o aluno resgata uma vantagem
      * Debita as moedas da carteira do aluno
      */
+    @Transactional
     fun gerarCupom(alunoId: Long, vantagemId: Long): CupomDTO {
         // Busca aluno e vantagem
         val aluno = alunoDao.findById(alunoId)
