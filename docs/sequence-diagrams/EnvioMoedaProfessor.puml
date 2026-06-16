@@ -5,8 +5,7 @@ actor Professor
 participant "Página Web" as Frontend
 participant "Backend" as Backend
 database "Banco de Dados" as DB
-participant Email
-participant Aluno
+participant "Email" as Email
 
 Professor -> Frontend: Faz login
 activate Frontend
@@ -42,12 +41,12 @@ Backend -> DB: Atualiza saldo do aluno
 activate DB
 DB --> Backend: Confirma atualização
 deactivate DB
+
+Backend -> Email: Envia email para o aluno\ninformando o recebimento das moedas
 activate Email
-Backend --> Email: Envia email para aluno
-activate Aluno
-Email --> Aluno: Recebe email com novo saldo
+Email --> Backend: Email de notificação enviado
 deactivate Email
-deactivate Aluno
+
 Backend --> Frontend: Operação concluída
 deactivate Backend
 Frontend --> Professor: Exibe confirmação

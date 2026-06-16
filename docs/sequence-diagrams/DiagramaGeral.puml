@@ -8,6 +8,7 @@ actor Empresa
 participant Frontend
 participant Backend
 database DB
+participant QUEUE
 participant Email
 
 
@@ -47,7 +48,7 @@ deactivate DB
 
 Backend -> Email: Notifica aluno
 activate Email
-Email --> Backend: Notificação enviada
+Email --> Backend: Notificação enviada por Email
 deactivate Email
 
 Backend --> Frontend: Confirma envio
@@ -55,7 +56,7 @@ deactivate Backend
 deactivate Frontend
 
 
-== Resgate de Moedas ==
+== Resgate de Vantagens ==
 
 Aluno -> Frontend: Resgata vantagem
 activate Frontend
@@ -63,20 +64,30 @@ activate Frontend
 Frontend -> Backend: Solicita resgate
 activate Backend
 
-Backend -> DB: Debita moedas
+Backend -> DB: Debita moedas e registra resgate
 activate DB
 DB --> Backend: OK
 deactivate DB
 
-Backend -> Email: Envia cupom
+Backend -> QUEUE: Publica evento de resgate\npara envio de emails
+activate QUEUE
+
+QUEUE -> Email: Processa evento e envia cupom ao aluno
 activate Email
-Email --> Backend: Cupom enviado
+Email --> QUEUE: Cupom enviado ao aluno
 deactivate Email
+
+QUEUE -> Email: Processa evento e notifica empresa parceira\nsobre o resgate da vantagem
+activate Email
+Email --> QUEUE: Notificação enviada à empresa
+deactivate Email
+
+QUEUE --> Backend: Evento encaminhado para processamento
+deactivate QUEUE
 
 Backend --> Frontend: Resgate confirmado
 deactivate Backend
 deactivate Frontend
-
 
 == Cadastro de Vantagens ==
 
