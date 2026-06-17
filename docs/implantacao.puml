@@ -5,8 +5,6 @@
 
 title Diagrama de Implantação
 
-
-
 skinparam rectangleBackgroundColor #E6F2FF
 skinparam rectangleBorderColor #0078D4
 
@@ -24,22 +22,39 @@ skinparam cloudBorderColor #0078D4
 
 cloud "Internet" as Internet
 
-AzureVirtualMachine(vm, "Ubuntu Azure VM", "Docker Compose")
+AzureVirtualMachine(vm, "Ubuntu Azure VM", "Docker + Docker Compose")
 
-component "Caddy" as caddy
-component "Frontend React/Vite" as frontend
-component "Backend Spring Boot Kotlin" as backend
-database "PostgreSQL" as postgres
-component "RabbitMQ" as rabbitmq
+node "Docker Compose Environment" {
 
-Internet --> caddy : HTTPS
+    node "Frontend Container" {
+        component "Caddy" as caddy
+        component "React/Vite\n(Static Build)" as frontend
+    }
 
-caddy --> frontend
-caddy --> backend
+    node "Backend Container" {
+        component "Spring Boot\n(Kotlin)" as backend
+    }
 
-backend --> postgres
-backend --> rabbitmq
+    node "Database Container" {
+        database "PostgreSQL" as postgres
+    }
 
-vm --> caddy
+    node "Message Broker Container" {
+        component "RabbitMQ" as rabbitmq
+    }
+}
+
+Internet --> caddy : HTTPS (443)
+
+caddy --> frontend : HTTP
+caddy --> backend : Reverse Proxy
+
+backend --> postgres : JDBC/TCP 5432
+backend --> rabbitmq : AMQP 5672
+
+vm *-- caddy
+vm *-- backend
+vm *-- postgres
+vm *-- rabbitmq
 
 @enduml

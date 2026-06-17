@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1 {
+        text-align: center;
+      }
+      .group-header th {
+        font-size: 200%;
+      }
+      .sub-header th {
+        font-size: 150%;
+      }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        white-space: nowrap;
+        padding: .3em;
+      }
+      table {
+        margin: 0 auto;
+      }
+      .severity {
+        text-align: center;
+        font-weight: bold;
+        color: #fafafa;
+      }
+      .severity-LOW .severity { background-color: #5fbb31; }
+      .severity-MEDIUM .severity { background-color: #e9c600; }
+      .severity-HIGH .severity { background-color: #ff8800; }
+      .severity-CRITICAL .severity { background-color: #e40000; }
+      .severity-UNKNOWN .severity { background-color: #747474; }
+      .severity-LOW { background-color: #5fbb3160; }
+      .severity-MEDIUM { background-color: #e9c60060; }
+      .severity-HIGH { background-color: #ff880060; }
+      .severity-CRITICAL { background-color: #e4000060; }
+      .severity-UNKNOWN { background-color: #74747460; }
+      table tr td:first-of-type {
+        font-weight: bold;
+      }
+      .links a,
+      .links[data-more-links=on] a {
+        display: block;
+      }
+      .links[data-more-links=off] a:nth-of-type(1n+5) {
+        display: none;
+      }
+      a.toggle-more-links { cursor: pointer; }
+    </style>
+    <title>scripts-frontend (alpine 3.23.4) - Trivy Report - 2026-06-16 11:27:29.305979235 +0000 UTC m=+47.592983924 </title>
+    <script>
+      window.onload = function() {
+        document.querySelectorAll('td.links').forEach(function(linkCell) {
+          var links = [].concat.apply([], linkCell.querySelectorAll('a'));
+          [].sort.apply(links, function(a, b) {
+            return a.href > b.href ? 1 : -1;
+          });
+          links.forEach(function(link, idx) {
+            if (links.length > 3 && 3 === idx) {
+              var toggleLink = document.createElement('a');
+              toggleLink.innerText = "Toggle more links";
+              toggleLink.href = "#toggleMore";
+              toggleLink.setAttribute("class", "toggle-more-links");
+              linkCell.appendChild(toggleLink);
+            }
+            linkCell.appendChild(link);
+          });
+        });
+        document.querySelectorAll('a.toggle-more-links').forEach(function(toggleLink) {
+          toggleLink.onclick = function() {
+            var expanded = toggleLink.parentElement.getAttribute("data-more-links");
+            toggleLink.parentElement.setAttribute("data-more-links", "on" === expanded ? "off" : "on");
+            return false;
+          };
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <h1>scripts-frontend (alpine 3.23.4) - Trivy Report - 2026-06-16 11:27:29.306758974 +0000 UTC m=+47.593763663</h1>
+    <table>
+      <tr class="group-header"><th colspan="6">alpine</th></tr>
+      <tr class="sub-header">
+        <th>Package</th>
+        <th>Vulnerability ID</th>
+        <th>Severity</th>
+        <th>Installed Version</th>
+        <th>Fixed Version</th>
+        <th>Links</th>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-45447</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-45447">https://access.redhat.com/security/cve/CVE-2026-45447</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/3aad5eb7af4de4ee0633c30a8541a54d9bbde63c">https://github.com/openssl/openssl/commit/3aad5eb7af4de4ee0633c30a8541a54d9bbde63c</a>
+          <a href="https://github.com/openssl/openssl/commit/7d4a980c62258c5910cc883936e0c8dbab4d75a8">https://github.com/openssl/openssl/commit/7d4a980c62258c5910cc883936e0c8dbab4d75a8</a>
+          <a href="https://github.com/openssl/openssl/commit/9dfd688ad2290fc5075cacbc9bf0c9a93eefed54">https://github.com/openssl/openssl/commit/9dfd688ad2290fc5075cacbc9bf0c9a93eefed54</a>
+          <a href="https://github.com/openssl/openssl/commit/a541ae8bfe849a30cc885e8780715c0f488e496c">https://github.com/openssl/openssl/commit/a541ae8bfe849a30cc885e8780715c0f488e496c</a>
+          <a href="https://github.com/openssl/openssl/commit/c505d7559da5d5f9f2c3913c6883a5562ce7273e">https://github.com/openssl/openssl/commit/c505d7559da5d5f9f2c3913c6883a5562ce7273e</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45447">https://nvd.nist.gov/vuln/detail/CVE-2026-45447</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-45447">https://www.cve.org/CVERecord?id=CVE-2026-45447</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-34182</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34182">https://access.redhat.com/security/cve/CVE-2026-34182</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/03c1f4d45fb963aee7d5833390c507cd290182bc">https://github.com/openssl/openssl/commit/03c1f4d45fb963aee7d5833390c507cd290182bc</a>
+          <a href="https://github.com/openssl/openssl/commit/439ed7d2c0962ce964482727264668bf277c333f">https://github.com/openssl/openssl/commit/439ed7d2c0962ce964482727264668bf277c333f</a>
+          <a href="https://github.com/openssl/openssl/commit/7947e6a81eb8776802f159fb6762cb7fcf7e34c7">https://github.com/openssl/openssl/commit/7947e6a81eb8776802f159fb6762cb7fcf7e34c7</a>
+          <a href="https://github.com/openssl/openssl/commit/9fd97f8cfdc2c0be214998de3b2b55c8edf6c7ac">https://github.com/openssl/openssl/commit/9fd97f8cfdc2c0be214998de3b2b55c8edf6c7ac</a>
+          <a href="https://github.com/openssl/openssl/commit/d2ca86bcd43e4f17d899f347101766b6107676e0">https://github.com/openssl/openssl/commit/d2ca86bcd43e4f17d899f347101766b6107676e0</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34182">https://nvd.nist.gov/vuln/detail/CVE-2026-34182</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34182">https://www.cve.org/CVERecord?id=CVE-2026-34182</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-34183</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34183">https://access.redhat.com/security/cve/CVE-2026-34183</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/5b306efb0b3779dfdd0803b4afc9d08c91f11517">https://github.com/openssl/openssl/commit/5b306efb0b3779dfdd0803b4afc9d08c91f11517</a>
+          <a href="https://github.com/openssl/openssl/commit/7d06955ebe0ecf8adfd4c1e92018586da47ef9ac">https://github.com/openssl/openssl/commit/7d06955ebe0ecf8adfd4c1e92018586da47ef9ac</a>
+          <a href="https://github.com/openssl/openssl/commit/d2e9efbe4900a373227deb136e8665401404ffac">https://github.com/openssl/openssl/commit/d2e9efbe4900a373227deb136e8665401404ffac</a>
+          <a href="https://github.com/openssl/openssl/commit/fbaa83859c01ad64f497b757aaf51be7d05ed9eb">https://github.com/openssl/openssl/commit/fbaa83859c01ad64f497b757aaf51be7d05ed9eb</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34183">https://nvd.nist.gov/vuln/detail/CVE-2026-34183</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34183">https://www.cve.org/CVERecord?id=CVE-2026-34183</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-42764</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42764">https://access.redhat.com/security/cve/CVE-2026-42764</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/5e3ed291b8af0b03d5d3b9e56a1da69a187e9729">https://github.com/openssl/openssl/commit/5e3ed291b8af0b03d5d3b9e56a1da69a187e9729</a>
+          <a href="https://github.com/openssl/openssl/commit/a45a0aba8095682c88ff4fc4a784892b8c6f0677">https://github.com/openssl/openssl/commit/a45a0aba8095682c88ff4fc4a784892b8c6f0677</a>
+          <a href="https://github.com/openssl/openssl/commit/bf29a458c1a231eca87e384c62b9c2553fa57a91">https://github.com/openssl/openssl/commit/bf29a458c1a231eca87e384c62b9c2553fa57a91</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42764">https://nvd.nist.gov/vuln/detail/CVE-2026-42764</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42764">https://www.cve.org/CVERecord?id=CVE-2026-42764</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-45445</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-45445">https://access.redhat.com/security/cve/CVE-2026-45445</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/323f0b6e7d530a4cb4336d50c88cb70f3ac2a451">https://github.com/openssl/openssl/commit/323f0b6e7d530a4cb4336d50c88cb70f3ac2a451</a>
+          <a href="https://github.com/openssl/openssl/commit/787a6dfba81b7b09c1e05ab31396c0cd7c36b3f7">https://github.com/openssl/openssl/commit/787a6dfba81b7b09c1e05ab31396c0cd7c36b3f7</a>
+          <a href="https://github.com/openssl/openssl/commit/7ac4715234ee72d9f3c93426a2c08554b5b771af">https://github.com/openssl/openssl/commit/7ac4715234ee72d9f3c93426a2c08554b5b771af</a>
+          <a href="https://github.com/openssl/openssl/commit/843c9b94ca9c2ed248bb30127bb4f3d7af0d607c">https://github.com/openssl/openssl/commit/843c9b94ca9c2ed248bb30127bb4f3d7af0d607c</a>
+          <a href="https://github.com/openssl/openssl/commit/983d54b5cce8d16147548ed1a37892d1720bbab6">https://github.com/openssl/openssl/commit/983d54b5cce8d16147548ed1a37892d1720bbab6</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45445">https://nvd.nist.gov/vuln/detail/CVE-2026-45445</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-45445">https://www.cve.org/CVERecord?id=CVE-2026-45445</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-34180</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34180">https://access.redhat.com/security/cve/CVE-2026-34180</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/1c6908e4fa5fa568752221d8eaf561a809751e5d">https://github.com/openssl/openssl/commit/1c6908e4fa5fa568752221d8eaf561a809751e5d</a>
+          <a href="https://github.com/openssl/openssl/commit/cbe418ae978539cf14a398a207dba834c0e93e83">https://github.com/openssl/openssl/commit/cbe418ae978539cf14a398a207dba834c0e93e83</a>
+          <a href="https://github.com/openssl/openssl/commit/d93853c42110d6319e3df07842b488cb9f7ac5ff">https://github.com/openssl/openssl/commit/d93853c42110d6319e3df07842b488cb9f7ac5ff</a>
+          <a href="https://github.com/openssl/openssl/commit/da5d62af75f69d6fbf7803743d7c56ac75461e43">https://github.com/openssl/openssl/commit/da5d62af75f69d6fbf7803743d7c56ac75461e43</a>
+          <a href="https://github.com/openssl/openssl/commit/f696c73c3e61b8c502d040af62e690c060908a16">https://github.com/openssl/openssl/commit/f696c73c3e61b8c502d040af62e690c060908a16</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34180">https://nvd.nist.gov/vuln/detail/CVE-2026-34180</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34180">https://www.cve.org/CVERecord?id=CVE-2026-34180</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-34181</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34181">https://access.redhat.com/security/cve/CVE-2026-34181</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/0300eb9ddce7a0895bf301a4b0c03a9da2313a0f">https://github.com/openssl/openssl/commit/0300eb9ddce7a0895bf301a4b0c03a9da2313a0f</a>
+          <a href="https://github.com/openssl/openssl/commit/79eb76a937e474bb7610a0a3dc57131dc8dc6610">https://github.com/openssl/openssl/commit/79eb76a937e474bb7610a0a3dc57131dc8dc6610</a>
+          <a href="https://github.com/openssl/openssl/commit/85dcbb3abaa4878af5c8fbbe11bce708fcf984a7">https://github.com/openssl/openssl/commit/85dcbb3abaa4878af5c8fbbe11bce708fcf984a7</a>
+          <a href="https://github.com/openssl/openssl/commit/ec36f2417c4ddd8cabce4b4a60a3d7a7365f2d81">https://github.com/openssl/openssl/commit/ec36f2417c4ddd8cabce4b4a60a3d7a7365f2d81</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34181">https://nvd.nist.gov/vuln/detail/CVE-2026-34181</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34181">https://www.cve.org/CVERecord?id=CVE-2026-34181</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-42766</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42766">https://access.redhat.com/security/cve/CVE-2026-42766</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/056d06c1918fafbb98c1c85a02e4c47cc4e199ce">https://github.com/openssl/openssl/commit/056d06c1918fafbb98c1c85a02e4c47cc4e199ce</a>
+          <a href="https://github.com/openssl/openssl/commit/12bc26ffb3a2be728c9b86e1cae277de5b33dfa4">https://github.com/openssl/openssl/commit/12bc26ffb3a2be728c9b86e1cae277de5b33dfa4</a>
+          <a href="https://github.com/openssl/openssl/commit/3ff64913615d648cfbb6a6f1cf5529ae7ea829d7">https://github.com/openssl/openssl/commit/3ff64913615d648cfbb6a6f1cf5529ae7ea829d7</a>
+          <a href="https://github.com/openssl/openssl/commit/ab52d88cb5374876d59aee3c91f9e4ccce2b7ce4">https://github.com/openssl/openssl/commit/ab52d88cb5374876d59aee3c91f9e4ccce2b7ce4</a>
+          <a href="https://github.com/openssl/openssl/commit/da26f368732b83e40e9d356fe61c3d3aaab6d2e8">https://github.com/openssl/openssl/commit/da26f368732b83e40e9d356fe61c3d3aaab6d2e8</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42766">https://nvd.nist.gov/vuln/detail/CVE-2026-42766</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42766">https://www.cve.org/CVERecord?id=CVE-2026-42766</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-42767</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42767">https://access.redhat.com/security/cve/CVE-2026-42767</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/61a86a8cd73546c9fea916f3d304c1293e05c046">https://github.com/openssl/openssl/commit/61a86a8cd73546c9fea916f3d304c1293e05c046</a>
+          <a href="https://github.com/openssl/openssl/commit/665d5254083affde9982efca7c41dd01cacc8774">https://github.com/openssl/openssl/commit/665d5254083affde9982efca7c41dd01cacc8774</a>
+          <a href="https://github.com/openssl/openssl/commit/810b722f772652ad48042bcc7ab07e3414b11d0f">https://github.com/openssl/openssl/commit/810b722f772652ad48042bcc7ab07e3414b11d0f</a>
+          <a href="https://github.com/openssl/openssl/commit/b90ff3b1bd33b1c18e6a09936d097c2eddef8873">https://github.com/openssl/openssl/commit/b90ff3b1bd33b1c18e6a09936d097c2eddef8873</a>
+          <a href="https://github.com/openssl/openssl/commit/e6f912907fc2ec82a0fd07aae55172c5e5e3d90d">https://github.com/openssl/openssl/commit/e6f912907fc2ec82a0fd07aae55172c5e5e3d90d</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42767">https://nvd.nist.gov/vuln/detail/CVE-2026-42767</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42767">https://www.cve.org/CVERecord?id=CVE-2026-42767</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-42768</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42768">https://access.redhat.com/security/cve/CVE-2026-42768</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/a2ca7b2d73e0ffc1eae183fe6e1741dac767cb4f">https://github.com/openssl/openssl/commit/a2ca7b2d73e0ffc1eae183fe6e1741dac767cb4f</a>
+          <a href="https://github.com/openssl/openssl/commit/bbb151a83041705d9d001ed2f9c12f5523e1b54d">https://github.com/openssl/openssl/commit/bbb151a83041705d9d001ed2f9c12f5523e1b54d</a>
+          <a href="https://github.com/openssl/openssl/commit/dd68364107a58841c0a2546812518b65d3a23abd">https://github.com/openssl/openssl/commit/dd68364107a58841c0a2546812518b65d3a23abd</a>
+          <a href="https://github.com/openssl/openssl/commit/f04b377be3d821741c86d1f4bf84dee09f3d5c3e">https://github.com/openssl/openssl/commit/f04b377be3d821741c86d1f4bf84dee09f3d5c3e</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42768">https://nvd.nist.gov/vuln/detail/CVE-2026-42768</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42768">https://www.cve.org/CVERecord?id=CVE-2026-42768</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-42769</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42769">https://access.redhat.com/security/cve/CVE-2026-42769</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/54d0989997e5fc26057009a9782c3441ce3842fb">https://github.com/openssl/openssl/commit/54d0989997e5fc26057009a9782c3441ce3842fb</a>
+          <a href="https://github.com/openssl/openssl/commit/777b363b16fcf2153bb3ded39dc3838713667c44">https://github.com/openssl/openssl/commit/777b363b16fcf2153bb3ded39dc3838713667c44</a>
+          <a href="https://github.com/openssl/openssl/commit/d35cd473a271bf3ce7bf3d32af53217fb83ae92c">https://github.com/openssl/openssl/commit/d35cd473a271bf3ce7bf3d32af53217fb83ae92c</a>
+          <a href="https://github.com/openssl/openssl/commit/d531f21c0fe99067a66fc0ff1161ef127f9cd70b">https://github.com/openssl/openssl/commit/d531f21c0fe99067a66fc0ff1161ef127f9cd70b</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42769">https://nvd.nist.gov/vuln/detail/CVE-2026-42769</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42769">https://www.cve.org/CVERecord?id=CVE-2026-42769</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-42770</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42770">https://access.redhat.com/security/cve/CVE-2026-42770</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/3da5a516cd2635a320ff748503db2cef7c4b0f02">https://github.com/openssl/openssl/commit/3da5a516cd2635a320ff748503db2cef7c4b0f02</a>
+          <a href="https://github.com/openssl/openssl/commit/3ddbb7ab50bd93dfc59cbe08e269a67605aeebdb">https://github.com/openssl/openssl/commit/3ddbb7ab50bd93dfc59cbe08e269a67605aeebdb</a>
+          <a href="https://github.com/openssl/openssl/commit/5f452bba2c681423d8fcffd120a19b757ee42e3c">https://github.com/openssl/openssl/commit/5f452bba2c681423d8fcffd120a19b757ee42e3c</a>
+          <a href="https://github.com/openssl/openssl/commit/7fbfde7677ed8808828bf00ff01c937ca04bdda2">https://github.com/openssl/openssl/commit/7fbfde7677ed8808828bf00ff01c937ca04bdda2</a>
+          <a href="https://github.com/openssl/openssl/commit/ca2237ab5615641b662183b077f62c08d75e8070">https://github.com/openssl/openssl/commit/ca2237ab5615641b662183b077f62c08d75e8070</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42770">https://nvd.nist.gov/vuln/detail/CVE-2026-42770</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42770">https://www.cve.org/CVERecord?id=CVE-2026-42770</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-45446</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-45446">https://access.redhat.com/security/cve/CVE-2026-45446</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/25b32cd9d41d2bc01b6abc425bb4baf2c2236fdc">https://github.com/openssl/openssl/commit/25b32cd9d41d2bc01b6abc425bb4baf2c2236fdc</a>
+          <a href="https://github.com/openssl/openssl/commit/71e2a5d263518cf5866043bd60ee4994d59e53a3">https://github.com/openssl/openssl/commit/71e2a5d263518cf5866043bd60ee4994d59e53a3</a>
+          <a href="https://github.com/openssl/openssl/commit/7fe3f33a3b3a4c487aa4dcdbc87057f66ffd2b85">https://github.com/openssl/openssl/commit/7fe3f33a3b3a4c487aa4dcdbc87057f66ffd2b85</a>
+          <a href="https://github.com/openssl/openssl/commit/daca0f48e4a69a2892a62262bad59e62a8a76598">https://github.com/openssl/openssl/commit/daca0f48e4a69a2892a62262bad59e62a8a76598</a>
+          <a href="https://github.com/openssl/openssl/commit/eec5e9bf0d867333b8495e456f5235d225798a68">https://github.com/openssl/openssl/commit/eec5e9bf0d867333b8495e456f5235d225798a68</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45446">https://nvd.nist.gov/vuln/detail/CVE-2026-45446</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-45446">https://www.cve.org/CVERecord?id=CVE-2026-45446</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-7383</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-7383">https://access.redhat.com/security/cve/CVE-2026-7383</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/4f8d2bddaa2c8e06f9c33390ee1717059a6e4be6">https://github.com/openssl/openssl/commit/4f8d2bddaa2c8e06f9c33390ee1717059a6e4be6</a>
+          <a href="https://github.com/openssl/openssl/commit/80c15faaf78042bbb8654a0e234c50c381732f74">https://github.com/openssl/openssl/commit/80c15faaf78042bbb8654a0e234c50c381732f74</a>
+          <a href="https://github.com/openssl/openssl/commit/bd17511070fb39a67bfa19682affb765e706a974">https://github.com/openssl/openssl/commit/bd17511070fb39a67bfa19682affb765e706a974</a>
+          <a href="https://github.com/openssl/openssl/commit/c332adaced43bcbb85f97410597e951c11ec3083">https://github.com/openssl/openssl/commit/c332adaced43bcbb85f97410597e951c11ec3083</a>
+          <a href="https://github.com/openssl/openssl/commit/d32350ae8ef7426718f5aa9e383d4b51398ee255">https://github.com/openssl/openssl/commit/d32350ae8ef7426718f5aa9e383d4b51398ee255</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-7383">https://nvd.nist.gov/vuln/detail/CVE-2026-7383</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-7383">https://www.cve.org/CVERecord?id=CVE-2026-7383</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libcrypto3</td>
+        <td>CVE-2026-9076</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-9076">https://access.redhat.com/security/cve/CVE-2026-9076</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/05b066366842f930fadd9a6e94df98030af431bb">https://github.com/openssl/openssl/commit/05b066366842f930fadd9a6e94df98030af431bb</a>
+          <a href="https://github.com/openssl/openssl/commit/3d8d5bc1056b2f62da9fede23fedbf47e85187b0">https://github.com/openssl/openssl/commit/3d8d5bc1056b2f62da9fede23fedbf47e85187b0</a>
+          <a href="https://github.com/openssl/openssl/commit/715349a1d7c6db970e6815dafb90915f07307f98">https://github.com/openssl/openssl/commit/715349a1d7c6db970e6815dafb90915f07307f98</a>
+          <a href="https://github.com/openssl/openssl/commit/77bf00ab13f6ff5e516535432f0328ed70ec0c26">https://github.com/openssl/openssl/commit/77bf00ab13f6ff5e516535432f0328ed70ec0c26</a>
+          <a href="https://github.com/openssl/openssl/commit/eecbe330977e8d023aae1ca2d9bdbe983ef3fdc6">https://github.com/openssl/openssl/commit/eecbe330977e8d023aae1ca2d9bdbe983ef3fdc6</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-9076">https://nvd.nist.gov/vuln/detail/CVE-2026-9076</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-9076">https://www.cve.org/CVERecord?id=CVE-2026-9076</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-45447</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-45447">https://access.redhat.com/security/cve/CVE-2026-45447</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/3aad5eb7af4de4ee0633c30a8541a54d9bbde63c">https://github.com/openssl/openssl/commit/3aad5eb7af4de4ee0633c30a8541a54d9bbde63c</a>
+          <a href="https://github.com/openssl/openssl/commit/7d4a980c62258c5910cc883936e0c8dbab4d75a8">https://github.com/openssl/openssl/commit/7d4a980c62258c5910cc883936e0c8dbab4d75a8</a>
+          <a href="https://github.com/openssl/openssl/commit/9dfd688ad2290fc5075cacbc9bf0c9a93eefed54">https://github.com/openssl/openssl/commit/9dfd688ad2290fc5075cacbc9bf0c9a93eefed54</a>
+          <a href="https://github.com/openssl/openssl/commit/a541ae8bfe849a30cc885e8780715c0f488e496c">https://github.com/openssl/openssl/commit/a541ae8bfe849a30cc885e8780715c0f488e496c</a>
+          <a href="https://github.com/openssl/openssl/commit/c505d7559da5d5f9f2c3913c6883a5562ce7273e">https://github.com/openssl/openssl/commit/c505d7559da5d5f9f2c3913c6883a5562ce7273e</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45447">https://nvd.nist.gov/vuln/detail/CVE-2026-45447</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-45447">https://www.cve.org/CVERecord?id=CVE-2026-45447</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-34182</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34182">https://access.redhat.com/security/cve/CVE-2026-34182</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/03c1f4d45fb963aee7d5833390c507cd290182bc">https://github.com/openssl/openssl/commit/03c1f4d45fb963aee7d5833390c507cd290182bc</a>
+          <a href="https://github.com/openssl/openssl/commit/439ed7d2c0962ce964482727264668bf277c333f">https://github.com/openssl/openssl/commit/439ed7d2c0962ce964482727264668bf277c333f</a>
+          <a href="https://github.com/openssl/openssl/commit/7947e6a81eb8776802f159fb6762cb7fcf7e34c7">https://github.com/openssl/openssl/commit/7947e6a81eb8776802f159fb6762cb7fcf7e34c7</a>
+          <a href="https://github.com/openssl/openssl/commit/9fd97f8cfdc2c0be214998de3b2b55c8edf6c7ac">https://github.com/openssl/openssl/commit/9fd97f8cfdc2c0be214998de3b2b55c8edf6c7ac</a>
+          <a href="https://github.com/openssl/openssl/commit/d2ca86bcd43e4f17d899f347101766b6107676e0">https://github.com/openssl/openssl/commit/d2ca86bcd43e4f17d899f347101766b6107676e0</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34182">https://nvd.nist.gov/vuln/detail/CVE-2026-34182</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34182">https://www.cve.org/CVERecord?id=CVE-2026-34182</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-34183</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34183">https://access.redhat.com/security/cve/CVE-2026-34183</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/5b306efb0b3779dfdd0803b4afc9d08c91f11517">https://github.com/openssl/openssl/commit/5b306efb0b3779dfdd0803b4afc9d08c91f11517</a>
+          <a href="https://github.com/openssl/openssl/commit/7d06955ebe0ecf8adfd4c1e92018586da47ef9ac">https://github.com/openssl/openssl/commit/7d06955ebe0ecf8adfd4c1e92018586da47ef9ac</a>
+          <a href="https://github.com/openssl/openssl/commit/d2e9efbe4900a373227deb136e8665401404ffac">https://github.com/openssl/openssl/commit/d2e9efbe4900a373227deb136e8665401404ffac</a>
+          <a href="https://github.com/openssl/openssl/commit/fbaa83859c01ad64f497b757aaf51be7d05ed9eb">https://github.com/openssl/openssl/commit/fbaa83859c01ad64f497b757aaf51be7d05ed9eb</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34183">https://nvd.nist.gov/vuln/detail/CVE-2026-34183</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34183">https://www.cve.org/CVERecord?id=CVE-2026-34183</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-42764</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42764">https://access.redhat.com/security/cve/CVE-2026-42764</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/5e3ed291b8af0b03d5d3b9e56a1da69a187e9729">https://github.com/openssl/openssl/commit/5e3ed291b8af0b03d5d3b9e56a1da69a187e9729</a>
+          <a href="https://github.com/openssl/openssl/commit/a45a0aba8095682c88ff4fc4a784892b8c6f0677">https://github.com/openssl/openssl/commit/a45a0aba8095682c88ff4fc4a784892b8c6f0677</a>
+          <a href="https://github.com/openssl/openssl/commit/bf29a458c1a231eca87e384c62b9c2553fa57a91">https://github.com/openssl/openssl/commit/bf29a458c1a231eca87e384c62b9c2553fa57a91</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42764">https://nvd.nist.gov/vuln/detail/CVE-2026-42764</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42764">https://www.cve.org/CVERecord?id=CVE-2026-42764</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-45445</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-45445">https://access.redhat.com/security/cve/CVE-2026-45445</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/323f0b6e7d530a4cb4336d50c88cb70f3ac2a451">https://github.com/openssl/openssl/commit/323f0b6e7d530a4cb4336d50c88cb70f3ac2a451</a>
+          <a href="https://github.com/openssl/openssl/commit/787a6dfba81b7b09c1e05ab31396c0cd7c36b3f7">https://github.com/openssl/openssl/commit/787a6dfba81b7b09c1e05ab31396c0cd7c36b3f7</a>
+          <a href="https://github.com/openssl/openssl/commit/7ac4715234ee72d9f3c93426a2c08554b5b771af">https://github.com/openssl/openssl/commit/7ac4715234ee72d9f3c93426a2c08554b5b771af</a>
+          <a href="https://github.com/openssl/openssl/commit/843c9b94ca9c2ed248bb30127bb4f3d7af0d607c">https://github.com/openssl/openssl/commit/843c9b94ca9c2ed248bb30127bb4f3d7af0d607c</a>
+          <a href="https://github.com/openssl/openssl/commit/983d54b5cce8d16147548ed1a37892d1720bbab6">https://github.com/openssl/openssl/commit/983d54b5cce8d16147548ed1a37892d1720bbab6</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45445">https://nvd.nist.gov/vuln/detail/CVE-2026-45445</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-45445">https://www.cve.org/CVERecord?id=CVE-2026-45445</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-34180</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34180">https://access.redhat.com/security/cve/CVE-2026-34180</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/1c6908e4fa5fa568752221d8eaf561a809751e5d">https://github.com/openssl/openssl/commit/1c6908e4fa5fa568752221d8eaf561a809751e5d</a>
+          <a href="https://github.com/openssl/openssl/commit/cbe418ae978539cf14a398a207dba834c0e93e83">https://github.com/openssl/openssl/commit/cbe418ae978539cf14a398a207dba834c0e93e83</a>
+          <a href="https://github.com/openssl/openssl/commit/d93853c42110d6319e3df07842b488cb9f7ac5ff">https://github.com/openssl/openssl/commit/d93853c42110d6319e3df07842b488cb9f7ac5ff</a>
+          <a href="https://github.com/openssl/openssl/commit/da5d62af75f69d6fbf7803743d7c56ac75461e43">https://github.com/openssl/openssl/commit/da5d62af75f69d6fbf7803743d7c56ac75461e43</a>
+          <a href="https://github.com/openssl/openssl/commit/f696c73c3e61b8c502d040af62e690c060908a16">https://github.com/openssl/openssl/commit/f696c73c3e61b8c502d040af62e690c060908a16</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34180">https://nvd.nist.gov/vuln/detail/CVE-2026-34180</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34180">https://www.cve.org/CVERecord?id=CVE-2026-34180</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-34181</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-34181">https://access.redhat.com/security/cve/CVE-2026-34181</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/0300eb9ddce7a0895bf301a4b0c03a9da2313a0f">https://github.com/openssl/openssl/commit/0300eb9ddce7a0895bf301a4b0c03a9da2313a0f</a>
+          <a href="https://github.com/openssl/openssl/commit/79eb76a937e474bb7610a0a3dc57131dc8dc6610">https://github.com/openssl/openssl/commit/79eb76a937e474bb7610a0a3dc57131dc8dc6610</a>
+          <a href="https://github.com/openssl/openssl/commit/85dcbb3abaa4878af5c8fbbe11bce708fcf984a7">https://github.com/openssl/openssl/commit/85dcbb3abaa4878af5c8fbbe11bce708fcf984a7</a>
+          <a href="https://github.com/openssl/openssl/commit/ec36f2417c4ddd8cabce4b4a60a3d7a7365f2d81">https://github.com/openssl/openssl/commit/ec36f2417c4ddd8cabce4b4a60a3d7a7365f2d81</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34181">https://nvd.nist.gov/vuln/detail/CVE-2026-34181</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-34181">https://www.cve.org/CVERecord?id=CVE-2026-34181</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-42766</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42766">https://access.redhat.com/security/cve/CVE-2026-42766</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/056d06c1918fafbb98c1c85a02e4c47cc4e199ce">https://github.com/openssl/openssl/commit/056d06c1918fafbb98c1c85a02e4c47cc4e199ce</a>
+          <a href="https://github.com/openssl/openssl/commit/12bc26ffb3a2be728c9b86e1cae277de5b33dfa4">https://github.com/openssl/openssl/commit/12bc26ffb3a2be728c9b86e1cae277de5b33dfa4</a>
+          <a href="https://github.com/openssl/openssl/commit/3ff64913615d648cfbb6a6f1cf5529ae7ea829d7">https://github.com/openssl/openssl/commit/3ff64913615d648cfbb6a6f1cf5529ae7ea829d7</a>
+          <a href="https://github.com/openssl/openssl/commit/ab52d88cb5374876d59aee3c91f9e4ccce2b7ce4">https://github.com/openssl/openssl/commit/ab52d88cb5374876d59aee3c91f9e4ccce2b7ce4</a>
+          <a href="https://github.com/openssl/openssl/commit/da26f368732b83e40e9d356fe61c3d3aaab6d2e8">https://github.com/openssl/openssl/commit/da26f368732b83e40e9d356fe61c3d3aaab6d2e8</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42766">https://nvd.nist.gov/vuln/detail/CVE-2026-42766</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42766">https://www.cve.org/CVERecord?id=CVE-2026-42766</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-42767</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42767">https://access.redhat.com/security/cve/CVE-2026-42767</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/61a86a8cd73546c9fea916f3d304c1293e05c046">https://github.com/openssl/openssl/commit/61a86a8cd73546c9fea916f3d304c1293e05c046</a>
+          <a href="https://github.com/openssl/openssl/commit/665d5254083affde9982efca7c41dd01cacc8774">https://github.com/openssl/openssl/commit/665d5254083affde9982efca7c41dd01cacc8774</a>
+          <a href="https://github.com/openssl/openssl/commit/810b722f772652ad48042bcc7ab07e3414b11d0f">https://github.com/openssl/openssl/commit/810b722f772652ad48042bcc7ab07e3414b11d0f</a>
+          <a href="https://github.com/openssl/openssl/commit/b90ff3b1bd33b1c18e6a09936d097c2eddef8873">https://github.com/openssl/openssl/commit/b90ff3b1bd33b1c18e6a09936d097c2eddef8873</a>
+          <a href="https://github.com/openssl/openssl/commit/e6f912907fc2ec82a0fd07aae55172c5e5e3d90d">https://github.com/openssl/openssl/commit/e6f912907fc2ec82a0fd07aae55172c5e5e3d90d</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42767">https://nvd.nist.gov/vuln/detail/CVE-2026-42767</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42767">https://www.cve.org/CVERecord?id=CVE-2026-42767</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-42768</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42768">https://access.redhat.com/security/cve/CVE-2026-42768</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/a2ca7b2d73e0ffc1eae183fe6e1741dac767cb4f">https://github.com/openssl/openssl/commit/a2ca7b2d73e0ffc1eae183fe6e1741dac767cb4f</a>
+          <a href="https://github.com/openssl/openssl/commit/bbb151a83041705d9d001ed2f9c12f5523e1b54d">https://github.com/openssl/openssl/commit/bbb151a83041705d9d001ed2f9c12f5523e1b54d</a>
+          <a href="https://github.com/openssl/openssl/commit/dd68364107a58841c0a2546812518b65d3a23abd">https://github.com/openssl/openssl/commit/dd68364107a58841c0a2546812518b65d3a23abd</a>
+          <a href="https://github.com/openssl/openssl/commit/f04b377be3d821741c86d1f4bf84dee09f3d5c3e">https://github.com/openssl/openssl/commit/f04b377be3d821741c86d1f4bf84dee09f3d5c3e</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42768">https://nvd.nist.gov/vuln/detail/CVE-2026-42768</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42768">https://www.cve.org/CVERecord?id=CVE-2026-42768</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-42769</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42769">https://access.redhat.com/security/cve/CVE-2026-42769</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/54d0989997e5fc26057009a9782c3441ce3842fb">https://github.com/openssl/openssl/commit/54d0989997e5fc26057009a9782c3441ce3842fb</a>
+          <a href="https://github.com/openssl/openssl/commit/777b363b16fcf2153bb3ded39dc3838713667c44">https://github.com/openssl/openssl/commit/777b363b16fcf2153bb3ded39dc3838713667c44</a>
+          <a href="https://github.com/openssl/openssl/commit/d35cd473a271bf3ce7bf3d32af53217fb83ae92c">https://github.com/openssl/openssl/commit/d35cd473a271bf3ce7bf3d32af53217fb83ae92c</a>
+          <a href="https://github.com/openssl/openssl/commit/d531f21c0fe99067a66fc0ff1161ef127f9cd70b">https://github.com/openssl/openssl/commit/d531f21c0fe99067a66fc0ff1161ef127f9cd70b</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42769">https://nvd.nist.gov/vuln/detail/CVE-2026-42769</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42769">https://www.cve.org/CVERecord?id=CVE-2026-42769</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-42770</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42770">https://access.redhat.com/security/cve/CVE-2026-42770</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/3da5a516cd2635a320ff748503db2cef7c4b0f02">https://github.com/openssl/openssl/commit/3da5a516cd2635a320ff748503db2cef7c4b0f02</a>
+          <a href="https://github.com/openssl/openssl/commit/3ddbb7ab50bd93dfc59cbe08e269a67605aeebdb">https://github.com/openssl/openssl/commit/3ddbb7ab50bd93dfc59cbe08e269a67605aeebdb</a>
+          <a href="https://github.com/openssl/openssl/commit/5f452bba2c681423d8fcffd120a19b757ee42e3c">https://github.com/openssl/openssl/commit/5f452bba2c681423d8fcffd120a19b757ee42e3c</a>
+          <a href="https://github.com/openssl/openssl/commit/7fbfde7677ed8808828bf00ff01c937ca04bdda2">https://github.com/openssl/openssl/commit/7fbfde7677ed8808828bf00ff01c937ca04bdda2</a>
+          <a href="https://github.com/openssl/openssl/commit/ca2237ab5615641b662183b077f62c08d75e8070">https://github.com/openssl/openssl/commit/ca2237ab5615641b662183b077f62c08d75e8070</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42770">https://nvd.nist.gov/vuln/detail/CVE-2026-42770</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42770">https://www.cve.org/CVERecord?id=CVE-2026-42770</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-45446</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-45446">https://access.redhat.com/security/cve/CVE-2026-45446</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/25b32cd9d41d2bc01b6abc425bb4baf2c2236fdc">https://github.com/openssl/openssl/commit/25b32cd9d41d2bc01b6abc425bb4baf2c2236fdc</a>
+          <a href="https://github.com/openssl/openssl/commit/71e2a5d263518cf5866043bd60ee4994d59e53a3">https://github.com/openssl/openssl/commit/71e2a5d263518cf5866043bd60ee4994d59e53a3</a>
+          <a href="https://github.com/openssl/openssl/commit/7fe3f33a3b3a4c487aa4dcdbc87057f66ffd2b85">https://github.com/openssl/openssl/commit/7fe3f33a3b3a4c487aa4dcdbc87057f66ffd2b85</a>
+          <a href="https://github.com/openssl/openssl/commit/daca0f48e4a69a2892a62262bad59e62a8a76598">https://github.com/openssl/openssl/commit/daca0f48e4a69a2892a62262bad59e62a8a76598</a>
+          <a href="https://github.com/openssl/openssl/commit/eec5e9bf0d867333b8495e456f5235d225798a68">https://github.com/openssl/openssl/commit/eec5e9bf0d867333b8495e456f5235d225798a68</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45446">https://nvd.nist.gov/vuln/detail/CVE-2026-45446</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-45446">https://www.cve.org/CVERecord?id=CVE-2026-45446</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-7383</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-7383">https://access.redhat.com/security/cve/CVE-2026-7383</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/4f8d2bddaa2c8e06f9c33390ee1717059a6e4be6">https://github.com/openssl/openssl/commit/4f8d2bddaa2c8e06f9c33390ee1717059a6e4be6</a>
+          <a href="https://github.com/openssl/openssl/commit/80c15faaf78042bbb8654a0e234c50c381732f74">https://github.com/openssl/openssl/commit/80c15faaf78042bbb8654a0e234c50c381732f74</a>
+          <a href="https://github.com/openssl/openssl/commit/bd17511070fb39a67bfa19682affb765e706a974">https://github.com/openssl/openssl/commit/bd17511070fb39a67bfa19682affb765e706a974</a>
+          <a href="https://github.com/openssl/openssl/commit/c332adaced43bcbb85f97410597e951c11ec3083">https://github.com/openssl/openssl/commit/c332adaced43bcbb85f97410597e951c11ec3083</a>
+          <a href="https://github.com/openssl/openssl/commit/d32350ae8ef7426718f5aa9e383d4b51398ee255">https://github.com/openssl/openssl/commit/d32350ae8ef7426718f5aa9e383d4b51398ee255</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-7383">https://nvd.nist.gov/vuln/detail/CVE-2026-7383</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-7383">https://www.cve.org/CVERecord?id=CVE-2026-7383</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">libssl3</td>
+        <td>CVE-2026-9076</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">3.5.6-r0</td>
+        <td>3.5.7-r0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:25237">https://access.redhat.com/errata/RHSA-2026:25237</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-9076">https://access.redhat.com/security/cve/CVE-2026-9076</a>
+          <a href="https://bugzilla.redhat.com/2481879">https://bugzilla.redhat.com/2481879</a>
+          <a href="https://bugzilla.redhat.com/2481880">https://bugzilla.redhat.com/2481880</a>
+          <a href="https://bugzilla.redhat.com/2481881">https://bugzilla.redhat.com/2481881</a>
+          <a href="https://bugzilla.redhat.com/2481882">https://bugzilla.redhat.com/2481882</a>
+          <a href="https://bugzilla.redhat.com/2481884">https://bugzilla.redhat.com/2481884</a>
+          <a href="https://bugzilla.redhat.com/2481885">https://bugzilla.redhat.com/2481885</a>
+          <a href="https://bugzilla.redhat.com/2481887">https://bugzilla.redhat.com/2481887</a>
+          <a href="https://bugzilla.redhat.com/2481890">https://bugzilla.redhat.com/2481890</a>
+          <a href="https://bugzilla.redhat.com/2481891">https://bugzilla.redhat.com/2481891</a>
+          <a href="https://bugzilla.redhat.com/2481892">https://bugzilla.redhat.com/2481892</a>
+          <a href="https://bugzilla.redhat.com/2481893">https://bugzilla.redhat.com/2481893</a>
+          <a href="https://bugzilla.redhat.com/2481894">https://bugzilla.redhat.com/2481894</a>
+          <a href="https://bugzilla.redhat.com/2481896">https://bugzilla.redhat.com/2481896</a>
+          <a href="https://bugzilla.redhat.com/2481897">https://bugzilla.redhat.com/2481897</a>
+          <a href="https://bugzilla.redhat.com/2481898">https://bugzilla.redhat.com/2481898</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-25237.html">https://errata.almalinux.org/10/ALSA-2026-25237.html</a>
+          <a href="https://github.com/openssl/openssl/commit/05b066366842f930fadd9a6e94df98030af431bb">https://github.com/openssl/openssl/commit/05b066366842f930fadd9a6e94df98030af431bb</a>
+          <a href="https://github.com/openssl/openssl/commit/3d8d5bc1056b2f62da9fede23fedbf47e85187b0">https://github.com/openssl/openssl/commit/3d8d5bc1056b2f62da9fede23fedbf47e85187b0</a>
+          <a href="https://github.com/openssl/openssl/commit/715349a1d7c6db970e6815dafb90915f07307f98">https://github.com/openssl/openssl/commit/715349a1d7c6db970e6815dafb90915f07307f98</a>
+          <a href="https://github.com/openssl/openssl/commit/77bf00ab13f6ff5e516535432f0328ed70ec0c26">https://github.com/openssl/openssl/commit/77bf00ab13f6ff5e516535432f0328ed70ec0c26</a>
+          <a href="https://github.com/openssl/openssl/commit/eecbe330977e8d023aae1ca2d9bdbe983ef3fdc6">https://github.com/openssl/openssl/commit/eecbe330977e8d023aae1ca2d9bdbe983ef3fdc6</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-9076">https://nvd.nist.gov/vuln/detail/CVE-2026-9076</a>
+          <a href="https://openssl-library.org/news/secadv/20260609.txt">https://openssl-library.org/news/secadv/20260609.txt</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-1">https://ubuntu.com/security/notices/USN-8414-1</a>
+          <a href="https://ubuntu.com/security/notices/USN-8414-2">https://ubuntu.com/security/notices/USN-8414-2</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-9076">https://www.cve.org/CVERecord?id=CVE-2026-9076</a>
+        </td>
+      </tr>
+      <tr><th colspan="6">No Misconfigurations found</th></tr>
+      <tr class="group-header"><th colspan="6">node-pkg</th></tr>
+      <tr class="sub-header">
+        <th>Package</th>
+        <th>Vulnerability ID</th>
+        <th>Severity</th>
+        <th>Installed Version</th>
+        <th>Fixed Version</th>
+        <th>Links</th>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">@babel/core</td>
+        <td>CVE-2026-49356</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">7.29.0</td>
+        <td>8.0.0-rc.6, 7.29.6</td>
+        <td class="links" data-more-links="off">
+          <a href="https://babeljs.io/docs/options#inputsourcemap">https://babeljs.io/docs/options#inputsourcemap</a>
+          <a href="https://github.com/babel/babel">https://github.com/babel/babel</a>
+          <a href="https://github.com/babel/babel/security/advisories/GHSA-4x5r-pxfx-6jf8">https://github.com/babel/babel/security/advisories/GHSA-4x5r-pxfx-6jf8</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">brace-expansion</td>
+        <td>CVE-2026-33750</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">2.0.1</td>
+        <td>5.0.5, 3.0.2, 2.0.3, 1.1.13</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-33750">https://access.redhat.com/security/cve/CVE-2026-33750</a>
+          <a href="https://github.com/juliangruber/brace-expansion">https://github.com/juliangruber/brace-expansion</a>
+          <a href="https://github.com/juliangruber/brace-expansion/blob/daa71bcb4a30a2df9bcb7f7b8daaf2ab30e5794a/src/index.ts#L107-L113">https://github.com/juliangruber/brace-expansion/blob/daa71bcb4a30a2df9bcb7f7b8daaf2ab30e5794a/src/index.ts#L107-L113</a>
+          <a href="https://github.com/juliangruber/brace-expansion/blob/daa71bcb4a30a2df9bcb7f7b8daaf2ab30e5794a/src/index.ts#L184">https://github.com/juliangruber/brace-expansion/blob/daa71bcb4a30a2df9bcb7f7b8daaf2ab30e5794a/src/index.ts#L184</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/311ac0d54994158c0a384e286a7d6cbb17ee8ed5">https://github.com/juliangruber/brace-expansion/commit/311ac0d54994158c0a384e286a7d6cbb17ee8ed5</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/7fd684f89fdde3549563d0a6522226a9189472a2">https://github.com/juliangruber/brace-expansion/commit/7fd684f89fdde3549563d0a6522226a9189472a2</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/b9cacd9e55e7a1fa588fe4b7bb1159d52f1d902a">https://github.com/juliangruber/brace-expansion/commit/b9cacd9e55e7a1fa588fe4b7bb1159d52f1d902a</a>
+          <a href="https://github.com/juliangruber/brace-expansion/issues/98">https://github.com/juliangruber/brace-expansion/issues/98</a>
+          <a href="https://github.com/juliangruber/brace-expansion/pull/95">https://github.com/juliangruber/brace-expansion/pull/95</a>
+          <a href="https://github.com/juliangruber/brace-expansion/pull/96">https://github.com/juliangruber/brace-expansion/pull/96</a>
+          <a href="https://github.com/juliangruber/brace-expansion/pull/97">https://github.com/juliangruber/brace-expansion/pull/97</a>
+          <a href="https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-f886-m6hf-6m8v">https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-f886-m6hf-6m8v</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-33750">https://nvd.nist.gov/vuln/detail/CVE-2026-33750</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-33750">https://www.cve.org/CVERecord?id=CVE-2026-33750</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">brace-expansion</td>
+        <td>CVE-2025-5889</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">2.0.1</td>
+        <td>2.0.2, 1.1.12, 3.0.1, 4.0.1</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2025-5889">https://access.redhat.com/security/cve/CVE-2025-5889</a>
+          <a href="https://gist.github.com/mmmsssttt404/37a40ce7d6e5ca604858fe30814d9466">https://gist.github.com/mmmsssttt404/37a40ce7d6e5ca604858fe30814d9466</a>
+          <a href="https://github.com/juliangruber/brace-expansion">https://github.com/juliangruber/brace-expansion</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/0b6a9781e18e9d2769bb2931f4856d1360243ed2">https://github.com/juliangruber/brace-expansion/commit/0b6a9781e18e9d2769bb2931f4856d1360243ed2</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/15f9b3c75ebf5988198241fecaebdc45eff28a9f">https://github.com/juliangruber/brace-expansion/commit/15f9b3c75ebf5988198241fecaebdc45eff28a9f</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/36603d5f3599a37af9e85eda30acd7d28599c36e">https://github.com/juliangruber/brace-expansion/commit/36603d5f3599a37af9e85eda30acd7d28599c36e</a>
+          <a href="https://github.com/juliangruber/brace-expansion/commit/c3c73c8b088defc70851843be88ccc3af08e7217">https://github.com/juliangruber/brace-expansion/commit/c3c73c8b088defc70851843be88ccc3af08e7217</a>
+          <a href="https://github.com/juliangruber/brace-expansion/pull/65/commits/a5b98a4f30d7813266b221435e1eaaf25a1b0ac5">https://github.com/juliangruber/brace-expansion/pull/65/commits/a5b98a4f30d7813266b221435e1eaaf25a1b0ac5</a>
+          <a href="https://github.com/juliangruber/brace-expansion/releases/tag/v4.0.1">https://github.com/juliangruber/brace-expansion/releases/tag/v4.0.1</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-5889">https://nvd.nist.gov/vuln/detail/CVE-2025-5889</a>
+          <a href="https://vuldb.com/?ctiid.311660">https://vuldb.com/?ctiid.311660</a>
+          <a href="https://vuldb.com/?id.311660">https://vuldb.com/?id.311660</a>
+          <a href="https://vuldb.com/?submit.585717">https://vuldb.com/?submit.585717</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2025-5889">https://www.cve.org/CVERecord?id=CVE-2025-5889</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">cross-spawn</td>
+        <td>CVE-2024-21538</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">7.0.3</td>
+        <td>7.0.5, 6.0.6</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2024-21538">https://access.redhat.com/security/cve/CVE-2024-21538</a>
+          <a href="https://github.com/moxystudio/node-cross-spawn">https://github.com/moxystudio/node-cross-spawn</a>
+          <a href="https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff">https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff</a>
+          <a href="https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f">https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f</a>
+          <a href="https://github.com/moxystudio/node-cross-spawn/commit/d35c865b877d2f9ded7c1ed87521c2fdb689c8dd">https://github.com/moxystudio/node-cross-spawn/commit/d35c865b877d2f9ded7c1ed87521c2fdb689c8dd</a>
+          <a href="https://github.com/moxystudio/node-cross-spawn/issues/165">https://github.com/moxystudio/node-cross-spawn/issues/165</a>
+          <a href="https://github.com/moxystudio/node-cross-spawn/pull/160">https://github.com/moxystudio/node-cross-spawn/pull/160</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2024-21538">https://nvd.nist.gov/vuln/detail/CVE-2024-21538</a>
+          <a href="https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349">https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349</a>
+          <a href="https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230">https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2024-21538">https://www.cve.org/CVERecord?id=CVE-2024-21538</a>
+        </td>
+      </tr>
+      <tr class="severity-LOW">
+        <td class="pkg-name">diff</td>
+        <td>CVE-2026-24001</td>
+        <td class="severity">LOW</td>
+        <td class="pkg-version">5.2.0</td>
+        <td>8.0.3, 5.2.2, 4.0.4, 3.5.1</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-24001">https://access.redhat.com/security/cve/CVE-2026-24001</a>
+          <a href="https://github.com/kpdecker/jsdiff">https://github.com/kpdecker/jsdiff</a>
+          <a href="https://github.com/kpdecker/jsdiff/commit/15a1585230748c8ae6f8274c202e0c87309142f5">https://github.com/kpdecker/jsdiff/commit/15a1585230748c8ae6f8274c202e0c87309142f5</a>
+          <a href="https://github.com/kpdecker/jsdiff/issues/653">https://github.com/kpdecker/jsdiff/issues/653</a>
+          <a href="https://github.com/kpdecker/jsdiff/pull/649">https://github.com/kpdecker/jsdiff/pull/649</a>
+          <a href="https://github.com/kpdecker/jsdiff/security/advisories/GHSA-73rr-hh4g-fpgx">https://github.com/kpdecker/jsdiff/security/advisories/GHSA-73rr-hh4g-fpgx</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-24001">https://nvd.nist.gov/vuln/detail/CVE-2026-24001</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-24001">https://www.cve.org/CVERecord?id=CVE-2026-24001</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">glob</td>
+        <td>CVE-2025-64756</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">10.4.2</td>
+        <td>11.1.0, 10.5.0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2025-64756">https://access.redhat.com/security/cve/CVE-2025-64756</a>
+          <a href="https://github.com/isaacs/node-glob">https://github.com/isaacs/node-glob</a>
+          <a href="https://github.com/isaacs/node-glob/commit/1e4e297342a09f2aa0ced87fcd4a70ddc325d75f">https://github.com/isaacs/node-glob/commit/1e4e297342a09f2aa0ced87fcd4a70ddc325d75f</a>
+          <a href="https://github.com/isaacs/node-glob/commit/47473c046b91c67269df7a66eab782a6c2716146">https://github.com/isaacs/node-glob/commit/47473c046b91c67269df7a66eab782a6c2716146</a>
+          <a href="https://github.com/isaacs/node-glob/security/advisories/GHSA-5j98-mcp5-4vw2">https://github.com/isaacs/node-glob/security/advisories/GHSA-5j98-mcp5-4vw2</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-64756">https://nvd.nist.gov/vuln/detail/CVE-2025-64756</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2025-64756">https://www.cve.org/CVERecord?id=CVE-2025-64756</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">hono</td>
+        <td>CVE-2026-47673</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">4.12.19</td>
+        <td>4.12.21</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/honojs/hono">https://github.com/honojs/hono</a>
+          <a href="https://github.com/honojs/hono/commit/5463db2735476959b8af67756f4e513f4fe19115">https://github.com/honojs/hono/commit/5463db2735476959b8af67756f4e513f4fe19115</a>
+          <a href="https://github.com/honojs/hono/releases/tag/v4.12.21">https://github.com/honojs/hono/releases/tag/v4.12.21</a>
+          <a href="https://github.com/honojs/hono/security/advisories/GHSA-f577-qrjj-4474">https://github.com/honojs/hono/security/advisories/GHSA-f577-qrjj-4474</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-47673">https://nvd.nist.gov/vuln/detail/CVE-2026-47673</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">hono</td>
+        <td>CVE-2026-47674</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">4.12.19</td>
+        <td>4.12.21</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/honojs/hono">https://github.com/honojs/hono</a>
+          <a href="https://github.com/honojs/hono/commit/c831020fb1fa2e929d222f6c84e1abfe013e512b">https://github.com/honojs/hono/commit/c831020fb1fa2e929d222f6c84e1abfe013e512b</a>
+          <a href="https://github.com/honojs/hono/releases/tag/v4.12.21">https://github.com/honojs/hono/releases/tag/v4.12.21</a>
+          <a href="https://github.com/honojs/hono/security/advisories/GHSA-xrhx-7g5j-rcj5">https://github.com/honojs/hono/security/advisories/GHSA-xrhx-7g5j-rcj5</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-47674">https://nvd.nist.gov/vuln/detail/CVE-2026-47674</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">hono</td>
+        <td>CVE-2026-47675</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">4.12.19</td>
+        <td>4.12.21</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/honojs/hono">https://github.com/honojs/hono</a>
+          <a href="https://github.com/honojs/hono/commit/905aedbc20661e0e2fa378783a7ec44a5c3df43d">https://github.com/honojs/hono/commit/905aedbc20661e0e2fa378783a7ec44a5c3df43d</a>
+          <a href="https://github.com/honojs/hono/releases/tag/v4.12.21">https://github.com/honojs/hono/releases/tag/v4.12.21</a>
+          <a href="https://github.com/honojs/hono/security/advisories/GHSA-3hrh-pfw6-9m5x">https://github.com/honojs/hono/security/advisories/GHSA-3hrh-pfw6-9m5x</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-47675">https://nvd.nist.gov/vuln/detail/CVE-2026-47675</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">hono</td>
+        <td>CVE-2026-47676</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">4.12.19</td>
+        <td>4.12.21</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/honojs/hono">https://github.com/honojs/hono</a>
+          <a href="https://github.com/honojs/hono/commit/6cbb025ff87fca1a3d00d0ccca0eaf3a6385c3f1">https://github.com/honojs/hono/commit/6cbb025ff87fca1a3d00d0ccca0eaf3a6385c3f1</a>
+          <a href="https://github.com/honojs/hono/releases/tag/v4.12.21">https://github.com/honojs/hono/releases/tag/v4.12.21</a>
+          <a href="https://github.com/honojs/hono/security/advisories/GHSA-2gcr-mfcq-wcc3">https://github.com/honojs/hono/security/advisories/GHSA-2gcr-mfcq-wcc3</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-47676">https://nvd.nist.gov/vuln/detail/CVE-2026-47676</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">ip-address</td>
+        <td>CVE-2026-42338</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">9.0.5</td>
+        <td>10.1.1</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-42338">https://access.redhat.com/security/cve/CVE-2026-42338</a>
+          <a href="https://github.com/beaugunderson/ip-address">https://github.com/beaugunderson/ip-address</a>
+          <a href="https://github.com/beaugunderson/ip-address/security/advisories/GHSA-v2v4-37r5-5v8g">https://github.com/beaugunderson/ip-address/security/advisories/GHSA-v2v4-37r5-5v8g</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42338">https://nvd.nist.gov/vuln/detail/CVE-2026-42338</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-42338">https://www.cve.org/CVERecord?id=CVE-2026-42338</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">js-yaml</td>
+        <td>CVE-2026-53550</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">4.1.1</td>
+        <td>4.2.0</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/nodeca/js-yaml">https://github.com/nodeca/js-yaml</a>
+          <a href="https://github.com/nodeca/js-yaml/security/advisories/GHSA-h67p-54hq-rp68">https://github.com/nodeca/js-yaml/security/advisories/GHSA-h67p-54hq-rp68</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">minimatch</td>
+        <td>CVE-2026-26996</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">9.0.5</td>
+        <td>10.2.1, 9.0.6, 8.0.5, 7.4.7, 6.2.1, 5.1.7, 4.2.4, 3.1.3</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:8339">https://access.redhat.com/errata/RHSA-2026:8339</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-26996">https://access.redhat.com/security/cve/CVE-2026-26996</a>
+          <a href="https://bugzilla.redhat.com/2441268">https://bugzilla.redhat.com/2441268</a>
+          <a href="https://bugzilla.redhat.com/2442922">https://bugzilla.redhat.com/2442922</a>
+          <a href="https://bugzilla.redhat.com/2448754">https://bugzilla.redhat.com/2448754</a>
+          <a href="https://bugzilla.redhat.com/2453151">https://bugzilla.redhat.com/2453151</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2441268">https://bugzilla.redhat.com/show_bug.cgi?id=2441268</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2442922">https://bugzilla.redhat.com/show_bug.cgi?id=2442922</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2448754">https://bugzilla.redhat.com/show_bug.cgi?id=2448754</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2453151">https://bugzilla.redhat.com/show_bug.cgi?id=2453151</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-21710">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-21710</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-26996">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-26996</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27135">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27135</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27904">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27904</a>
+          <a href="https://errata.almalinux.org/8/ALSA-2026-8339.html">https://errata.almalinux.org/8/ALSA-2026-8339.html</a>
+          <a href="https://errata.rockylinux.org/RLSA-2026:7896">https://errata.rockylinux.org/RLSA-2026:7896</a>
+          <a href="https://github.com/isaacs/minimatch">https://github.com/isaacs/minimatch</a>
+          <a href="https://github.com/isaacs/minimatch/commit/2e111f3a79abc00fa73110195de2c0f2351904f5">https://github.com/isaacs/minimatch/commit/2e111f3a79abc00fa73110195de2c0f2351904f5</a>
+          <a href="https://github.com/isaacs/minimatch/security/advisories/GHSA-3ppc-4f35-3m26">https://github.com/isaacs/minimatch/security/advisories/GHSA-3ppc-4f35-3m26</a>
+          <a href="https://linux.oracle.com/cve/CVE-2026-26996.html">https://linux.oracle.com/cve/CVE-2026-26996.html</a>
+          <a href="https://linux.oracle.com/errata/ELSA-2026-8339.html">https://linux.oracle.com/errata/ELSA-2026-8339.html</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-26996">https://nvd.nist.gov/vuln/detail/CVE-2026-26996</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-26996">https://www.cve.org/CVERecord?id=CVE-2026-26996</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">minimatch</td>
+        <td>CVE-2026-27903</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">9.0.5</td>
+        <td>10.2.3, 9.0.7, 8.0.6, 7.4.8, 6.2.2, 5.1.8, 4.2.5, 3.1.3</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-27903">https://access.redhat.com/security/cve/CVE-2026-27903</a>
+          <a href="https://github.com/isaacs/minimatch">https://github.com/isaacs/minimatch</a>
+          <a href="https://github.com/isaacs/minimatch/commit/0bf499aa45f5059b56809cc3b75ff3eafeb8d748">https://github.com/isaacs/minimatch/commit/0bf499aa45f5059b56809cc3b75ff3eafeb8d748</a>
+          <a href="https://github.com/isaacs/minimatch/security/advisories/GHSA-7r86-cg39-jmmj">https://github.com/isaacs/minimatch/security/advisories/GHSA-7r86-cg39-jmmj</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-27903">https://nvd.nist.gov/vuln/detail/CVE-2026-27903</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-27903">https://www.cve.org/CVERecord?id=CVE-2026-27903</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">minimatch</td>
+        <td>CVE-2026-27904</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">9.0.5</td>
+        <td>10.2.3, 9.0.7, 8.0.6, 7.4.8, 6.2.2, 5.1.8, 4.2.5, 3.1.4</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:8339">https://access.redhat.com/errata/RHSA-2026:8339</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-27904">https://access.redhat.com/security/cve/CVE-2026-27904</a>
+          <a href="https://bugzilla.redhat.com/2441268">https://bugzilla.redhat.com/2441268</a>
+          <a href="https://bugzilla.redhat.com/2442922">https://bugzilla.redhat.com/2442922</a>
+          <a href="https://bugzilla.redhat.com/2448754">https://bugzilla.redhat.com/2448754</a>
+          <a href="https://bugzilla.redhat.com/2453151">https://bugzilla.redhat.com/2453151</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2441268">https://bugzilla.redhat.com/show_bug.cgi?id=2441268</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2442922">https://bugzilla.redhat.com/show_bug.cgi?id=2442922</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2448754">https://bugzilla.redhat.com/show_bug.cgi?id=2448754</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2453151">https://bugzilla.redhat.com/show_bug.cgi?id=2453151</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-21710">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-21710</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-26996">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-26996</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27135">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27135</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27904">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-27904</a>
+          <a href="https://errata.almalinux.org/8/ALSA-2026-8339.html">https://errata.almalinux.org/8/ALSA-2026-8339.html</a>
+          <a href="https://errata.rockylinux.org/RLSA-2026:7896">https://errata.rockylinux.org/RLSA-2026:7896</a>
+          <a href="https://github.com/isaacs/minimatch">https://github.com/isaacs/minimatch</a>
+          <a href="https://github.com/isaacs/minimatch/commit/11d0df6165d15a955462316b26d52e5efae06fce">https://github.com/isaacs/minimatch/commit/11d0df6165d15a955462316b26d52e5efae06fce</a>
+          <a href="https://github.com/isaacs/minimatch/security/advisories/GHSA-23c5-xmqv-rm74">https://github.com/isaacs/minimatch/security/advisories/GHSA-23c5-xmqv-rm74</a>
+          <a href="https://linux.oracle.com/cve/CVE-2026-27904.html">https://linux.oracle.com/cve/CVE-2026-27904.html</a>
+          <a href="https://linux.oracle.com/errata/ELSA-2026-8339.html">https://linux.oracle.com/errata/ELSA-2026-8339.html</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-27904">https://nvd.nist.gov/vuln/detail/CVE-2026-27904</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-27904">https://www.cve.org/CVERecord?id=CVE-2026-27904</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-23745</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.3</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:18480">https://access.redhat.com/errata/RHSA-2026:18480</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-23745">https://access.redhat.com/security/cve/CVE-2026-23745</a>
+          <a href="https://bugzilla.redhat.com/2425946">https://bugzilla.redhat.com/2425946</a>
+          <a href="https://bugzilla.redhat.com/2430538">https://bugzilla.redhat.com/2430538</a>
+          <a href="https://bugzilla.redhat.com/2431036">https://bugzilla.redhat.com/2431036</a>
+          <a href="https://bugzilla.redhat.com/2431740">https://bugzilla.redhat.com/2431740</a>
+          <a href="https://bugzilla.redhat.com/2433645">https://bugzilla.redhat.com/2433645</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2425946">https://bugzilla.redhat.com/show_bug.cgi?id=2425946</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2430538">https://bugzilla.redhat.com/show_bug.cgi?id=2430538</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2431036">https://bugzilla.redhat.com/show_bug.cgi?id=2431036</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2431740">https://bugzilla.redhat.com/show_bug.cgi?id=2431740</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2433645">https://bugzilla.redhat.com/show_bug.cgi?id=2433645</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-13465">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-13465</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-15284">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-15284</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23745">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23745</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23950">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23950</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24842">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24842</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-18480.html">https://errata.almalinux.org/10/ALSA-2026-18480.html</a>
+          <a href="https://errata.rockylinux.org/RLSA-2026:18868">https://errata.rockylinux.org/RLSA-2026:18868</a>
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/commit/340eb285b6d986e91969a1170d7fe9b0face405e">https://github.com/isaacs/node-tar/commit/340eb285b6d986e91969a1170d7fe9b0face405e</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-8qq5-rm4j-mr97">https://github.com/isaacs/node-tar/security/advisories/GHSA-8qq5-rm4j-mr97</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-23745">https://nvd.nist.gov/vuln/detail/CVE-2026-23745</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-23745">https://www.cve.org/CVERecord?id=CVE-2026-23745</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-23950</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.4</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:18480">https://access.redhat.com/errata/RHSA-2026:18480</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-23950">https://access.redhat.com/security/cve/CVE-2026-23950</a>
+          <a href="https://bugzilla.redhat.com/2425946">https://bugzilla.redhat.com/2425946</a>
+          <a href="https://bugzilla.redhat.com/2430538">https://bugzilla.redhat.com/2430538</a>
+          <a href="https://bugzilla.redhat.com/2431036">https://bugzilla.redhat.com/2431036</a>
+          <a href="https://bugzilla.redhat.com/2431740">https://bugzilla.redhat.com/2431740</a>
+          <a href="https://bugzilla.redhat.com/2433645">https://bugzilla.redhat.com/2433645</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2425946">https://bugzilla.redhat.com/show_bug.cgi?id=2425946</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2430538">https://bugzilla.redhat.com/show_bug.cgi?id=2430538</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2431036">https://bugzilla.redhat.com/show_bug.cgi?id=2431036</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2431740">https://bugzilla.redhat.com/show_bug.cgi?id=2431740</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2433645">https://bugzilla.redhat.com/show_bug.cgi?id=2433645</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-13465">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-13465</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-15284">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-15284</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23745">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23745</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23950">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23950</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24842">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24842</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-18480.html">https://errata.almalinux.org/10/ALSA-2026-18480.html</a>
+          <a href="https://errata.rockylinux.org/RLSA-2026:18868">https://errata.rockylinux.org/RLSA-2026:18868</a>
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/commit/3b1abfae650056edfabcbe0a0df5954d390521e6">https://github.com/isaacs/node-tar/commit/3b1abfae650056edfabcbe0a0df5954d390521e6</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-r6q2-hw4h-h46w">https://github.com/isaacs/node-tar/security/advisories/GHSA-r6q2-hw4h-h46w</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-23950">https://nvd.nist.gov/vuln/detail/CVE-2026-23950</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-23950">https://www.cve.org/CVERecord?id=CVE-2026-23950</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-24842</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.7</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/errata/RHSA-2026:18480">https://access.redhat.com/errata/RHSA-2026:18480</a>
+          <a href="https://access.redhat.com/security/cve/CVE-2026-24842">https://access.redhat.com/security/cve/CVE-2026-24842</a>
+          <a href="https://bugzilla.redhat.com/2425946">https://bugzilla.redhat.com/2425946</a>
+          <a href="https://bugzilla.redhat.com/2430538">https://bugzilla.redhat.com/2430538</a>
+          <a href="https://bugzilla.redhat.com/2431036">https://bugzilla.redhat.com/2431036</a>
+          <a href="https://bugzilla.redhat.com/2431740">https://bugzilla.redhat.com/2431740</a>
+          <a href="https://bugzilla.redhat.com/2433645">https://bugzilla.redhat.com/2433645</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2425946">https://bugzilla.redhat.com/show_bug.cgi?id=2425946</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2430538">https://bugzilla.redhat.com/show_bug.cgi?id=2430538</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2431036">https://bugzilla.redhat.com/show_bug.cgi?id=2431036</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2431740">https://bugzilla.redhat.com/show_bug.cgi?id=2431740</a>
+          <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2433645">https://bugzilla.redhat.com/show_bug.cgi?id=2433645</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-13465">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-13465</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-15284">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-15284</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23745">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23745</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23950">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-23950</a>
+          <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24842">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24842</a>
+          <a href="https://errata.almalinux.org/10/ALSA-2026-18480.html">https://errata.almalinux.org/10/ALSA-2026-18480.html</a>
+          <a href="https://errata.rockylinux.org/RLSA-2026:18868">https://errata.rockylinux.org/RLSA-2026:18868</a>
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/commit/f4a7aa9bc3d717c987fdf1480ff7a64e87ffdb46">https://github.com/isaacs/node-tar/commit/f4a7aa9bc3d717c987fdf1480ff7a64e87ffdb46</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-34x7-hfp2-rc4v">https://github.com/isaacs/node-tar/security/advisories/GHSA-34x7-hfp2-rc4v</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-24842">https://nvd.nist.gov/vuln/detail/CVE-2026-24842</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-24842">https://www.cve.org/CVERecord?id=CVE-2026-24842</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-26960</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.8</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-26960">https://access.redhat.com/security/cve/CVE-2026-26960</a>
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/commit/2cb1120bcefe28d7ecc719b41441ade59c52e384">https://github.com/isaacs/node-tar/commit/2cb1120bcefe28d7ecc719b41441ade59c52e384</a>
+          <a href="https://github.com/isaacs/node-tar/commit/d18e4e1f846f4ddddc153b0f536a19c050e7499f">https://github.com/isaacs/node-tar/commit/d18e4e1f846f4ddddc153b0f536a19c050e7499f</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-83g3-92jg-28cx">https://github.com/isaacs/node-tar/security/advisories/GHSA-83g3-92jg-28cx</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-26960">https://nvd.nist.gov/vuln/detail/CVE-2026-26960</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-26960">https://www.cve.org/CVERecord?id=CVE-2026-26960</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-29786</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.10</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-29786">https://access.redhat.com/security/cve/CVE-2026-29786</a>
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/commit/7bc755dd85e623c0279e08eb3784909e6d7e4b9f">https://github.com/isaacs/node-tar/commit/7bc755dd85e623c0279e08eb3784909e6d7e4b9f</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-qffp-2rhf-9h96">https://github.com/isaacs/node-tar/security/advisories/GHSA-qffp-2rhf-9h96</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-29786">https://nvd.nist.gov/vuln/detail/CVE-2026-29786</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-29786">https://www.cve.org/CVERecord?id=CVE-2026-29786</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-31802</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.11</td>
+        <td class="links" data-more-links="off">
+          <a href="https://access.redhat.com/security/cve/CVE-2026-31802">https://access.redhat.com/security/cve/CVE-2026-31802</a>
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/commit/f48b5fa3b7985ddab96dc0f2125a4ffc9911b6ad">https://github.com/isaacs/node-tar/commit/f48b5fa3b7985ddab96dc0f2125a4ffc9911b6ad</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-9ppj-qmqm-q256">https://github.com/isaacs/node-tar/security/advisories/GHSA-9ppj-qmqm-q256</a>
+          <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-31802">https://nvd.nist.gov/vuln/detail/CVE-2026-31802</a>
+          <a href="https://www.cve.org/CVERecord?id=CVE-2026-31802">https://www.cve.org/CVERecord?id=CVE-2026-31802</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">tar</td>
+        <td>CVE-2026-53655</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">6.2.1</td>
+        <td>7.5.16</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/isaacs/node-tar">https://github.com/isaacs/node-tar</a>
+          <a href="https://github.com/isaacs/node-tar/security/advisories/GHSA-vmf3-w455-68vh">https://github.com/isaacs/node-tar/security/advisories/GHSA-vmf3-w455-68vh</a>
+        </td>
+      </tr>
+      <tr class="severity-HIGH">
+        <td class="pkg-name">vite</td>
+        <td>CVE-2026-53571</td>
+        <td class="severity">HIGH</td>
+        <td class="pkg-version">8.0.13</td>
+        <td>8.0.16, 7.3.5, 6.4.3</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/vitejs/vite">https://github.com/vitejs/vite</a>
+          <a href="https://github.com/vitejs/vite/security/advisories/GHSA-fx2h-pf6j-xcff">https://github.com/vitejs/vite/security/advisories/GHSA-fx2h-pf6j-xcff</a>
+        </td>
+      </tr>
+      <tr class="severity-MEDIUM">
+        <td class="pkg-name">vite</td>
+        <td>CVE-2026-53632</td>
+        <td class="severity">MEDIUM</td>
+        <td class="pkg-version">8.0.13</td>
+        <td>8.0.16, 7.3.5, 6.4.3</td>
+        <td class="links" data-more-links="off">
+          <a href="https://github.com/vitejs/launch-editor">https://github.com/vitejs/launch-editor</a>
+          <a href="https://github.com/vitejs/launch-editor/security/advisories/GHSA-v6wh-96g9-6wx3">https://github.com/vitejs/launch-editor/security/advisories/GHSA-v6wh-96g9-6wx3</a>
+        </td>
+      </tr>
+      <tr><th colspan="6">No Misconfigurations found</th></tr>
+    </table>
+  </body>
+</html>
