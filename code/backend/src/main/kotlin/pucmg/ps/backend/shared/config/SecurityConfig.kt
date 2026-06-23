@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.header.writers.StaticHeadersWriter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -55,6 +54,7 @@ internal class SecurityConfig(
                             buildDirective("connect-src", cspConnectSrc) + "; " +
                             buildDirective("style-src", cspStyleSrc) + "; " +
                             buildDirective("font-src", cspFontSrc) + "; " +
+                            "img-src 'self' data: blob:; " +
                             "script-src 'self' 'unsafe-inline'; " +
                             "object-src 'none'; " +
                             "frame-ancestors 'none';"
@@ -75,9 +75,7 @@ internal class SecurityConfig(
 
         http
             .cors(Customizer.withDefaults())
-            .csrf {
-                it.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            }
+            .csrf { it.disable() }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
