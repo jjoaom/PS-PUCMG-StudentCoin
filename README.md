@@ -85,13 +85,29 @@ docker compose -f docker-compose.prod.yml up --build
 
 ![Diagrama de Sequência: Evento de atualização de Moeda dos professores](./docs/sequence-diagrams/EnvioSemestralMoeda.png)
 
-![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessorV2.png)
+![Diagrama de Sequência: Envio de moedas para alunos](./docs/sequence-diagrams/EnvioMoedaProfessor.png)
 
 ![Diagrama de Sequência: Cadastro de empresa parceira](./docs/sequence-diagrams/CadastroEmpresaParceira.png)
 
+![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeral.png)
 
+## Diagramas de Comunicação
 
-![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeralV2.png)
+![Diagrama de Comunicação: Login](./docs/communication-diagrams/Login.png)
+
+![Diagrama de Comunicação: Cadastro Aluno](./docs/communication-diagrams/CadastroAluno.png)
+
+![Diagrama de Comunicação: Consultar Saldo e Histórico](./docs/communication-diagrams/ConsultaSaldo.png)
+
+![Diagrama de Comunicação: Envio Semestral de Moedas](./docs/communication-diagrams/EnvioSemestralMoeda.png)
+
+![Diagrama de Comunicação: Envio de Moedas pelo Professor](./docs/communication-diagrams/EnvioMoedaProfessor.png)
+
+![Diagrama de Comunicação: Cadastro de Empresa Parceira](./docs/communication-diagrams/CadastroEmpresaParceira.png)
+
+![Diagrama de Comunicação: Cadastro de Vantagem](./docs/communication-diagrams/CadastroVantagem.png)
+
+![Diagrama de Comunicação: Resgate de Vantagem](./docs/communication-diagrams/ResgateVantagem.png)
 
 ## Histórias do Usuário
 
