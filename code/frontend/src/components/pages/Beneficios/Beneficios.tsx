@@ -40,56 +40,7 @@ type AlunoSaldoResponse = {
   };
 };
 
-const BENEFICIOS_MOCK: Vantagem[] = [
-  {
-    id: 101,
-    descricao: "Cupom de R$ 20,00 no Restaurante Universitário",
-    custoMoedas: 50,
-    detalhes: "Válido para qualquer refeição no self-service do Sabores do Campus.",
-    ativa: true,
-    nomeEmpresa: "Sabores do Campus"
-  },
-  {
-    id: 102,
-    descricao: "Desconto de 50% em Livros Didáticos",
-    custoMoedas: 100,
-    detalhes: "Aplicável a livros universitários selecionados na Livraria Universitária.",
-    ativa: true,
-    nomeEmpresa: "Livraria Universitária"
-  },
-  {
-    id: 103,
-    descricao: "Assinatura Grátis de 3 meses na DevLearn Tech",
-    custoMoedas: 250,
-    detalhes: "Acesso ilimitado a todos os cursos de desenvolvimento e dados.",
-    ativa: true,
-    nomeEmpresa: "DevLearn Tech"
-  },
-  {
-    id: 104,
-    descricao: "Ingresso Cortesia para o Startup Challenge",
-    custoMoedas: 90,
-    detalhes: "Garante entrada e certificado de participação no evento anual do Hub.",
-    ativa: true,
-    nomeEmpresa: "Inova PUCMG Hub"
-  },
-  {
-    id: 105,
-    descricao: "Copo Térmico Personalizado StudentCoin",
-    custoMoedas: 150,
-    detalhes: "Retirada presencial no Bloco I do campus mediante apresentação do cupom.",
-    ativa: true,
-    nomeEmpresa: "Brindes Express"
-  },
-  {
-    id: 106,
-    descricao: "Assinatura de 2 meses Premium no SoundStream",
-    custoMoedas: 120,
-    detalhes: "Curta suas playlists sem anúncios no SoundStream.",
-    ativa: true,
-    nomeEmpresa: "SoundStream"
-  }
-];
+
 
 export default function Beneficios() {
   const [beneficios, setBeneficios] = useState<Vantagem[]>([]);
@@ -114,8 +65,6 @@ export default function Beneficios() {
     if (isAluno) {
       carregarBeneficios();
       carregarSaldoAluno();
-    } else {
-      setBeneficios(BENEFICIOS_MOCK);
     }
   }, [isAluno]);
 
@@ -155,7 +104,6 @@ export default function Beneficios() {
 
       setSaldoMoedas(saldo);
     } catch (error) {
-      console.error("Erro ao carregar saldo do aluno:", error);
       setSaldoMoedas(null);
     } finally {
       setLoadingSaldo(false);
@@ -184,11 +132,9 @@ export default function Beneficios() {
         (beneficio: Vantagem) => beneficio.ativa !== false
       );
 
-      setBeneficios(beneficiosAtivos.length > 0 ? beneficiosAtivos : BENEFICIOS_MOCK);
+      setBeneficios(beneficiosAtivos.length > 0 ? beneficiosAtivos : []);
     } catch (error) {
-      console.error(error);
-      // Fallback para mock caso dê erro de conexão
-      setBeneficios(BENEFICIOS_MOCK);
+      setBeneficios([]);
     } finally {
       setLoading(false);
     }

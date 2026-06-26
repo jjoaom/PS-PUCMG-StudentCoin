@@ -67,10 +67,7 @@ internal class SecurityConfig(
                 )
             )
             .frameOptions { it.deny() }
-            .httpStrictTransportSecurity {
-                it.includeSubDomains(true)
-                it.maxAgeInSeconds(31536000)
-            }
+            .httpStrictTransportSecurity { it.maxAgeInSeconds(31536000) }
         }
 
         http
@@ -82,7 +79,7 @@ internal class SecurityConfig(
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests {
-                it.requestMatchers("/auth/**").permitAll()
+                it.requestMatchers("/auth/**", "/alunos", "/professor", "/empresa", "/instituicoes").permitAll()
                 it.anyRequest().authenticated()
             }
 

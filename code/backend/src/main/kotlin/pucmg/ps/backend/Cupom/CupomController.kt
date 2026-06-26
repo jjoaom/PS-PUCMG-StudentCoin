@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/cupom")
-@CrossOrigin(origins = ["http://localhost:5173"])
 class CupomController(
     private val cupomService: CupomService
 ) {

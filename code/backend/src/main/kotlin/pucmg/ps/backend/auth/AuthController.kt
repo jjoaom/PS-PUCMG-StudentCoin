@@ -14,7 +14,7 @@ import pucmg.ps.backend.features.auth.refreshToken.RefreshTokenNotFoundException
 @RequestMapping("/auth")
 class AuthController(
     private val authService: AuthService,
-    @Value($$"${cookie.secure}") private val isSecure: Boolean
+    @Value("\${cookie.secure}") private val isSecure: Boolean
 ) {
 
     companion object {

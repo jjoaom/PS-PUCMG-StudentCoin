@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class CupomService(
     private val cupomDAO: CupomDAO,
     private val vantagemDAO: VantagemDAO,
@@ -128,6 +129,7 @@ class CupomService(
     /**
      * Utiliza um cupom (marca como usado)
      */
+    @Transactional
     fun usarCupom(codigo: String): CupomResgatoDTO {
         val cupom = cupomDAO.findByCodigo(codigo)
 
@@ -173,6 +175,7 @@ class CupomService(
     /**
      * Deleta um cupom
      */
+    @Transactional
     fun deletar(id: Long) {
         cupomDAO.deletarPorId(id)
     }

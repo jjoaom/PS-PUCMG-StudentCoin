@@ -1,9 +1,11 @@
 package pucmg.ps.backend.Vantagem
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import pucmg.ps.backend.Empresa.EmpresaDao
 
 @Service
+@Transactional(readOnly = true)
 class VantagemService(
     private val vantagemDAO: VantagemDAO,
     private val empresaDao: EmpresaDao

@@ -7,7 +7,6 @@ import pucmg.ps.backend.Vantagem.VantagemCadastroDTO
 
 @RestController
 @RequestMapping("/empresa")
-@CrossOrigin(origins = ["http://localhost:5173"])
 class EmpresaController(
     private val empresaService: EmpresaService
 ) {

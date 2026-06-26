@@ -2,6 +2,7 @@ package pucmg.ps.backend.Aluno
 
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import pucmg.ps.backend.features.auth.permission.PermissionDAO
 import pucmg.ps.backend.Instituicao.InstituicaoRepository
 import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
@@ -11,6 +12,7 @@ import pucmg.ps.backend.Cupom.CupomDTO
 import pucmg.ps.backend.Cupom.CupomResgatoDTO
 
 @Service
+@Transactional(readOnly = true)
 class AlunoService(
     private val alunoDao: AlunoDao,
     private val passwordEncoder: PasswordEncoder,
@@ -21,6 +23,7 @@ class AlunoService(
     private val cupomService: CupomService? = null
 ) {
 
+    @Transactional
     fun cadastrar(dto: AlunoCadastroDTO): Aluno {
 
         if (alunoDao.existsByEmail(dto.email)) {
@@ -63,6 +66,7 @@ class AlunoService(
         return alunoDao.findById(id)
     }
 
+    @Transactional
     fun atualizar(id: Long, dto: AlunoCadastroDTO): Aluno {
         val aluno = alunoDao.findById(id)
 
@@ -112,6 +116,7 @@ class AlunoService(
             }
     }
 
+    @Transactional
     fun resgatarVantagem(alunoId: Long, vantagemId: Long): CupomDTO {
         if (cupomService == null) throw RuntimeException("CupomService não disponível")
         

@@ -2,6 +2,7 @@ package pucmg.ps.backend.Empresa
 
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import pucmg.ps.backend.features.auth.permission.PermissionDAO
 import pucmg.ps.backend.Vantagem.VantagemResponseDTO
 import pucmg.ps.backend.Vantagem.VantagemDAO
@@ -10,6 +11,7 @@ import pucmg.ps.backend.Vantagem.toResponseDTO
 import pucmg.ps.backend.Cupom.CupomDAO
 
 @Service
+@Transactional(readOnly = true)
 class EmpresaService(
     private val empresaDao: EmpresaDao,
     private val passwordEncoder: PasswordEncoder,
@@ -18,6 +20,7 @@ class EmpresaService(
     private val cupomDAO: CupomDAO? = null
 ) {
 
+    @Transactional
     fun cadastrar(dto: EmpresaCadastroDTO): Empresa {
 
         if (empresaDao.existsByEmail(dto.email)) {
@@ -60,6 +63,7 @@ class EmpresaService(
         return empresaDao.findById(id)
     }
 
+    @Transactional
     fun atualizar(id: Long, dto: EmpresaCadastroDTO): Empresa {
         val empresa = empresaDao.findById(id)
 
@@ -84,6 +88,7 @@ class EmpresaService(
         return empresaDao.save(empresa)
     }
 
+    @Transactional
     fun deletar(id: Long) {
         empresaDao.deleteById(id)
     }
@@ -98,6 +103,7 @@ class EmpresaService(
         return vantagemDAO?.findByEmpresaIdAndAtiva(empresaId, true)?.map { it.toResponseDTO() } ?: emptyList()
     }
 
+    @Transactional
     fun criarVantagem(empresaId: Long, dto: VantagemCadastroDTO): VantagemResponseDTO {
         if (vantagemDAO == null) throw RuntimeException("VantagemDAO não disponível")
         

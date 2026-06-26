@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/vantagem")
-@CrossOrigin(origins = ["http://localhost:5173"])
 class VantagemController(
     private val vantagemService: VantagemService
 ) {

@@ -14,16 +14,16 @@ import pucmg.ps.backend.features.auth.UserResponse
 @RequestMapping("/users")
 class UserController(private val userService: UserService) {
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     fun create(@RequestBody request: CreateUserRequest): ResponseEntity<UserResponse> =
         ResponseEntity.status(HttpStatus.CREATED).body(userService.create(request))
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     fun findById(@PathVariable id: Long): ResponseEntity<UserResponse> = ResponseEntity.ok(userService.findById(id))
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN') or @userSecurity.isSelf(authentication, #id)")
+    @PreAuthorize("hasRole('ADMIN') or @userSecurity.isSelf(authentication, #id)")
     fun update(
         @PathVariable id: Long,
         @RequestBody request: UpdateUserRequest,
@@ -32,7 +32,7 @@ class UserController(private val userService: UserService) {
         ResponseEntity.ok(userService.update(id, currentUser, request))
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     fun delete(@PathVariable id: Long): ResponseEntity<Void> {
         userService.delete(id)
         return ResponseEntity.noContent().build()

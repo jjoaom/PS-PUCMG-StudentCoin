@@ -1,19 +1,26 @@
 package pucmg.ps.backend.Professor
 
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import pucmg.ps.backend.Aluno.ExtratoDTO
 import pucmg.ps.backend.Aluno.SaldoDTO
 import pucmg.ps.backend.Moeda.MovimentacaoMoedaRepository
+import pucmg.ps.backend.features.auth.permission.PermissionDAO
 import pucmg.ps.backend.shared.events.EnviarMoedasEvent
 import pucmg.ps.backend.shared.events.MoedaProducer
 
 @Service
+@Transactional(readOnly = true)
 class ProfessorService(
     private val professorDao: ProfessorDao,
     private val moedaProducer: MoedaProducer,
-    private val movimentacaoRepository: MovimentacaoMoedaRepository
+    private val movimentacaoRepository: MovimentacaoMoedaRepository,
+    private val passwordEncoder: PasswordEncoder,
+    private val permissionDao: PermissionDAO
 ) {
 
+    @Transactional
     fun cadastrar(dto: ProfessorCadastroDTO): Professor {
         if (professorDao.existsByEmail(dto.email)) {
             throw RuntimeException("Já existe um professor cadastrado com este e-mail.")
@@ -23,13 +30,18 @@ class ProfessorService(
             throw RuntimeException("Já existe um professor cadastrado com este CPF.")
         }
 
+        val permissaoProfessor = permissionDao.findByName("PROFESSOR")
+        val permissoes = if (permissaoProfessor != null) mutableSetOf(permissaoProfessor) else mutableSetOf()
+
         val professor = Professor(
             name = dto.name,
             email = dto.email,
-            password = dto.password,
+            password = passwordEncoder.encode(dto.password).toString(),
             cpf = dto.cpf,
             departamento = dto.departamento,
-        )
+        ).apply {
+            this.permissions = permissoes
+        }
 
         professor.carteira.saldo = 10000
 
@@ -39,7 +51,7 @@ class ProfessorService(
     fun login(dto: ProfessorLoginDTO): Professor {
         val professor = professorDao.findByEmail(dto.email)
 
-        if (professor.password != dto.password) {
+        if (!passwordEncoder.matches(dto.password, professor.password)) {
             throw RuntimeException("Senha inválida.")
         }
 
@@ -54,6 +66,7 @@ class ProfessorService(
         return professorDao.findById(id)
     }
 
+    @Transactional
     fun atualizar(id: Long, dto: ProfessorUpdateDTO): Professor {
         val professor = professorDao.findById(id)
 
@@ -76,7 +89,7 @@ class ProfessorService(
         }
 
         dto.password?.let {
-            professor.password = it
+            professor.password = passwordEncoder.encode(it).toString()
         }
 
         dto.departamento?.let {
@@ -109,6 +122,7 @@ class ProfessorService(
             }
     }
 
+    @Transactional
     fun enviarMoedas(professorId: Long, dto: EnviarMoedasDTO): String {
         if (dto.quantidade <= 0) {
             throw RuntimeException("Quantidade inválida")

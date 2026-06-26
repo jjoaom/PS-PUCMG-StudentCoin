@@ -18,7 +18,7 @@ class UserService (
     fun create(request: CreateUserRequest): UserResponse {
         if (userDao.existsByEmail(request.email))
             throw EmailAlreadyInUseException(request.email)
-        val permissions = if (request.permissions.isEmpty())
+        val permissions = if (request.permissions.isNotEmpty())
             permissionDao.findByNames(request.permissions)
         else emptySet()
 

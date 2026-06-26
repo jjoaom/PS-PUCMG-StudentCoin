@@ -1,7 +1,12 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { IMaskInput } from "react-imask";
 import "./CadastroAluno.css";
+
+type Instituicao = {
+  id: number;
+  nome: string;
+};
 
 type FormAluno = {
   nome: string;
@@ -38,8 +43,16 @@ export default function CadastroAluno() {
     instituicaoId: "",
   });
 
+  const [instituicoes, setInstituicoes] = useState<Instituicao[]>([]);
   const [loadingCep, setLoadingCep] = useState(false);
   const [loadingCadastro, setLoadingCadastro] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/instituicoes")
+      .then((res) => res.json())
+      .then((data) => setInstituicoes(Array.isArray(data) ? data : []))
+      .catch(() => setInstituicoes([]));
+  }, []);
 
   function limparMascara(value: string) {
     return value.replace(/\D/g, "");
@@ -299,11 +312,11 @@ export default function CadastroAluno() {
                 required
               >
                 <option value="">Selecione a instituição</option>
-                <option value="1">PUC Minas</option>
-                <option value="2">UFMG</option>
-                <option value="3">CEFET-MG</option>
-                <option value="4">UNA</option>
-                <option value="5">FUMEC</option>
+                {instituicoes.map((inst) => (
+                  <option key={inst.id} value={inst.id}>
+                    {inst.nome}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
