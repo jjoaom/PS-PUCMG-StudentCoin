@@ -91,6 +91,9 @@ docker compose -f docker-compose.prod.yml up --build
 
 ![Diagrama de Sequência Geral](./docs/sequence-diagrams/DiagramaGeral.png)
 
+## Diagrama de Implantação
+![Diagrama de Implantação](./docs/implantacao.png)
+
 ## Diagramas de Comunicação
 
 ![Diagrama de Comunicação: Login](./docs/communication-diagrams/Login.png)
